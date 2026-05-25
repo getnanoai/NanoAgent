@@ -79,6 +79,7 @@
                 <a href="#features" class="hidden md:inline hover:text-terminal-cyan transition-colors px-1">#features</a>
                 <a href="#cli-workflows" class="hidden md:inline hover:text-terminal-cyan transition-colors px-1">#cli</a>
                 <a href="#extensibility" class="hidden lg:inline hover:text-terminal-cyan transition-colors px-1">#extensibility</a>
+                <a href="#why-nanoagent" class="hidden lg:inline hover:text-terminal-cyan transition-colors px-1">#why</a>
                 <a href="#comparison" class="hidden md:inline hover:text-terminal-cyan transition-colors px-1">#comparison</a>
                 <a href="#install" class="hidden md:inline hover:text-terminal-cyan transition-colors px-1">#install</a>
                 <a href="#faq" class="hidden md:inline hover:text-terminal-cyan transition-colors px-1">#faq</a>
@@ -214,12 +215,56 @@
             </div>
         </section>
 
+        <section id="why-nanoagent" class="relative px-4 sm:px-6 pt-10 pb-16 grid-bg">
+            <div class="max-w-6xl mx-auto">
+                <div class="section-line border-terminal-border pb-3 mb-3"><span class="text-terminal-cyan text-xs font-bold"># why-nanoagent</span><span class="text-terminal-dim text-xs ml-2">────────────────────────────────────────────────────</span></div>
+                <p class="text-terminal-muted text-xs mb-8">NanoAgent is strongest when you want an agent you can shape, govern, and run across your whole workflow instead of a single chat box.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+                    <div class="tcard border border-terminal-purple/25 bg-terminal-purple/[0.015] p-5">
+                        <div class="flex items-center gap-2 mb-2"><span class="text-terminal-purple text-xs">◆</span><h3 class="text-xs font-bold text-white">Composable workflow</h3></div>
+                        <p class="text-[0.7rem] text-terminal-muted leading-relaxed">Mix modes, sections, subagents, custom tools, MCP servers, and hooks into one repo-aware workflow. NanoAgent is built to be composed around your process, not the other way around.</p>
+                    </div>
+                    <div class="tcard border border-terminal-green/25 bg-terminal-green/[0.015] p-5">
+                        <div class="flex items-center gap-2 mb-2"><span class="text-terminal-green text-xs">◆</span><h3 class="text-xs font-bold text-white">More control by default</h3></div>
+                        <p class="text-[0.7rem] text-terminal-muted leading-relaxed">Approval prompts, permission profiles, sandbox levels, network controls, audit logs, and secret redaction make it easier to run serious repo work without handing the agent a blank check.</p>
+                    </div>
+                    <div class="tcard border border-terminal-cyan/25 bg-terminal-cyan/[0.015] p-5">
+                        <div class="flex items-center gap-2 mb-2"><span class="text-terminal-cyan text-xs">◆</span><h3 class="text-xs font-bold text-white">More surfaces, one agent</h3></div>
+                        <p class="text-[0.7rem] text-terminal-muted leading-relaxed">Use the same agent from the desktop app, terminal CLI, ACP-compatible tools, and CI review automation. That is broader than tools that mainly live in one editor or one terminal experience.</p>
+                    </div>
+                    <div class="tcard border border-terminal-amber/25 bg-terminal-amber/[0.015] p-5">
+                        <div class="flex items-center gap-2 mb-2"><span class="text-terminal-amber text-xs">◆</span><h3 class="text-xs font-bold text-white">Provider freedom</h3></div>
+                        <p class="text-[0.7rem] text-terminal-muted leading-relaxed">Run with OpenAI, Claude, Gemini, OpenRouter, local OpenAI-compatible backends, or browser-backed ChatGPT sessions. You are not locked into one vendor or one pricing model.</p>
+                    </div>
+                </div>
+                <div class="border border-terminal-border bg-white/[0.01] p-5 sm:p-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                        <div>
+                            <div class="text-[0.62rem] text-terminal-cyan font-bold uppercase tracking-wider mb-2">vs Claude Code</div>
+                            <p class="text-[0.72rem] text-terminal-muted leading-relaxed">NanoAgent gives teams a broader operating model: desktop plus CLI, repo memory files you can commit, CI review automation, and stronger workflow composition through hooks, sections, and subagent orchestration.</p>
+                        </div>
+                        <div>
+                            <div class="text-[0.62rem] text-terminal-green font-bold uppercase tracking-wider mb-2">vs OpenAI Codex</div>
+                            <p class="text-[0.72rem] text-terminal-muted leading-relaxed">NanoAgent is the better fit when you want BYOK flexibility, local-first workspace state, explicit permission layers, and the ability to wire in your own tools, rules, and providers instead of staying inside one product boundary.</p>
+                        </div>
+                        <div>
+                            <div class="text-[0.62rem] text-terminal-amber font-bold uppercase tracking-wider mb-2">vs other top-tier agents</div>
+                            <p class="text-[0.72rem] text-terminal-muted leading-relaxed">Many strong agents optimize for a single surface such as an editor extension or terminal shell. NanoAgent is differentiated by being open source, multi-provider, automation-ready, and designed for local repo operations with governance.</p>
+                        </div>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-terminal-border/60 text-[0.65rem] text-terminal-dim">
+                        Better depends on the job. If you want the most polished vendor-specific experience, other tools may fit. If you want a hackable agent platform with stronger control, broader workflow coverage, and less lock-in, NanoAgent has the edge.
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Comparison Table -->
         <section id="comparison" class="relative px-4 sm:px-6 pt-10 pb-16 grid-bg">
             <div class="max-w-6xl mx-auto">
                 <div class="section-line border-terminal-border pb-3 mb-3"><span class="text-terminal-cyan text-xs font-bold"># comparison</span><span class="text-terminal-dim text-xs ml-2">────────────────────────────────────────────────────</span></div>
-                <p class="text-terminal-muted text-xs mb-2">Feature comparison across AI coding agents.</p>
-                <p class="text-[0.65rem] text-terminal-dim mb-6"><span class="text-terminal-green">✅</span> = supported · <span class="text-terminal-dim">—</span> = not verified as first-class feature</p>
+                <p class="text-terminal-muted text-xs mb-2">Capability map across AI coding agents.</p>
+                <p class="text-[0.65rem] text-terminal-dim mb-6"><span class="text-terminal-green">✅</span> = supported · <span class="text-terminal-dim">—</span> = not verified as a first-class feature on this page. Use the matrix as a directional snapshot, then validate the exact workflow you care about.</p>
                 <div class="overflow-x-auto border border-terminal-border">
                     <table id="comp-table" class="w-max min-w-full"></table>
                 </div>
@@ -348,6 +393,7 @@ const faqs = [
     ['Does NanoAgent support MCP?', 'Yes. You can add MCP servers to extend NanoAgent with custom tools and data sources — databases, APIs, internal services — all governed by the same permission and approval system.'],
     ['Does NanoAgent support ACP?', 'Yes. NanoAgent can run as an Agent Client Protocol (ACP) server so compatible editors and workflow tools can send prompts, manage sessions, and receive real-time tool progress updates.'],
     ['Can I extend NanoAgent with custom tools?', 'Yes. Define custom process tools in <span class="text-terminal-green">agent-profile.json</span> — write them in any language that reads JSON from stdin and outputs text/JSON. You can also add lifecycle hooks for task, tool, file, shell, web, memory, permission, and delegation events for automation around writes, tests, and security checks.'],
+    ['Why choose NanoAgent over Claude Code, Codex, or other top agents?', 'Choose NanoAgent when you want more than a great prompt box: local-first workspace state, provider freedom, repo memory files, desktop + CLI + ACP surfaces, CI review automation, custom tools, MCP, hooks, subagents, and explicit permission controls. If you value hackability and governance over vendor lock-in, NanoAgent is the stronger fit.'],
     ['Is NanoAgent really open source?', 'Yes. The entire source code is available on <a href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener" class="text-terminal-cyan hover:underline">GitHub</a> under the Apache 2.0 license. No hidden tiers, no locked features, no telemetry phoning home.'],
 ];
 

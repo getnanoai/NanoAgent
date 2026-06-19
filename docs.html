@@ -166,10 +166,16 @@
 
             <h3>CLI</h3>
             <p>Install with the release installer.</p>
-            <h4>macOS / Linux</h4>
+            <h4>Curl</h4>
             <pre><code>curl -fsSL https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh | bash</code></pre>
             <h4>Windows PowerShell</h4>
             <pre><code>irm https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.ps1 | iex</code></pre>
+            <h4>NPM</h4>
+            <pre><code>npm install -g nanoai-cli</code></pre>
+            <h4>pnpm</h4>
+            <pre><code>pnpm add -g nanoai-cli</code></pre>
+            <h4>bun</h4>
+            <pre><code>bun add -g nanoai-cli</code></pre>
             <p>The installers show step status and download progress when run in an interactive terminal. Set
               <code>NANOAGENT_NO_PROGRESS=1</code> to keep output compact in CI logs. Restart your terminal if
               <code>nanoai</code> is not found immediately after installation.</p>

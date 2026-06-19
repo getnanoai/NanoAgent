@@ -1,0 +1,1447 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Documentation — NanoAgent</title>
+  <meta name="description"
+    content="The complete NanoAgent handbook — install, first run & provider setup, desktop/terminal/editor workflows, ACP, CI review automation, codebase indexing, providers & reasoning, profiles, permissions & sandboxing, memory, skills, MCP, hooks, privacy, and troubleshooting." />
+  <meta name="theme-color" content="#000000" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Documentation — NanoAgent" />
+  <meta property="og:description"
+    content="The full NanoAgent documentation: setup, daily use, safety controls, editor & CI integration, automation, and advanced workspace customization." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/logo.png" />
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://github.com" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- ambient background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <!-- ───────────────────────── NAV ───────────────────────── -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a class="brand" href="index.html#top" aria-label="NanoAgent home">
+        <img src="assets/logo.png" alt="" class="brand__mark" width="28" height="28" />
+        <span class="brand__name">NanoAgent</span>
+      </a>
+
+      <nav class="nav__links" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="docs.html">Docs</a>
+      </nav>
+
+      <div class="nav__actions">
+        <a class="ghost-link" href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener"
+          aria-label="NanoAgent stars on GitHub">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
+            <path
+              d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z" />
+          </svg>
+          <span class="gh-stars" data-stars>Star</span>
+        </a>
+        <a class="ghost-link" href="https://github.com/rizwan3d/NanoAgent/commits/master" target="_blank" rel="noopener"
+          aria-label="NanoAgent commits on GitHub">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
+            <path
+              d="M11.93 8.5a4.002 4.002 0 0 1-7.86 0H.75a.75.75 0 0 1 0-1.5h3.32a4.002 4.002 0 0 1 7.86 0h3.32a.75.75 0 0 1 0 1.5Zm-1.43-.75a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z" />
+          </svg>
+          <span class="gh-commits" data-commits>Commits</span>
+        </a>
+      </div>
+
+      <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ───────────────────────── HEADER ───────────────────────── -->
+    <section class="docs-hero container">
+      <span class="eyebrow">Documentation</span>
+      <h1 class="hero__title">The NanoAgent <span class="grad">handbook</span></h1>
+      <p class="hero__sub">
+        NanoAgent is an AI coding agent that works directly inside a repository while respecting local permissions,
+        approval prompts, and workspace policy. It runs as a desktop app, the <code>nanoai</code> terminal command, a
+        VS&nbsp;Code extension, a Visual&nbsp;Studio extension, and an ACP-compatible editor server. This is the full
+        handbook for installation, daily use, safety controls, integration, automation, and advanced customization.
+      </p>
+    </section>
+
+    <div class="container">
+      <div class="docs">
+        <!-- ───────── SIDEBAR ───────── -->
+        <aside class="docs__sidebar" aria-label="Documentation contents">
+          <p class="docs__navtitle">Getting started</p>
+          <ul class="docs__nav">
+            <li><a href="#install">Install</a></li>
+            <li><a href="#first-run">First run &amp; provider setup</a></li>
+          </ul>
+
+          <p class="docs__navtitle">Daily use</p>
+          <ul class="docs__nav">
+            <li><a href="#desktop">Desktop workflow</a></li>
+            <li><a href="#terminal">Terminal workflow</a></li>
+            <li><a href="#commands">Terminal commands</a></li>
+          </ul>
+
+          <p class="docs__navtitle">Editors &amp; CI</p>
+          <ul class="docs__nav">
+            <li><a href="#vscode">VS Code extension</a></li>
+            <li><a href="#visual-studio">Visual Studio extension</a></li>
+            <li><a href="#acp">ACP editor integration</a></li>
+            <li><a href="#review">Review automation (CI)</a></li>
+          </ul>
+
+          <p class="docs__navtitle">Capabilities</p>
+          <ul class="docs__nav">
+            <li><a href="#indexing">Codebase indexing</a></li>
+            <li><a href="#providers">Providers &amp; models</a></li>
+            <li><a href="#profiles">Profiles &amp; subagents</a></li>
+            <li><a href="#lsp">Code intelligence (LSP)</a></li>
+          </ul>
+
+          <p class="docs__navtitle">Configuration</p>
+          <ul class="docs__nav">
+            <li><a href="#permissions">Permissions &amp; sandboxing</a></li>
+            <li><a href="#workspace">Workspace files</a></li>
+            <li><a href="#memory">Team memory</a></li>
+            <li><a href="#skills">Skills &amp; custom agents</a></li>
+            <li><a href="#mcp">MCP servers</a></li>
+            <li><a href="#custom-tools">Custom tools</a></li>
+            <li><a href="#hooks">Memory, audit &amp; hooks</a></li>
+          </ul>
+
+          <p class="docs__navtitle">Reference</p>
+          <ul class="docs__nav">
+            <li><a href="#privacy">Privacy &amp; local data</a></li>
+            <li><a href="#troubleshooting">Troubleshooting</a></li>
+            <li><a href="#sdk">NuGet SDK (.NET)</a></li>
+            <li><a href="#build">Build from source</a></li>
+            <li><a href="#license">License</a></li>
+          </ul>
+        </aside>
+
+        <!-- ───────── CONTENT ───────── -->
+        <article class="doc-prose">
+
+          <!-- INSTALL -->
+          <section class="doc-section" id="install">
+            <h2>Install</h2>
+
+            <h3>Desktop app</h3>
+            <p>Download the latest release for your platform:</p>
+            <div class="doc-table-wrap">
+              <table class="doc-table">
+                <thead>
+                  <tr><th>Platform</th><th>Download</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Windows x64</td><td><a href="https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-win-x64-setup.exe" target="_blank" rel="noopener">Installer</a></td></tr>
+                  <tr><td>Linux x64</td><td><a href="https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-linux-x64.zip" target="_blank" rel="noopener">Zip</a></td></tr>
+                  <tr><td>Linux arm64</td><td><a href="https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-linux-arm64.zip" target="_blank" rel="noopener">Zip</a></td></tr>
+                  <tr><td>macOS x64</td><td><a href="https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-osx-x64.zip" target="_blank" rel="noopener">Zip</a></td></tr>
+                  <tr><td>macOS arm64</td><td><a href="https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-osx-arm64.zip" target="_blank" rel="noopener">Zip</a></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Release downloads are published at:</p>
+            <pre><code>https://github.com/rizwan3d/NanoAgent/releases/latest</code></pre>
+            <p>New release assets include <code>SHA256SUMS</code> beside the downloads. The release pipeline verifies
+              every checksum matches its asset before publishing, and GitHub release workflows also generate artifact
+              attestations that establish SLSA build provenance for the checksummed assets. For manual downloads,
+              compare the published SHA256 hash with your downloaded file before running it. To verify provenance with
+              GitHub CLI, run <code>gh attestation verify path/to/asset -R rizwan3d/NanoAgent</code>.</p>
+
+            <h3>CLI</h3>
+            <p>Install with the release installer.</p>
+            <h4>macOS / Linux</h4>
+            <pre><code>curl -fsSL https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh | bash</code></pre>
+            <h4>Windows PowerShell</h4>
+            <pre><code>irm https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.ps1 | iex</code></pre>
+            <p>The installers show step status and download progress when run in an interactive terminal. Set
+              <code>NANOAGENT_NO_PROGRESS=1</code> to keep output compact in CI logs. Restart your terminal if
+              <code>nanoai</code> is not found immediately after installation.</p>
+            <p>The release workflows also pack the <code>NanoAgent</code> library and publish it to NuGet.org for every
+              <code>v*</code> tag release. The CLI is distributed only as a release installer, not as a NuGet package.</p>
+            <div class="doc-note">The CLI install scripts verify the archive checksum against <code>SHA256SUMS</code>,
+              or the SHA256 digest from GitHub release metadata, before extraction. <strong>Checksum verification is
+              mandatory</strong> — installation fails if the checksum cannot be validated.</div>
+          </section>
+
+          <!-- FIRST RUN -->
+          <section class="doc-section" id="first-run">
+            <h2>First run &amp; provider setup</h2>
+            <p>Start NanoAgent:</p>
+            <pre><code>nanoai</code></pre>
+            <p>NanoAgent will guide you through provider setup:</p>
+            <ol>
+              <li>Choose a setup type: subscription account, API key provider, OpenAI-compatible provider, or local provider.</li>
+              <li>Choose a provider from the matching submenu when needed.</li>
+              <li>Enter an API key, sign in with ChatGPT Plus/Pro, Claude Pro/Max, or GitHub Copilot, enter a custom compatible base URL, or use a local provider default.</li>
+              <li>Let NanoAgent discover available models.</li>
+              <li>Open a desktop workspace or use the current terminal directory.</li>
+              <li>Start a new section or resume an existing one.</li>
+            </ol>
+            <p>In terminal runs, <code>--provider-auth-key &lt;key&gt;</code> can supply the provider API key when
+              onboarding asks for it.</p>
+
+            <h3>Headless / preseeded setup</h3>
+            <p>If you already know the provider settings you want, skip the interactive onboarding by setting
+              <code>NANOAGENT_PROVIDER</code>, <code>NANOAGENT_MODEL</code>, <code>NANOAGENT_THINKING</code>, optional
+              <code>NANOAGENT_REASONING</code>, and <code>NANOAGENT_API_KEY</code> before the first run. NanoAgent treats
+              that as a complete headless setup and saves it as the active provider profile.</p>
+            <h4>PowerShell example</h4>
+            <pre><code>$env:NANOAGENT_PROVIDER="openrouter"
+$env:NANOAGENT_MODEL="poolside/laguna-m.1:free"
+$env:NANOAGENT_THINKING="on"
+$env:NANOAGENT_REASONING="high"
+$env:NANOAGENT_API_KEY="PASTE_NEW_ROTATED_KEY_HERE"
+
+nanoai -p "Say hello in one short line"</code></pre>
+            <h4>Bash example</h4>
+            <pre><code>export NANOAGENT_PROVIDER="openrouter"
+export NANOAGENT_MODEL="poolside/laguna-m.1:free"
+export NANOAGENT_THINKING="on"
+export NANOAGENT_REASONING="high"
+export NANOAGENT_API_KEY="PASTE_NEW_ROTATED_KEY_HERE"
+
+nanoai -p "Say hello in one short line"</code></pre>
+            <p>If NanoAgent detects incomplete local provider setup, it asks whether to reconfigure. Choose reconfigure
+              when a previous setup was interrupted or credentials were not saved. If provider validation fails after
+              setup, NanoAgent offers to run onboarding again.</p>
+            <p>Use <code>/onboard</code> in an active desktop or terminal session to re-run provider setup later. You can
+              also use <code>/setting provider</code> or the <code>/setting</code> picker. The command opens setup-type
+              and provider submenus, supports every provider listed below, and switches the active session to the
+              validated provider and selected default model.</p>
+            <p>When a newer NanoAgent release is available, startup can ask whether to update now or skip. One-shot
+              prompt runs do not show the startup update prompt.</p>
+
+            <h3>Provider options</h3>
+            <div class="doc-table-wrap">
+              <table class="doc-table">
+                <thead>
+                  <tr><th>Group</th><th>Provider</th><th>Credential</th><th>Notes</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Subscription</td><td>OpenAI ChatGPT Plus/Pro</td><td>Browser sign-in</td><td>OAuth with local callback port <code>1455</code>.</td></tr>
+                  <tr><td>Subscription</td><td>Anthropic Claude Pro/Max</td><td>Browser sign-in</td><td>OAuth with local callback port <code>53692</code>.</td></tr>
+                  <tr><td>Subscription</td><td>GitHub Copilot</td><td>Browser device sign-in</td><td>GitHub device-code login. Leave the Enterprise URL/domain prompt blank for <code>github.com</code>.</td></tr>
+                  <tr><td>API key</td><td>OpenAI</td><td>API key</td><td>Uses the OpenAI API.</td></tr>
+                  <tr><td>API key</td><td>Anthropic</td><td>API key</td><td>Uses the Anthropic OpenAI-compatible endpoint.</td></tr>
+                  <tr><td>API key</td><td>Google AI Studio</td><td>API key</td><td>Uses the OpenAI-compatible Gemini endpoint.</td></tr>
+                  <tr><td>API key</td><td>OpenRouter</td><td>API key</td><td>Uses the OpenRouter OpenAI-compatible endpoint.</td></tr>
+                  <tr><td>API key</td><td>Kilo Code</td><td>API key</td><td>Uses Kilo's OpenRouter-compatible gateway.</td></tr>
+                  <tr><td>API key</td><td>Cerebras</td><td>API key</td><td>Uses the Cerebras OpenAI-compatible endpoint.</td></tr>
+                  <tr><td>API key</td><td>Groq</td><td>API key</td><td>Uses the Groq OpenAI-compatible endpoint.</td></tr>
+                  <tr><td>API key</td><td>DeepSeek</td><td>API key</td><td>Uses the DeepSeek OpenAI-compatible endpoint at <code>https://api.deepseek.com/</code>.</td></tr>
+                  <tr><td>API key</td><td>Ollama Cloud</td><td>API key</td><td>Uses Ollama's hosted native chat and tags APIs.</td></tr>
+                  <tr><td>OpenAI-compatible</td><td>OpenAI-compatible provider</td><td>Base URL + API key</td><td>Use for local or third-party compatible APIs.</td></tr>
+                  <tr><td>Local</td><td>Ollama</td><td>None</td><td>Local OpenAI-compatible endpoint at <code>http://127.0.0.1:11434/v1</code>.</td></tr>
+                  <tr><td>Local</td><td>LM Studio</td><td>Base URL + API key</td><td>Leave the base URL empty to use <code>http://127.0.0.1:1234/v1</code>.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Secrets are stored through platform credential storage where supported. ChatGPT Plus/Pro, Claude Pro/Max,
+              and GitHub Copilot sign-in store refreshable account credentials locally.</p>
+          </section>
+
+          <!-- DESKTOP -->
+          <section class="doc-section" id="desktop">
+            <h2>Desktop workflow</h2>
+            <p>The desktop app is built around workspaces, sections, chat, and controls.</p>
+
+            <h3>Workspaces</h3>
+            <p>Open a local folder to make it the active workspace. NanoAgent remembers recent workspaces so you can
+              return later.</p>
+
+            <h3>Sections</h3>
+            <p>A section is a saved local conversation thread tied to a workspace. Sections preserve conversation
+              history, active model, profile, thinking mode, plan state, and session state when available. Use separate
+              sections for a feature, a bug fix, a review, and planning.</p>
+
+            <h3>Conversation</h3>
+            <p>Type a prompt and let NanoAgent inspect, plan, edit, run commands, or ask for approval depending on the
+              active profile and permissions. Type <code>/</code> in the desktop prompt to open command suggestions; use
+              Up/Down and Enter to choose a command, or Shift+Enter for multiline input.</p>
+            <p>Start input with <code>!</code> to run the rest as a local shell command directly, for example
+              <code>!dotnet test</code>. Direct shell input is treated as user-entered terminal work and does not ask the
+              agent for a tool approval. Start input with <code>!!</code> to run the rest as a background terminal whose
+              output streams live, for example <code>!!dotnet watch</code>. Manage these background terminals with
+              <code>/terminals</code>.</p>
+
+            <h3>Controls</h3>
+            <ul>
+              <li>Refresh session state.</li>
+              <li>Switch model.</li>
+              <li>Configure budget controls from a local workspace file or a cloud API.</li>
+              <li>Toggle thinking mode.</li>
+              <li>Switch profile.</li>
+              <li>View help, model picker, permissions, and rules.</li>
+              <li>Add permission overrides.</li>
+              <li>Undo or redo tracked file edits.</li>
+            </ul>
+
+            <h3>Budget controls</h3>
+            <p>Budget controls are disabled by default. They become active only after you enable them with
+              <code>/budget local</code> or <code>/budget cloud</code>, or when a
+              <code>.nanoagent/budget-controls.*.json</code> file already exists in the active workspace. While disabled,
+              no usage is recorded, no tracking file is created, and provider requests are never blocked;
+              <code>/budget status</code> reports <code>Disabled</code>.</p>
+            <p>Budget controls can run in local mode or cloud mode. Local mode asks for the monthly budget USD, alert
+              threshold percent, and input, cached-input, and output prices per 1M tokens, then creates and updates
+              <code>.nanoagent/budget-controls.local.json</code> in the active workspace. Cloud mode asks for the budget
+              API URL and auth key; the URL is saved with user settings and the key is stored through the platform
+              credential store. In the terminal, use <code>/budget</code>, <code>/budget local</code>,
+              <code>/budget cloud</code>, or <code>/budget status</code>.</p>
+            <p>Cloud budget APIs use <code>Authorization: Bearer &lt;auth-key&gt;</code>. GET returns the current budget
+              state:</p>
+            <pre><code>{
+  "monthlyBudgetUsd": 100,
+  "spentUsd": 25.5,
+  "alertThresholdPercent": 80
+}</code></pre>
+            <p>POST receives only the tokens consumed by the last LLM call, adds that delta to the backend usage
+              database, and returns the updated budget state with the same JSON shape as GET:</p>
+            <pre><code>{
+  "inputTokens": 1234,
+  "cachedInputTokens": 250,
+  "outputTokens": 600
+}</code></pre>
+          </section>
+
+          <!-- TERMINAL -->
+          <section class="doc-section" id="terminal">
+            <h2>Terminal workflow</h2>
+
+            <h3>Interactive mode</h3>
+            <pre><code>nanoai</code></pre>
+            <p>Interactive mode opens the terminal UI with conversation history, live activity, prompts, and status.</p>
+
+            <h3>One-shot prompt</h3>
+            <pre><code>nanoai "Find risky changes in this branch"</code></pre>
+
+            <h3>Prompt from standard input</h3>
+            <pre><code>git diff --stat | nanoai --stdin --profile review</code></pre>
+
+            <h3>Resume a session</h3>
+            <p>When you exit, NanoAgent prints a session resume command. You can also resume directly:</p>
+            <pre><code>nanoai --session &lt;session-guid&gt;</code></pre>
+
+            <h3>CLI options</h3>
+            <div class="doc-table-wrap">
+              <table class="doc-table">
+                <thead><tr><th>Option</th><th>Description</th></tr></thead>
+                <tbody>
+                  <tr><td><code>--acp</code></td><td>Run an Agent Client Protocol server over stdin/stdout for compatible editors and tools.</td></tr>
+                  <tr><td><code>--interactive</code></td><td>Start the terminal UI explicitly.</td></tr>
+                  <tr><td><code>--stdin</code></td><td>Read one-shot prompt text from standard input.</td></tr>
+                  <tr><td><code>--json</code></td><td>Write one-shot prompt or command output as a JSON object.</td></tr>
+                  <tr><td><code>-y, --yes</code></td><td>Approve promptable tool requests for this run while preserving explicit deny rules.</td></tr>
+                  <tr><td><code>-p, --prompt &lt;text&gt;</code></td><td>Run one prompt and print the response.</td></tr>
+                  <tr><td><code>--provider-auth-key &lt;key&gt;</code></td><td>Use this key when provider API-key onboarding asks for a credential.</td></tr>
+                  <tr><td><code>--session &lt;id&gt;</code></td><td>Resume an existing session.</td></tr>
+                  <tr><td><code>--section &lt;id&gt;</code></td><td>Compatibility alias for <code>--session</code>.</td></tr>
+                  <tr><td><code>--profile &lt;name&gt;</code></td><td>Start with a profile.</td></tr>
+                  <tr><td><code>--thinking &lt;on|off&gt;</code></td><td>Start with thinking on or off.</td></tr>
+                  <tr><td><code>-h, --help</code></td><td>Show CLI help.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TERMINAL COMMANDS -->
+          <section class="doc-section" id="commands">
+            <h2>Terminal commands</h2>
+            <div class="doc-table-wrap">
+              <table class="doc-table">
+                <thead><tr><th>Command</th><th>Description</th></tr></thead>
+                <tbody>
+                  <tr><td><code>/help</code></td><td>List commands and usage.</td></tr>
+                  <tr><td><code>/budget [status|local|cloud]</code></td><td>Show or configure budget controls.</td></tr>
+                  <tr><td><code>/config</code></td><td>Show provider, model, profile, thinking mode, reasoning effort, and reasoning-output behavior.</td></tr>
+                  <tr><td><code>/models</code></td><td>Choose the active model with the arrow-key picker.</td></tr>
+                  <tr><td><code>/use &lt;model&gt;</code></td><td>Switch directly to a model id.</td></tr>
+                  <tr><td><code>/onboard</code></td><td>Re-run provider onboarding through setup-type and provider submenus, then switch the active session.</td></tr>
+                  <tr><td><code>/profile &lt;name&gt;</code></td><td>Switch the active profile.</td></tr>
+                  <tr><td><code>/thinking [on|off]</code></td><td>Show or set simple thinking mode.</td></tr>
+                  <tr><td><code>/reasoning [show|&lt;none|minimal|low|medium|high|xhigh|max&gt;]</code></td><td>Show or set provider reasoning effort.</td></tr>
+                  <tr><td><code>/tooloutput [compact|full|auto]</code></td><td>Toggle whether tool results print complete output or a compact preview. <code>auto</code> follows the active profile.</td></tr>
+                  <tr><td><code>/permissions</code></td><td>Show permission summary and override guidance.</td></tr>
+                  <tr><td><code>/rules</code></td><td>Show effective permission rules in evaluation order.</td></tr>
+                  <tr><td><code>/setting […]</code></td><td>Open the settings picker or jump directly to a settings area (model, profile, thinking, provider, budget, workspace, permissions, tools, summary).</td></tr>
+                  <tr><td><code>/allow &lt;tool-or-tag&gt; [pattern]</code></td><td>Add a session allow override.</td></tr>
+                  <tr><td><code>/deny &lt;tool-or-tag&gt; [pattern]</code></td><td>Add a session deny override.</td></tr>
+                  <tr><td><code>/mcp</code></td><td>Show MCP servers, custom tool providers, and dynamic tools.</td></tr>
+                  <tr><td><code>/terminals [stop &lt;id&gt;|stop all]</code></td><td>List or stop background terminals for the current session.</td></tr>
+                  <tr><td><code>/init [recommended|minimal|custom]</code></td><td>Choose and initialize workspace-local NanoAgent files.</td></tr>
+                  <tr><td><code>/update [now]</code></td><td>Check for updates. Use <code>/update now</code> to install without another prompt.</td></tr>
+                  <tr><td><code>/undo</code></td><td>Roll back the most recent tracked edit transaction.</td></tr>
+                  <tr><td><code>/redo</code></td><td>Re-apply the most recently undone edit transaction.</td></tr>
+                  <tr><td><code>/exit</code></td><td>Exit the interactive shell.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Terminal utility commands also include <code>/clear</code>, <code>/ls</code>, and
+              <code>/read &lt;file&gt;</code>.</p>
+
+            <h3>Custom slash commands</h3>
+            <p>Project commands live in <code>.nanoagent/commands/*.md</code>. User commands live in
+              <code>~/.nanoagent/commands/*.md</code>. Subdirectories create namespaces with <code>:</code>, so
+              <code>.nanoagent/commands/review/security.md</code> is available as <code>/review:security</code>. Each
+              command file can include front matter:</p>
+            <pre><code>---
+name: security-review
+description: Review changed files for security risks
+args: ["scope"]
+---
+
+Review $scope for authentication, injection, secrets, unsafe deserialization, and permission bypasses.
+Return findings by severity.</code></pre>
+            <p>Run commands with any arguments after the name:</p>
+            <pre><code>/security-review latest diff
+/fix-tests NanoAgent.Tests
+/release-check v0.0.16</code></pre>
+            <p>Use <code>$ARGUMENTS</code> for the full argument string, or name positional arguments in
+              <code>args</code> and reference them as <code>$scope</code> or <code>${scope}</code>. Project commands
+              override user commands with the same name. Built-in command names are reserved.</p>
+            <p>Press <strong>F2</strong> in the terminal UI to choose the active model with the arrow-key picker. Type
+              <code>/</code> to open command suggestions, then use Up/Down and Enter to choose. Start input with
+              <code>!</code> to run the rest as a local shell command directly, for example
+              <code>!git status --short</code>.</p>
+
+            <h3>Tool runtime settings</h3>
+            <p>Workspace <code>agent-profile.json</code> can tune tool timeouts and background terminal retention:</p>
+            <pre><code>{
+  "Application": {
+    "Tools": {
+      "httpClientTimeoutSeconds": 0,
+      "mcpRequestTimeoutSeconds": 0,
+      "acpRequestTimeoutSeconds": 0,
+      "agentOrchestrationTimeoutSeconds": 0,
+      "defaultTimeoutSeconds": 180,
+      "maxConcurrentBackgroundTerminalsPerSession": 4,
+      "completedBackgroundTerminalTtlSeconds": 300,
+      "toolOutput": "compact"
+    }
+  }
+}</code></pre>
+            <p>A value of <code>0</code> keeps the existing default behavior for each timeout setting. Set
+              <code>toolOutput</code> to <code>full</code>/<code>complete</code> for full tool output or
+              <code>compact</code>/<code>preview</code> for the capped preview; a per-agent profile's
+              <code>toolOutput</code> front matter overrides it, and <code>/tooloutput</code> overrides both for the
+              current session. Completed background terminals remain readable until
+              <code>completedBackgroundTerminalTtlSeconds</code> expires; running background terminals are stopped when
+              the NanoAgent process exits.</p>
+          </section>
+
+          <!-- VS CODE -->
+          <section class="doc-section" id="vscode">
+            <h2>VS Code extension</h2>
+            <p>NanoAgent includes a VS Code extension in <code>NanoAgent.VsCode</code>. It opens a NanoAgent chat view
+              in the auxiliary bar and starts the local NanoAgent ACP process with <code>nanoai --acp</code>. Run
+              <code>nanoai</code> once before using the extension so provider onboarding, credentials, and the default
+              model are already configured.</p>
+            <p>Install from the Visual Studio Marketplace:</p>
+            <pre><code>ext install rizwan3d.nanoagent</code></pre>
+            <p>Marketplace item: <a href="https://marketplace.visualstudio.com/items?itemName=rizwan3d.nanoagent" target="_blank" rel="noopener">marketplace.visualstudio.com/items?itemName=rizwan3d.nanoagent</a>. GitHub releases also publish an installable
+              <code>NanoAgent.VsCode-&lt;version&gt;.vsix</code> asset.</p>
+
+            <h3>Extension commands</h3>
+            <div class="doc-table-wrap">
+              <table class="doc-table">
+                <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
+                <tbody>
+                  <tr><td><code>NanoAgent: Open Chat</code></td><td>Open the NanoAgent chat view.</td></tr>
+                  <tr><td><code>NanoAgent: New Chat</code></td><td>Focus the chat view for a new prompt.</td></tr>
+                  <tr><td><code>NanoAgent: Start</code></td><td>Start the local NanoAgent ACP process.</td></tr>
+                  <tr><td><code>NanoAgent: Stop</code></td><td>Stop the local NanoAgent ACP process.</td></tr>
+                  <tr><td><code>NanoAgent: Restart</code></td><td>Restart the local NanoAgent ACP process.</td></tr>
+                  <tr><td><code>NanoAgent: Send Selection</code></td><td>Send the active editor selection as context.</td></tr>
+                  <tr><td><code>NanoAgent: Explain Selection</code></td><td>Ask NanoAgent to explain the active selection.</td></tr>
+                  <tr><td><code>NanoAgent: Send Current File</code></td><td>Send the full current editor file as context.</td></tr>
+                  <tr><td><code>NanoAgent: Review Current File</code></td><td>Ask for a review of the current file.</td></tr>
+                  <tr><td><code>NanoAgent: Review Git Diff</code></td><td>Ask for a review of the current workspace Git diff.</td></tr>
+                  <tr><td><code>NanoAgent: Plan Changes</code></td><td>Prefill a planning prompt.</td></tr>
+                  <tr><td><code>NanoAgent: Apply Suggested Changes</code></td><td>Ask NanoAgent to apply the previous suggested change.</td></tr>
+                  <tr><td><code>NanoAgent: Open Logs</code></td><td>Show extension logs.</td></tr>
+                  <tr><td><code>NanoAgent: Open Settings</code></td><td>Open the extension settings surface.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>Extension settings</h3>
+            <div class="doc-table-wrap">
+              <table class="doc-table">
+                <thead><tr><th>Setting</th><th>Default</th><th>Purpose</th></tr></thead>
+                <tbody>
+                  <tr><td><code>nanoagent.command</code></td><td><code>nanoai</code></td><td>Command used to start NanoAgent.</td></tr>
+                  <tr><td><code>nanoagent.args</code></td><td><code>["--acp"]</code></td><td>Arguments passed to the NanoAgent CLI.</td></tr>
+                  <tr><td><code>nanoagent.workingDirectory</code></td><td>workspace root</td><td>Working directory for the NanoAgent process.</td></tr>
+                  <tr><td><code>nanoagent.autoStart</code></td><td><code>false</code></td><td>Start NanoAgent automatically when VS Code starts.</td></tr>
+                  <tr><td><code>nanoagent.logLevel</code></td><td><code>info</code></td><td>Extension log level.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>Build &amp; package locally</h3>
+            <pre><code>cd NanoAgent.VsCode
+npm ci
+npm run lint
+npm run package
+npm run package:vsix</code></pre>
+            <p>The package command creates an installable <code>.vsix</code>. Install a local package with:</p>
+            <pre><code>code --install-extension nanoagent-&lt;version&gt;.vsix</code></pre>
+          </section>
+
+          <!-- VISUAL STUDIO -->
+          <section class="doc-section" id="visual-studio">
+            <h2>Visual Studio extension</h2>
+            <p>NanoAgent includes a Visual Studio extension in <code>NanoAgent.VS</code>. It opens a tool window inside
+              Visual Studio and starts the local NanoAgent CLI over ACP. Before first use:</p>
+            <ul>
+              <li>Install the NanoAgent CLI so <code>nanoai.exe</code> is available on <code>PATH</code>, or set an explicit CLI path in the NanoAgent Visual Studio options page.</li>
+              <li>Run <code>nanoai</code> once and complete provider onboarding.</li>
+            </ul>
+            <h3>Local build</h3>
+            <p>Build the VSIX from a Developer PowerShell for Visual Studio:</p>
+            <pre><code>msbuild NanoAgent.VS/NanoAgent.VS.csproj /restore /p:Configuration=Release /p:DeployExtension=false</code></pre>
+            <p>The package is written to <code>NanoAgent.VS/bin/Release/NanoAgent.VS.vsix</code>.</p>
+          </section>
+
+          <!-- ACP -->
+          <section class="doc-section" id="acp">
+            <h2>ACP editor integration</h2>
+            <p>NanoAgent can run as an Agent Client Protocol server:</p>
+            <pre><code>nanoai --acp</code></pre>
+            <p>ACP mode speaks line-delimited JSON-RPC on stdin/stdout, so compatible editors and tools can create
+              NanoAgent sessions, send prompts, cancel active turns, and receive assistant message, plan, and tool
+              progress updates. ACP does not open a network listener — it communicates only over the local child
+              process stdin/stdout streams created by the host editor or tool.</p>
+            <p>Example editor server configuration:</p>
+            <pre><code>{
+  "agent_servers": {
+    "NanoAgent": {
+      "command": "nanoai",
+      "args": ["--acp"]
+    }
+  }
+}</code></pre>
+            <p>To require ACP authentication, set a process-level token with either
+              <code>NANOAGENT_ACP_AUTH_TOKEN</code> or a workspace profile:</p>
+            <pre><code>{
+  "Application": {
+    "Acp": {
+      "authenticationToken": "replace-with-a-long-random-token"
+    }
+  }
+}</code></pre>
+            <p>When an ACP authentication token is configured, <code>initialize</code> returns
+              <code>"authMethods": ["token"]</code>. The client must then call <code>authenticate</code> with
+              <code>{"token":"..."}</code> before sending <code>session/new</code>, <code>session/load</code>,
+              <code>session/prompt</code>, or <code>session/close</code>. If no token is configured,
+              <code>authMethods</code> is empty and <code>authenticate</code> is rejected instead of returning a
+              misleading success response.</p>
+            <p>ACP mode currently supports one active NanoAgent session per process. It merges ACP client
+              <code>mcpServers</code> with NanoAgent's user and workspace MCP configuration for that ACP session only, so
+              editor-provided MCP tools do not become global configuration.</p>
+          </section>
+
+          <!-- REVIEW AUTOMATION -->
+          <section class="doc-section" id="review">
+            <h2>Review automation (CI)</h2>
+            <p>NanoAgent includes copy-paste CI examples for GitHub, GitLab, and Bitbucket. Each example installs NanoAI
+              from the latest release using the same curl installer command shown in the CLI install section, computes
+              the pull request or merge request diff, runs the workspace <code>pr-reviewer</code> profile in read-only
+              mode, stores review artifacts, and posts a top-level review comment when platform credentials are
+              configured.</p>
+            <ul>
+              <li>Always copy <code>.nanoagent/agents/pr-reviewer.md</code> with the CI files so the review profile is available.</li>
+              <li>GitHub: copy <code>.github/workflows/nanoai-review.yml</code> and <code>.github/nanoai-github-review.sh</code>.</li>
+              <li>GitLab: copy <code>.gitlab-ci.yml</code> and <code>.gitlab/nanoai-gitlab-review.sh</code>.</li>
+              <li>Bitbucket: copy <code>bitbucket-pipelines.yml</code> and <code>.bitbucket/nanoai-bitbucket-review.sh</code>.</li>
+              <li>GitHub and GitLab draft pull requests are skipped.</li>
+              <li>Review artifacts are uploaded from <code>artifacts/nanoai-review</code> and retained for 14 days.</li>
+            </ul>
+            <p>Required repository secret: <code>NANOAGENT_API_KEY</code>. Platform posting credentials:</p>
+            <div class="doc-table-wrap">
+              <table class="doc-table">
+                <thead><tr><th>Platform</th><th>Variable</th></tr></thead>
+                <tbody>
+                  <tr><td>GitHub Actions</td><td>Uses the built-in <code>GITHUB_TOKEN</code> through <code>GH_TOKEN</code>.</td></tr>
+                  <tr><td>GitLab CI</td><td><code>GITLAB_TOKEN</code> or <code>NANOAI_GITLAB_TOKEN</code> with permission to create merge request notes.</td></tr>
+                  <tr><td>Bitbucket Pipelines</td><td><code>BITBUCKET_ACCESS_TOKEN</code>, or <code>BITBUCKET_USERNAME</code> plus <code>BITBUCKET_APP_PASSWORD</code>.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Optional repository variables:</p>
+            <div class="doc-table-wrap">
+              <table class="doc-table">
+                <thead><tr><th>Variable</th><th>Default</th><th>Purpose</th></tr></thead>
+                <tbody>
+                  <tr><td><code>NANOAGENT_PROVIDER</code></td><td><code>openai</code></td><td><code>openai</code>, <code>openai-compatible</code>, <code>google-ai-studio</code>, <code>anthropic</code>, <code>anthropic-claude-account</code>, <code>github-copilot</code>, <code>openrouter</code>, <code>kilo-code</code>, <code>cerebras</code>, <code>groq</code>, <code>ollama</code>, or <code>ollama-cloud</code>.</td></tr>
+                  <tr><td><code>NANOAGENT_MODEL</code></td><td><code>gpt-5.4</code></td><td>Preferred model id for the review run.</td></tr>
+                  <tr><td><code>NANOAGENT_BASE_URL</code></td><td>empty</td><td>Required only when <code>NANOAGENT_PROVIDER</code> is <code>openai-compatible</code>.</td></tr>
+                  <tr><td><code>NANOAGENT_THINKING</code></td><td><code>off</code></td><td><code>on</code> or <code>off</code>.</td></tr>
+                  <tr><td><code>NANOAGENT_REASONING</code></td><td>empty</td><td><code>none</code>, <code>minimal</code>, <code>low</code>, <code>medium</code>, <code>high</code>, <code>xhigh</code>, or <code>max</code>.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>The GitHub workflow uses <code>pull_request_target</code> so it can comment with the repository token. It
+              checks out the trusted base branch version of NanoAgent, fetches the PR head only to compute a diff, and
+              runs the CLI from trusted code. GitLab and Bitbucket examples run in their native merge request or pull
+              request pipeline contexts and post comments through their REST APIs.</p>
+          </section>
+
+          <!-- INDEXING -->
+          <section class="doc-section" id="indexing">
+            <h2>Codebase indexing</h2>
+            <p>NanoAgent includes a local codebase index for repository-wide discovery. The <code>codebase_index</code>
+              tool can:</p>
+            <ul>
+              <li><code>status</code>: show whether the index exists, when it was built, and whether files are new, changed, or deleted.</li>
+              <li><code>build</code>: refresh the index, reusing unchanged files and updating changed files incrementally.</li>
+              <li><code>search</code>: rank likely relevant files for a natural-language, symbol, path, or behavior query.</li>
+              <li><code>list</code>: show indexed file paths.</li>
+            </ul>
+            <p>NanoAgent computes and caches lightweight local embeddings for files, refreshing incrementally when the
+              index is searched or rebuilt, and respecting ignore files such as <code>.gitignore</code>. The cache lives
+              at:</p>
+            <pre><code>.nanoagent/cache/codebase-index.json</code></pre>
+            <p>The cache does not store full file contents. It stores per-file metadata such as path, length, hash,
+              language, line count, symbols, and the local embedding vector used for ranking. Search snippets are read
+              from current workspace files when results are returned. Indexing respects <code>.gitignore</code>,
+              <code>.nanoagent/.nanoignore</code>, and built-in exclusions for generated or local runtime directories
+              such as <code>.git/</code>, <code>node_modules/</code>, <code>bin/</code>, <code>obj/</code>,
+              <code>.nanoagent/cache/</code>, <code>.nanoagent/logs/</code>, and <code>.nanoagent/sessions/</code>.</p>
+            <p>Use <code>codebase_index</code> for broad discovery first, then use <code>file_read</code>,
+              <code>text_search</code>, or <code>code_intelligence</code> to verify exact behavior before editing.</p>
+
+            <h3>Manual index updates</h3>
+            <pre><code>/index
+/index update
+/index status
+/index rebuild
+/index list
+/index list 50</code></pre>
+
+            <h3>Automatic index updates</h3>
+            <p>NanoAgent can refresh the index automatically after each conversation turn completes, so the next prompt
+              sees an up-to-date index. This runs after the assistant response and all tool calls finish, reuses
+              unchanged files, updates changed files incrementally, and never fails the completed turn on a failed
+              refresh. This is <strong>disabled by default</strong>. Enable it in user-level or workspace-level
+              <code>.nanoagent/agent-profile.json</code>:</p>
+            <pre><code>{
+  "codebaseIndex": {
+    "autoUpdateAfterTask": true
+  }
+}</code></pre>
+          </section>
+
+          <!-- PROVIDERS & MODELS -->
+          <section class="doc-section" id="providers">
+            <h2>Providers &amp; models</h2>
+            <p>NanoAgent stores a provider profile locally and discovers models from that provider when possible. Use the
+              terminal F2 or <code>/models</code> picker, <code>/use &lt;model&gt;</code>, or the desktop model control to
+              switch models. The active model is stored with the local configuration and section state. If a preferred
+              model is unavailable, NanoAgent falls back to a discovered model when possible.</p>
+
+            <h3>Thinking mode</h3>
+            <pre><code>/thinking on
+/thinking off</code></pre>
+
+            <h3>Reasoning effort vs thinking mode</h3>
+            <p><code>thinking</code> controls whether NanoAgent enables provider reasoning behavior where supported and
+              whether provider-approved reasoning summaries are shown in the UI. <code>reasoningEffort</code> controls
+              how much reasoning work NanoAgent asks the model to spend.</p>
+            <ul>
+              <li><code>/thinking on</code> shows supported reasoning output.</li>
+              <li><code>/thinking off</code> hides reasoning output.</li>
+              <li><code>/reasoning high</code> asks the provider for deeper reasoning.</li>
+              <li><code>/reasoning none</code> disables reasoning where the provider supports disabling it.</li>
+            </ul>
+            <p>Supported normalized reasoning effort values:</p>
+            <pre><code>none
+minimal
+low
+medium
+high
+xhigh
+max</code></pre>
+            <p>If thinking is on and no explicit reasoning effort is set, NanoAgent asks supported providers for their
+              default reasoning depth, which is usually mapped to <code>medium</code>.</p>
+
+            <h3>Provider reasoning mapping</h3>
+            <div class="doc-table-wrap">
+              <table class="doc-table">
+                <thead><tr><th>Provider</th><th>Request shape</th><th>Notes</th></tr></thead>
+                <tbody>
+                  <tr><td>OpenCode Zen</td><td><code>reasoning.effort</code> for Responses, <code>reasoningEffort</code> in OpenCode config</td><td>CamelCase in OpenCode config files; Responses-style payloads for Zen Responses models.</td></tr>
+                  <tr><td>OpenAI</td><td><code>reasoning_effort</code> (chat-completions) or <code>reasoning: { effort, summary }</code> (Responses)</td><td>Raw reasoning stays hidden; only provider-approved summaries are shown.</td></tr>
+                  <tr><td>Anthropic Claude</td><td><code>thinking</code> plus <code>output_config.effort</code>, or manual <code>budget_tokens</code> fallback</td><td>Adaptive thinking for Claude 4 families, manual budget fallback for older Claude models.</td></tr>
+                  <tr><td>DeepSeek</td><td><code>reasoning_content</code> in responses; optional <code>reasoning_effort</code> where supported</td><td>NanoAgent never replays prior <code>reasoning_content</code> back to DeepSeek.</td></tr>
+                  <tr><td>Gemini</td><td><code>thinkingConfig.thinkingLevel</code> or <code>thinkingConfig.thinkingBudget</code></td><td>Gemini 3-style and Gemini 2.5-style models differ.</td></tr>
+                  <tr><td>xAI Grok &amp; other OpenAI-compatible</td><td><code>reasoning_effort</code> or Responses-compatible <code>reasoning.effort</code> when supported</td><td>Capability depends on the upstream provider and model.</td></tr>
+                  <tr><td>OpenRouter</td><td>Unified <code>reasoning</code> object</td><td>Supports effort mapping and safe replay of provider-approved reasoning metadata.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>NanoAgent keeps final answers separate from reasoning output. When thinking output is disabled, NanoAgent
+              still shows the final answer and suppresses reasoning blocks.</p>
+          </section>
+
+          <!-- PROFILES & SUBAGENTS -->
+          <section class="doc-section" id="profiles">
+            <h2>Profiles &amp; subagents</h2>
+            <p>Profiles shape how NanoAgent behaves.</p>
+            <div class="doc-table-wrap">
+              <table class="doc-table">
+                <thead><tr><th>Profile</th><th>Mode</th><th>Edit behavior</th><th>Best for</th></tr></thead>
+                <tbody>
+                  <tr><td><code>build</code></td><td>Primary</td><td>Allows edits under permissions</td><td>Implementation, fixes, tests, build loops.</td></tr>
+                  <tr><td><code>plan</code></td><td>Primary</td><td>Read-only</td><td>Investigation and implementation plans.</td></tr>
+                  <tr><td><code>review</code></td><td>Primary</td><td>Read-only</td><td>Findings-first code review.</td></tr>
+                  <tr><td><code>general</code></td><td>Subagent</td><td>Allows edits under permissions</td><td>Bounded delegated implementation work.</td></tr>
+                  <tr><td><code>explore</code></td><td>Subagent</td><td>Read-only</td><td>Fast codebase discovery.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Switch profiles:</p>
+            <pre><code>/profile build
+/profile plan
+/profile review</code></pre>
+            <p>Invoke a subagent for one turn:</p>
+            <pre><code>@explore How does authentication work?
+@general Update the parser tests for this narrow case.</code></pre>
+            <p>Primary agents can also use <code>agent_delegate</code> for one focused handoff or
+              <code>agent_orchestrate</code> for several coordinated subtasks. Orchestration is useful when multiple
+              read-only investigations can run independently or when implementation tasks can be split into clear file
+              scopes.</p>
+            <p>Primary profiles (<code>build</code>, <code>plan</code>, and <code>review</code>) can use the
+              <code>ask_question</code> tool to ask you a question and wait for your answer before continuing. It supports
+              multiple-choice options, multi-select, and free-form text, and works in the interactive terminal, one-shot
+              CLI runs, and ACP editors that support permission or text prompts. In a non-interactive run with no
+              available user, the tool returns gracefully so the agent continues with its best judgment instead of
+              failing the turn.</p>
+
+            <h3>Built-in profile prompt overrides</h3>
+            <p>Create one of these files to replace only that built-in profile's prompt for a workspace:</p>
+            <pre><code>.nanoagent/agents/build.md
+.nanoagent/agents/plan.md
+.nanoagent/agents/review.md
+.nanoagent/agents/general.md
+.nanoagent/agents/explore.md</code></pre>
+            <p>NanoAgent reads the markdown body as the active profile prompt, redacts secret-looking values, and reloads
+              it for conversation turns like <code>.nanoagent/SystemPrompt.md</code>. For built-in profile names,
+              NanoAgent keeps the built-in mode, enabled tools, and permission behavior, so a custom <code>plan.md</code>
+              prompt still stays read-only.</p>
+          </section>
+
+          <!-- PERMISSIONS -->
+          <section class="doc-section" id="permissions">
+            <h2>Permissions &amp; sandboxing</h2>
+            <p>NanoAgent evaluates every sensitive action through permission policy.</p>
+
+            <h3>Permission modes</h3>
+            <div class="doc-table-wrap">
+              <table class="doc-table">
+                <thead><tr><th>Mode</th><th>Meaning</th></tr></thead>
+                <tbody>
+                  <tr><td><code>Allow</code></td><td>The action can proceed.</td></tr>
+                  <tr><td><code>Ask</code></td><td>NanoAgent prompts for approval.</td></tr>
+                  <tr><td><code>Deny</code></td><td>The action is blocked.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>Sandbox modes</h3>
+            <div class="doc-table-wrap">
+              <table class="doc-table">
+                <thead><tr><th>Mode</th><th>Meaning</th></tr></thead>
+                <tbody>
+                  <tr><td><code>ReadOnly</code></td><td>No file writes or unsafe shell mutation.</td></tr>
+                  <tr><td><code>WorkspaceWrite</code></td><td>Workspace-scoped writes are allowed under policy.</td></tr>
+                  <tr><td><code>DangerFullAccess</code></td><td>Unrestricted execution when explicitly configured or approved.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Shell sandboxing depends on the operating system. Linux uses <code>bubblewrap</code> when available. macOS
+              uses <code>sandbox-exec</code>. Platforms without a supported OS sandbox runner fail closed for restricted
+              shell modes unless the user approves escalation or configures full access.</p>
+
+            <h3>Session overrides</h3>
+            <pre><code>/allow bash "&lt;command-pattern&gt;"
+/deny bash "&lt;command-pattern&gt;"</code></pre>
+            <p>Overrides are session-scoped. For durable policy, edit configuration.</p>
+
+            <h3>Example permission policy</h3>
+            <pre><code>{
+  "Application": {
+    "Permissions": {
+      "auto_approve_all_tools": false,
+      "file_read": "Allow",
+      "file_write": "Ask",
+      "file_delete": "Ask",
+      "shell_default": "Ask",
+      "shell_safe": "Allow",
+      "network": "Ask",
+      "memory_write": "Ask",
+      "mcp_tools": "Ask",
+      "shell": {
+        "allow": {
+          "commands": [
+            "your-build-command",
+            "your-test-command"
+          ]
+        },
+        "deny": {
+          "commands": [
+            "dangerous-command-pattern",
+            "network-installer-pattern"
+          ]
+        }
+      }
+    }
+  }
+}</code></pre>
+            <p><code>shell_safe</code> controls the mode applied to the command patterns you list under
+              <code>shell.allow.commands</code>; NanoAgent does not ship a built-in shell command allow catalog. The
+              <code>network</code> shortcut applies to built-in <code>webfetch</code> tools, including
+              <code>web_search</code> and <code>headless_browser</code>. <code>headless_browser</code> renders pages
+              through an installed Chromium-family browser such as Microsoft Edge, Google Chrome, or Chromium.</p>
+
+            <h3>Auto-approve all tools</h3>
+            <p>For trusted workspaces, you can disable approval prompts for all tools:</p>
+            <pre><code>{
+  "Application": {
+    "Permissions": {
+      "auto_approve_all_tools": true
+    }
+  }
+}</code></pre>
+            <p>This keeps workspace path checks, profile restrictions, sandbox-mode restrictions, and built-in deny rules
+              active. Use explicit <code>rules</code> or shortcut settings when you need to override a specific deny
+              policy. Memory writes still require approval by default through the memory policy, even in workspaces that
+              auto-approve general tools.</p>
+          </section>
+
+          <!-- WORKSPACE FILES -->
+          <section class="doc-section" id="workspace">
+            <h2>Workspace files</h2>
+            <p>Run <code>/init</code>. NanoAgent asks which starter files to add:</p>
+            <ul>
+              <li><code>Recommended</code>: core config, ignores, repo memory templates, runtime folders, and inactive agent/skill templates.</li>
+              <li><code>Minimal</code>: core config, README, and ignore files only.</li>
+              <li><code>Custom</code>: asks for each optional group, including the advanced inactive <code>SystemPrompt.md.template</code>.</li>
+            </ul>
+            <p>You can skip the picker with <code>/init recommended</code>, <code>/init minimal</code>, or
+              <code>/init custom</code>. The recommended preset creates:</p>
+            <pre><code>.nanoagent/
+  agent-profile.json
+  README.md
+  .gitignore
+  .nanoignore
+  agents/
+  skills/
+  cache/
+  memory/
+    architecture.md
+    conventions.md
+    decisions.md
+    known-issues.md
+    test-strategy.md
+    lessons.jsonl
+  logs/</code></pre>
+
+            <h3><code>AGENTS.md</code></h3>
+            <p>Place <code>AGENTS.md</code> or <code>.agent/AGENTS.md</code> in the workspace for persistent project
+              instructions. NanoAgent adds them to the model context after secret redaction.</p>
+
+            <h3><code>.nanoagent/SystemPrompt-Append.md</code></h3>
+            <p>Create this file when you want to append workspace-specific base rules to NanoAgent's configured default
+              system prompt. This keeps the normal base behavior intact and adds your extra instructions before the
+              active profile prompt, workspace instructions, skills, memory, and session state.</p>
+
+            <h3><code>.nanoagent/SystemPrompt.md</code></h3>
+            <p>Create this file to replace NanoAgent's base system prompt for that workspace. NanoAgent always prepends
+              its identity header before the custom file content, then appends the active profile prompt, workspace
+              instructions, skills, memory, and session state as usual. If both <code>SystemPrompt.md</code> and
+              <code>SystemPrompt-Append.md</code> exist, <code>SystemPrompt.md</code> wins and the append file is ignored.
+              Use <code>.nanoagent/agents/&lt;profile&gt;.md</code> when you want to replace the active profile prompt while
+              keeping the same base system prompt. Built-in profile names are <code>build</code>, <code>plan</code>,
+              <code>review</code>, <code>general</code>, and <code>explore</code>.</p>
+
+            <h3><code>.nanoagent/.nanoignore</code></h3>
+            <p>Use <code>.nanoignore</code> to exclude paths from NanoAgent file tools. It supports gitignore-style
+              patterns including comments, negation, directory rules, <code>*</code>, <code>?</code>, <code>**</code>, and
+              character classes. Common exclusions:</p>
+            <pre><code>.env
+.env.*
+secrets.*
+[Bb]in/
+[Oo]bj/
+node_modules/
+.git/
+.nanoagent/cache/
+.nanoagent/logs/
+.nanoagent/memory/*.jsonl</code></pre>
+          </section>
+
+          <!-- TEAM MEMORY -->
+          <section class="doc-section" id="memory">
+            <h2>Team memory</h2>
+            <p>NanoAgent stores structured team memory as ordinary markdown files:</p>
+            <pre><code>.nanoagent/memory/
+  architecture.md
+  conventions.md
+  decisions.md
+  known-issues.md
+  test-strategy.md</code></pre>
+            <p>These files are repo-scoped memory that your team can inspect, diff, and version-control. That is much
+              safer than hidden memory because every durable note can go through normal code review and repository
+              history.</p>
+            <ul>
+              <li><code>architecture.md</code>: major components, boundaries, data flow, and integration points.</li>
+              <li><code>conventions.md</code>: coding, naming, formatting, review, and workflow conventions.</li>
+              <li><code>decisions.md</code>: durable technical decisions, context, and consequences.</li>
+              <li><code>known-issues.md</code>: known bugs, limitations, risky areas, and workarounds.</li>
+              <li><code>test-strategy.md</code>: expected test layers, important commands, and validation guidance.</li>
+            </ul>
+            <p>NanoAgent loads non-empty team memory files into the model context as durable project context, skipping
+              untouched scaffold templates. Treat them as starting context, then verify against current files and fresh
+              tool output when correctness matters.</p>
+            <p>Use the <code>repo_memory</code> tool to list, read, or update these documents. Writes require memory
+              approval by default and are blocked in read-only profiles, planning phase, and read-only sandbox mode.
+              Direct writes to <code>.nanoagent/memory/*</code> through file editing tools also receive the
+              <code>memory_write</code> permission tag so they cannot silently bypass memory approval.</p>
+
+            <h3>Lesson memory</h3>
+            <p>NanoAgent stores reusable workspace lessons in <code>.nanoagent/memory/lessons.jsonl</code>. Lessons help
+              NanoAgent avoid repeating local mistakes. When lesson memory is enabled for a workspace, NanoAgent can
+              inject relevant lessons into prompts automatically, and automatic tool-failure observation can turn
+              repeated failures and their later fixes into reusable lessons. Memory is local, redacted by default, and
+              write operations require approval unless policy is changed.</p>
+          </section>
+
+          <!-- SKILLS -->
+          <section class="doc-section" id="skills">
+            <h2>Skills &amp; custom agents</h2>
+
+            <h3>Workspace skills</h3>
+            <p>Skills are task-specific playbooks loaded only when relevant. Supported layouts:</p>
+            <pre><code>.nanoagent/skills/dotnet/SKILL.md
+.nanoagent/skills/code-review.md</code></pre>
+            <p>Example:</p>
+            <pre><code>---
+name: dotnet
+description: Use for .NET build, test, package, and project-file work.
+---
+Prefer repo-native `dotnet build` and `dotnet test` commands.
+Inspect the relevant `.csproj` before changing package references.
+Keep package and target framework changes narrowly scoped.</code></pre>
+
+            <h3>Custom agents</h3>
+            <p>Custom agents live in <code>.nanoagent/agents/*.md</code>. Example:</p>
+            <pre><code>---
+name: code-reviewer
+mode: subagent
+description: Read-only reviewer for bugs, regressions, edge cases, and missing tests.
+editMode: readOnly
+shellMode: safeInspectionOnly
+toolOutput: full
+tools:
+  - code_intelligence
+  - directory_list
+  - file_read
+  - search_files
+  - shell_command
+  - text_search
+---
+Review the requested code or change set with a findings-first posture.</code></pre>
+            <p>The optional <code>toolOutput</code> key sets the default rendering for tool results while the profile is
+              active. Omit it to fall back to the <code>Application.Tools.toolOutput</code> default in
+              <code>agent-profile.json</code> (or the compact default if that is also unset). <code>/tooloutput</code>
+              overrides this for the current session, and <code>/tooloutput auto</code> reverts to the profile or
+              configured default. (The legacy <code>fileOutput</code> key is still accepted as an alias.)</p>
+            <p>If front matter is omitted, NanoAgent derives the name from the file name and uses conservative defaults.
+              If a workspace agent file uses a built-in profile name such as <code>build</code> or <code>review</code>,
+              NanoAgent treats it as a prompt override for that built-in profile rather than adding a duplicate profile —
+              the markdown body is customizable, but the built-in profile's mode, tool set, and permission behavior are
+              preserved.</p>
+          </section>
+
+          <!-- MCP -->
+          <section class="doc-section" id="mcp">
+            <h2>MCP servers</h2>
+            <p>NanoAgent can load MCP servers from user-level and workspace-level <code>agent-profile.json</code> files.
+              ACP clients can also supply session-scoped <code>mcpServers</code>; those entries are merged after user and
+              workspace config and are visible in <code>/mcp</code> only for that ACP session. Example:</p>
+            <pre><code>{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "startupTimeoutSeconds": 20,
+      "toolTimeoutSeconds": 45,
+      "defaultToolsApprovalMode": "prompt",
+      "env": {
+        "MY_ENV_VAR": "MY_ENV_VALUE"
+      }
+    }
+  }
+}</code></pre>
+            <p>Supported transports:</p>
+            <ul>
+              <li>Stdio: <code>command</code>, <code>args</code>, <code>env</code>, <code>envVars</code>, <code>cwd</code>.</li>
+              <li>Streamable HTTP: <code>url</code>, <code>bearerTokenEnvVar</code>, <code>httpHeaders</code>, <code>envHttpHeaders</code>.</li>
+            </ul>
+            <p>Use <code>enabledTools</code> and <code>disabledTools</code> to filter exposed tools. Use <code>/mcp</code>
+              to inspect loaded MCP servers, custom tool providers, and dynamic tools.</p>
+          </section>
+
+          <!-- CUSTOM TOOLS -->
+          <section class="doc-section" id="custom-tools">
+            <h2>Custom tools</h2>
+            <p>NanoAgent can expose user-defined process tools from <code>agent-profile.json</code>. A custom tool can be
+              written in any language that can read JSON from stdin and write text or JSON to stdout. Configured tools are
+              exposed to the model as <code>custom__&lt;name&gt;</code>. <code>mcpServers</code> and <code>customTools</code>
+              can be configured in the same profile; NanoAgent loads both sets together and exposes MCP tools as
+              <code>mcp__*</code> plus custom tools as <code>custom__*</code>. Example:</p>
+            <pre><code>{
+  "customTools": {
+    "word_count": {
+      "description": "Count words in provided text.",
+      "command": "python",
+      "args": [".nanoagent/tools/word_count.py"],
+      "cwd": ".",
+      "approvalMode": "prompt",
+      "timeoutSeconds": 15,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Text to count."
+          }
+        },
+        "required": ["text"],
+        "additionalProperties": false
+      }
+    }
+  }
+}</code></pre>
+            <p>NanoAgent sends this JSON to the process on stdin:</p>
+            <pre><code>{
+  "toolName": "custom__word_count",
+  "configuredName": "word_count",
+  "arguments": {
+    "text": "hello world"
+  },
+  "session": {
+    "id": "session-id",
+    "workspacePath": "/path/to/workspace",
+    "workingDirectory": "."
+  }
+}</code></pre>
+            <p>The process can print plain stdout, which is treated as a successful text result, or a structured
+              response:</p>
+            <pre><code>{
+  "status": "success",
+  "message": "Counted words.",
+  "data": {
+    "words": 2
+  },
+  "renderText": "2 words"
+}</code></pre>
+            <p>Use <code>status: "error"</code> for execution errors or <code>status: "invalid_arguments"</code> for
+              argument validation failures. Relative <code>cwd</code> and relative command paths are resolved against the
+              workspace root. Custom tools default to approval prompts; use permission rules or
+              <code>approvalMode: "auto"</code> only for tools you trust.</p>
+          </section>
+
+          <!-- HOOKS / AUDIT -->
+          <section class="doc-section" id="hooks">
+            <h2>Memory, audit &amp; hooks</h2>
+
+            <h3>Tool audit</h3>
+            <p>Tool audit logging is disabled by default. When enabled, NanoAgent writes completed tool-call records to
+              <code>.nanoagent/logs/tool-audit.jsonl</code>.</p>
+
+            <h3>Workspace policy</h3>
+            <p>Configure memory and audit behavior in <code>.nanoagent/agent-profile.json</code>:</p>
+            <pre><code>{
+  "memory": {
+    "requireApprovalForWrites": true,
+    "allowAutoFailureObservation": true,
+    "allowAutoManualLessons": false,
+    "redactSecrets": true,
+    "maxEntries": 500,
+    "maxPromptChars": 12000,
+    "disabled": false
+  },
+  "toolAudit": {
+    "enabled": false,
+    "redactSecrets": true,
+    "maxArgumentsChars": 12000,
+    "maxResultChars": 12000
+  }
+}</code></pre>
+
+            <h3>Lifecycle hooks</h3>
+            <p>Hooks run local automation around NanoAgent actions. A hook receives JSON on standard input and selected
+              <code>NANOAGENT_*</code> environment variables. Example:</p>
+            <pre><code>{
+  "Application": {
+    "Hooks": {
+      "enabled": true,
+      "defaultTimeoutSeconds": 30,
+      "maxOutputCharacters": 12000,
+      "rules": [
+        {
+          "name": "check-write",
+          "events": ["before_file_write", "after_file_write"],
+          "command": "scripts/check-write.ps1",
+          "pathPatterns": ["src/**", "NanoAgent/**"]
+        },
+        {
+          "name": "shell-failure",
+          "event": "after_shell_failure",
+          "command": "scripts/on-shell-failure.ps1",
+          "shellCommandPatterns": ["dotnet test*", "npm test*"]
+        }
+      ]
+    }
+  }
+}</code></pre>
+            <p>Supported hook events include task, tool, file, shell, web, memory, permission, and delegation lifecycle
+              events.</p>
+          </section>
+
+          <!-- LSP -->
+          <section class="doc-section" id="lsp">
+            <h2>Code intelligence (LSP)</h2>
+            <p><code>code_intelligence</code> discovers language servers from built-in definitions, the current
+              workspace, and optional user or workspace profile overrides.</p>
+            <ul>
+              <li>Run <code>code_intelligence</code> with <code>action: "servers_status"</code> to inspect supported languages, detected servers, missing servers, cached health, and install hints.</li>
+              <li>In the interactive CLI, use <code>/lsp</code> for the same registry view. Use <code>/lsp refresh</code> to bypass cached detection, or <code>/lsp file &lt;path&gt;</code> to inspect candidates for one file.</li>
+              <li>Built-in detection checks workspace-local bins such as <code>node_modules/.bin</code> and common Python virtualenv script folders before falling back to <code>PATH</code>.</li>
+              <li>Server selection is deterministic: higher <code>priority</code> wins, then NanoAgent falls back through remaining detected servers in stable key order.</li>
+              <li>Rename stays preview-only. Code-intelligence actions remain read-only.</li>
+            </ul>
+            <p>Example status request:</p>
+            <pre><code>{
+  "action": "servers_status",
+  "refresh": true
+}</code></pre>
+            <p>Profile overrides live in user-level or workspace-level <code>.nanoagent/agent-profile.json</code> under
+              <code>languageServers</code>. Example override:</p>
+            <pre><code>{
+  "languageServers": {
+    "python-pyright": {
+      "language": "Python",
+      "name": "Pyright",
+      "command": ".nanoagent/tools/pyright-langserver.cmd",
+      "args": ["--stdio"],
+      "languageId": "python",
+      "fileExtensions": [".py"],
+      "priority": 250
+    }
+  }
+}</code></pre>
+            <p>Supported <code>languageServers</code> fields: <code>command</code>, <code>args</code>,
+              <code>enabled</code>, <code>fileExtensions</code>, <code>initializationOptions</code>,
+              <code>installHint</code>, <code>language</code>, <code>languageId</code>, <code>name</code>,
+              <code>priority</code>.</p>
+            <h3>Setup examples</h3>
+            <ul>
+              <li><strong>TypeScript/JavaScript</strong> — install <code>vtsls</code> or <code>typescript-language-server</code>: <code>npm install -g @vtsls/language-server typescript</code></li>
+              <li><strong>Python</strong> — install <code>basedpyright-langserver</code>, <code>pyright-langserver</code>, or <code>pylsp</code>: <code>pip install basedpyright</code> or <code>pip install python-lsp-server</code></li>
+              <li><strong>C#</strong> — install <code>csharp-ls</code>: <code>dotnet tool install --global csharp-ls</code></li>
+              <li><strong>Rust</strong> — install <code>rust-analyzer</code>: <code>rustup component add rust-analyzer</code></li>
+              <li><strong>Go</strong> — install <code>gopls</code>: <code>go install golang.org/x/tools/gopls@latest</code></li>
+              <li><strong>C/C++</strong> — install <code>clangd</code> via your platform package manager or LLVM distribution so <code>clangd</code> is on <code>PATH</code>.</li>
+            </ul>
+          </section>
+
+          <!-- PRIVACY -->
+          <section class="doc-section" id="privacy">
+            <h2>Privacy &amp; local data</h2>
+            <h4>Stays local</h4>
+            <ul>
+              <li>Workspace files stay on your machine.</li>
+              <li>Configuration is local.</li>
+              <li>Sections are stored locally.</li>
+              <li>Codebase index cache is stored locally.</li>
+              <li>Team memory and lesson memory are stored locally.</li>
+              <li>Optional audit logs are stored locally.</li>
+              <li>Secrets are stored through platform credential storage where supported.</li>
+            </ul>
+            <h4>Sent to the configured provider when needed</h4>
+            <ul>
+              <li>User prompts.</li>
+              <li>System and workspace instructions.</li>
+              <li>Relevant file excerpts.</li>
+              <li>Tool outputs.</li>
+              <li>Conversation context.</li>
+              <li>Model and tool schemas.</li>
+            </ul>
+            <p>NanoAgent redacts common secret patterns before storing or displaying tool output, memory, audit records,
+              logs, conversation history, session state, workspace instructions, and errors. Redaction is pattern-based
+              and should not be treated as a full data-loss-prevention system.</p>
+          </section>
+
+          <!-- TROUBLESHOOTING -->
+          <section class="doc-section" id="troubleshooting">
+            <h2>Troubleshooting</h2>
+
+            <h3><code>nanoai</code> is not found</h3>
+            <p>Restart the terminal after installation. If it still fails, verify that the install directory is on
+              <code>PATH</code>.</p>
+
+            <h3>Provider setup is incomplete</h3>
+            <p>Run <code>nanoai</code> and choose to reconfigure. This can happen when setup was cancelled after provider
+              config was saved but before the secret was stored.</p>
+
+            <h3>Provider validation fails after onboarding</h3>
+            <p>Choose to re-run onboarding when NanoAgent offers it. If the same provider still fails, check the
+              credential, account access, selected provider base URL, and network connectivity.</p>
+
+            <h3>Updating NanoAgent</h3>
+            <p>Run <code>/update</code> to check for a newer release. Run <code>/update now</code> to install the latest
+              release immediately, then restart NanoAgent.</p>
+
+            <h3>ChatGPT Plus/Pro sign-in does not complete</h3>
+            <p>Check that port <code>1455</code> is available and that the browser callback URL opens locally. Sign-in
+              requires network access and a valid account with access to the selected model.</p>
+
+            <h3>Claude Pro/Max sign-in does not complete</h3>
+            <p>Check that port <code>53692</code> is available and that the browser callback URL opens locally. Sign-in
+              requires network access and a valid Claude Pro or Max account.</p>
+
+            <h3>GitHub Copilot sign-in does not complete</h3>
+            <p>Check that the device-code page opened, enter the displayed code, and verify that your GitHub account has
+              Copilot access. For GitHub Enterprise, enter only the Enterprise URL or domain when prompted; leave it blank
+              for <code>github.com</code>.</p>
+
+            <h3>No models are listed</h3>
+            <p>Check the provider credential, provider account access, network connectivity, and custom provider base URL.
+              For compatible providers, the base URL must be absolute and use HTTP or HTTPS. For Ollama, make sure
+              <code>ollama serve</code> is running and at least one model is installed. For LM Studio, make sure the local
+              server is started, at least one model is loaded, and the API key matches your LM Studio server settings. For
+              Ollama Cloud, check that the API key has access to the hosted models you expect to use.</p>
+
+            <h3>A command is denied</h3>
+            <p>Run <code>/permissions</code> and <code>/rules</code> to see active policy. You can approve the prompt, add
+              a session override with <code>/allow</code>, or update configuration.</p>
+
+            <h3>Shell sandboxing fails on Windows</h3>
+            <p>Foreground shell commands in <code>read-only</code> and <code>workspace-write</code> modes use the Windows
+              sandbox runner. If a restricted command still fails, inspect
+              <code>%APPDATA%\NanoAgent\.sandbox\sandbox.log</code>, rerun the Windows sandbox setup if prompted, and
+              verify the working directory still exists. Restricted pseudo-terminal sessions and restricted background
+              terminals are not wired to the Windows sandbox runner yet; those requests fail closed — rerun without
+              <code>pty</code>, use a foreground command, or approve sandbox escalation only when you trust the command.</p>
+
+            <h3>The agent cannot read a file</h3>
+            <p>Check that the path is inside the workspace and not excluded by <code>.nanoagent/.nanoignore</code> or
+              default secret-protection rules.</p>
+
+            <h3>Undo did not revert a shell side effect</h3>
+            <p>Undo/redo only covers tracked file edit transactions. It does not revert arbitrary shell command side
+              effects, package installs, generated files, external tools, or network actions.</p>
+          </section>
+
+          <!-- NUGET SDK -->
+          <section class="doc-section" id="sdk">
+            <h2>NuGet SDK (.NET)</h2>
+            <p>The <code>NanoAgent</code> package on
+              <a href="https://www.nuget.org/packages/NanoAgent/" target="_blank" rel="noopener">NuGet.org</a> provides
+              the core libraries and application services behind NanoAgent — the same core that powers the desktop app,
+              the <code>nanoai</code> terminal command, and the editor extensions. Add the package to drive the coding
+              agent from your own application — an app builder, a server, a bot, or automation — without implementing the
+              interactive console UI. The release workflows pack and publish the package for every <code>v*</code> tag
+              release. If you want the end-user command-line experience instead, install the <code>nanoai</code> CLI from
+              the <a href="#install">release installers</a>; the CLI is not distributed as a NuGet package.</p>
+
+            <h3>Install</h3>
+            <pre><code>dotnet add package NanoAgent</code></pre>
+            <p>Or add a reference directly in your <code>.csproj</code>:</p>
+            <pre><code>&lt;PackageReference Include="NanoAgent" Version="*" /&gt;</code></pre>
+            <p>The package targets <code>net10.0</code>, so your project needs a .NET SDK compatible with
+              <code>net10.0</code>. Pin <code>Version</code> to a specific release for reproducible builds instead of
+              using <code>*</code>.</p>
+
+            <h3>Embed the SDK</h3>
+            <p>The <code>NanoAgent.Sdk</code> namespace lets you drive the coding agent from your own application without
+              the interactive console UI. Configure a provider and model with the fluent builder, then run turns and
+              subscribe to progress events. Provider credentials are held in memory only — embedding the SDK never
+              touches the machine-wide NanoAgent configuration.</p>
+            <pre><code>using NanoAgent.Sdk;
+
+await using NanoAgentClient client = NanoAgentClient.CreateBuilder()
+    .UseAnthropic(apiKey, "claude-opus-4-8")   // or UseOpenAi / UseOllama / UseOpenAiCompatible / ...
+    .WithWorkspace("/path/to/repo")
+    .AutoApproveTools()                          // for trusted / sandboxed automation
+    .Build();
+
+// Surface progress in your UI (final answer is still returned from RunTurnAsync).
+client.AssistantMessageChunkReceived += (_, e) => Console.Write(e.Text);
+client.ToolCallsStarted += (_, e) => Console.WriteLine($"Running {e.ToolCalls.Count} tool(s)...");
+client.StatusMessage   += (_, e) => Console.WriteLine($"[{e.Severity}] {e.Message}");
+
+await client.InitializeAsync();
+ConversationTurnResult result = await client.RunTurnAsync("Build a TODO app");
+Console.WriteLine(result.ResponseText);</code></pre>
+
+            <h3>Extend with your own tools and services</h3>
+            <p>Register custom tools the agent can call, attach MCP servers, and override or add any dependency-injection
+              service:</p>
+            <pre><code>NanoAgentClient client = NanoAgentClient.CreateBuilder()
+    .UseAnthropic(apiKey)
+    .AddTool(new MyDeployTool())                 // custom ITool the agent can call
+    .AddMcpServer(new BackendMcpServerConfiguration("docs") { Url = "https://..." })
+    .ConfigureServices(services => { /* override or add any DI service */ })
+    .Build();</code></pre>
+            <p>The CLI and desktop apps continue to use the same core through their existing entry points; the SDK is an
+              additive layer on top.</p>
+
+            <div class="doc-note">The SDK runs the agent in-process. Permission policy, sandbox modes, and built-in deny
+              rules still apply — review <a href="#permissions">Permissions &amp; sandboxing</a> before calling
+              <code>AutoApproveTools()</code> or granting an embedded agent write or shell access in a host application.
+            </div>
+          </section>
+
+          <!-- BUILD -->
+          <section class="doc-section" id="build">
+            <h2>Build from source</h2>
+            <h3>Requirements</h3>
+            <ul>
+              <li>.NET SDK compatible with <code>net10.0</code>.</li>
+              <li>Node.js 20 or newer for the VS Code extension.</li>
+              <li>Visual Studio 2022 or newer on Windows for <code>NanoAgent.VS</code>.</li>
+              <li>Platform toolchains needed by your target desktop/CLI build.</li>
+            </ul>
+            <h3>Commands</h3>
+            <pre><code>dotnet restore NanoAgent.CrossPlatform.slnx
+dotnet build NanoAgent.CrossPlatform.slnx
+dotnet test NanoAgent.Tests/NanoAgent.Tests.csproj
+dotnet pack NanoAgent/NanoAgent.csproj -c Release</code></pre>
+            <p>VS Code extension commands:</p>
+            <pre><code>cd NanoAgent.VsCode
+npm ci
+npm run lint
+npm run package
+npm run package:vsix</code></pre>
+            <p>Visual Studio extension command:</p>
+            <pre><code>msbuild NanoAgent.VS/NanoAgent.VS.csproj /restore /p:Configuration=Release /p:DeployExtension=false</code></pre>
+            <h3>Main projects</h3>
+            <div class="doc-table-wrap">
+              <table class="doc-table">
+                <thead><tr><th>Project</th><th>Purpose</th></tr></thead>
+                <tbody>
+                  <tr><td><code>NanoAgent</code></td><td>Core application, domain, infrastructure, tools, providers, storage.</td></tr>
+                  <tr><td><code>NanoAgent.CLI</code></td><td>Terminal UI and one-shot CLI.</td></tr>
+                  <tr><td><code>NanoAgent.Desktop</code></td><td>Desktop app.</td></tr>
+                  <tr><td><code>NanoAgent.VS</code></td><td>Visual Studio extension that hosts NanoAgent inside a tool window.</td></tr>
+                  <tr><td><code>NanoAgent.VsCode</code></td><td>VS Code extension that drives NanoAgent through ACP mode.</td></tr>
+                  <tr><td><code>NanoAgent.Tests</code></td><td>Test suite.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- LICENSE -->
+          <section class="doc-section" id="license">
+            <h2>License</h2>
+            <p>NanoAgent is licensed under the Apache License 2.0. See the
+              <a href="https://github.com/rizwan3d/NanoAgent/blob/master/LICENSE" target="_blank" rel="noopener">LICENSE</a>
+              file in the repository.</p>
+            <div class="doc-note">Looking for the source, releases, or to file an issue? Visit the
+              <a href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener">NanoAgent GitHub repository</a>.</div>
+          </section>
+
+        </article>
+      </div>
+    </div>
+
+    <!-- ───────────────────────── CTA ───────────────────────── -->
+    <section class="section container">
+      <div class="cta">
+        <div class="cta__glow" aria-hidden="true"></div>
+        <h2>Ship with an agent that keeps you in control.</h2>
+        <p>Local-first. Reviewable. Open source under Apache-2.0.</p>
+        <div class="cta__actions">
+          <a class="btn btn--primary btn--lg" href="index.html#get">Get NanoAgent</a>
+          <a class="btn btn--ghost btn--lg" href="features.html">See all features</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ───────────────────────── FOOTER ───────────────────────── -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a class="brand" href="index.html#top">
+          <img src="assets/logo.png" alt="" class="brand__mark" width="26" height="26" />
+          <span class="brand__name">NanoAgent</span>
+        </a>
+        <p>Your AI coding agent for desktop, terminal, and editor workflows.</p>
+      </div>
+      <nav class="footer__cols" aria-label="Footer">
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="index.html#why">Why NanoAgent</a>
+          <a href="features.html">Features</a>
+          <a href="index.html#compare">Compare</a>
+          <a href="index.html#providers">Providers</a>
+          <a href="index.html#start">Quickstart</a>
+        </div>
+        <div class="footer__col">
+          <h4>Resources</h4>
+          <a href="docs.html">Documentation</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/releases/latest" target="_blank" rel="noopener">Releases</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/releases" target="_blank" rel="noopener">Changelog</a>
+          <a href="https://www.nuget.org/packages/NanoAgent/" target="_blank" rel="noopener">NuGet SDK</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/blob/master/SECURITY.md" target="_blank"
+            rel="noopener">Security</a>
+        </div>
+        <div class="footer__col">
+          <h4>Community</h4>
+          <a href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/issues" target="_blank" rel="noopener">Issues</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/discussions" target="_blank"
+            rel="noopener">Discussions</a>
+          <a href="https://hackernoon.com/building-an-ai-coding-agent-that-doesnt-hide-what-its-doing"
+            target="_blank" rel="noopener">Blog</a>
+        </div>
+        <div class="footer__col">
+          <h4>More</h4>
+          <a href="https://github.com/rizwan3d/NanoAgent#readme" target="_blank" rel="noopener">About</a>
+          <a href="https://github.com/rizwan3d" target="_blank" rel="noopener">Creator</a>
+          <a href="https://github.com/rizwan3d" target="_blank" rel="noopener">@rizwan3d</a>
+        </div>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <span>© <span data-year>2026</span> NanoAgent · Apache-2.0 · Built with ❤ for the open-source community.</span>
+      <span class="footer__sponsor">Sponsored by <a href="https://alfain.co/" target="_blank" rel="noopener">ALFAIN
+          Technologies</a></span>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+
+</html>

@@ -1,374 +1,669 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<!doctype html>
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NanoAgent — AI Coding Agent</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { mono: ['JetBrains Mono', 'monospace'] },
-                    colors: {
-                        terminal: {
-                            bg: '#0a0a0f', bg2: '#0d0d14', border: '#1e1e2e',
-                            green: '#4ade80', cyan: '#22d3ee', purple: '#a78bfa',
-                            amber: '#fbbf24', rose: '#fb7185', muted: '#6b7280', dim: '#3b3b4f',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        ::selection { background: #22d3ee; color: #0a0a0f; }
-        @keyframes blink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
-        @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes cursorPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-        .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; opacity:0; }
-        .delay-100{animation-delay:.1s}.delay-200{animation-delay:.2s}.delay-300{animation-delay:.3s}.delay-400{animation-delay:.4s}.delay-500{animation-delay:.5s}
-        .cursor-blink::after { content:'█'; animation:blink 1s step-end infinite; color:#22d3ee; }
-        .cursor-pulse { animation: cursorPulse 2s ease-in-out infinite; }
-        .ascii-art { font-family:'JetBrains Mono',monospace; line-height:1.2; letter-spacing:0.05em; }
-        .dot-bg { background-image:radial-gradient(circle,rgba(255,255,255,0.02) 1px,transparent 1px); background-size:20px 20px; }
-        .grid-bg { background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px); background-size:40px 40px; }
-        .section-line { border-bottom: 1px solid rgba(255,255,255,0.06); }
-        .faq-answer { max-height:0; overflow:hidden; transition: max-height 0.3s ease, opacity 0.25s ease; opacity:0; }
-        .faq-item.active .faq-answer { max-height:400px; opacity:1; }
-        .faq-item.active .faq-chevron { transform:rotate(180deg); }
-        .faq-chevron { transition: transform 0.2s ease; }
-        .tcard { transition: border-color 0.2s ease, background 0.2s ease; }
-        .tcard:hover { border-color: rgba(34,211,238,0.25); background: rgba(255,255,255,0.015); }
-        .tbtn { transition: all 0.2s ease; }
-        .tbtn:hover { border-color: rgba(34,211,238,0.4); background: rgba(34,211,238,0.08); }
-        .tbtn-fill { transition: all 0.2s ease; }
-        .tbtn-fill:hover { box-shadow: 0 0 20px rgba(34,211,238,0.2); }
-        body { font-family: 'JetBrains Mono', monospace; }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0a0f; }
-        ::-webkit-scrollbar-thumb { background: #1e1e2e; }
-        ::-webkit-scrollbar-thumb:hover { background: #2e2e3e; }
-        #comp-table th, #comp-table td { white-space: nowrap; }
-        #comp-table tr.hl-row { background: rgba(74,222,128,0.06); }
-        #comp-table tr.hl-row td:first-child { border-left: 2px solid #4ade80; }
-        #comp-table .chk { color: #4ade80; }
-        #comp-table .na { color: #3b3b4f; }
-        #comp-table .score-hl { color: #4ade80; font-weight: 700; }
-        #comp-table .score-dim { color: #6b7280; }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NanoAgent — Your AI coding agent that doesn't hide what it's doing</title>
+  <meta name="description"
+    content="NanoAgent is a local-first AI coding agent for desktop, terminal, and editor workflows. Understand code, plan changes, edit files, run validation, and review diffs — with you in control." />
+  <meta name="theme-color" content="#000000" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="NanoAgent — Your AI coding agent that doesn't hide what it's doing" />
+  <meta property="og:description"
+    content="A local-first AI coding agent for desktop, terminal, and editor workflows. Reviewable changes, explicit approvals, your choice of provider." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/logo.png" />
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://github.com" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="bg-terminal-bg text-white antialiased">
 
-<div class="min-h-screen flex flex-col">
+<body>
+  <!-- ambient background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
 
-    <header class="sticky top-0 z-50 bg-terminal-bg border-b border-terminal-border">
-        <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-2">
-            <div class="flex items-center gap-3">
-                <div class="flex items-center gap-1.5">
-                    <div class="w-2.5 h-2.5 rounded-full bg-terminal-rose/80"></div>
-                    <div class="w-2.5 h-2.5 rounded-full bg-terminal-amber/80"></div>
-                    <div class="w-2.5 h-2.5 rounded-full bg-terminal-green/80"></div>
-                </div>
-                <span class="text-terminal-dim text-xs hidden sm:inline">│</span>
-                <span class="text-terminal-muted text-xs hidden sm:inline">NanoAgent — bash</span>
-            </div>
-            <nav class="flex items-center gap-1 sm:gap-3 text-xs text-terminal-muted">
-                <a href="#features" class="hidden md:inline hover:text-terminal-cyan transition-colors px-1">#features</a>
-                <a href="#cli-workflows" class="hidden md:inline hover:text-terminal-cyan transition-colors px-1">#cli</a>
-                <a href="#extensibility" class="hidden lg:inline hover:text-terminal-cyan transition-colors px-1">#extensibility</a>
-                <a href="#comparison" class="hidden md:inline hover:text-terminal-cyan transition-colors px-1">#comparison</a>
-                <a href="#install" class="hidden md:inline hover:text-terminal-cyan transition-colors px-1">#install</a>
-                <a href="#faq" class="hidden md:inline hover:text-terminal-cyan transition-colors px-1">#faq</a>
-                <span class="text-terminal-dim hidden sm:inline">│</span>
-                <a href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener" class="flex items-center gap-1 hover:text-white transition-colors px-1">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    <span id="star-count" class="hidden sm:inline">—</span>
-                </a>
-                <a href="#install" class="tbtn-fill px-3 py-1 bg-terminal-cyan text-terminal-bg font-bold text-xs">get-started</a>
-            </nav>
+  <!-- ───────────────────────── NAV ───────────────────────── -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a class="brand" href="#top" aria-label="NanoAgent home">
+        <img src="assets/logo.png" alt="" class="brand__mark" width="28" height="28" />
+        <span class="brand__name">NanoAgent</span>
+      </a>
+
+      <nav class="nav__links" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+       
+        <a href="docs.html">Docs</a>
+      </nav>
+
+      <div class="nav__actions">
+        <a class="ghost-link" href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener"
+          aria-label="NanoAgent stars on GitHub">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
+            <path
+              d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z" />
+          </svg>
+          <span class="gh-stars" data-stars>Star</span>
+        </a>
+        <a class="ghost-link" href="https://github.com/rizwan3d/NanoAgent/commits/master" target="_blank" rel="noopener"
+          aria-label="NanoAgent commits on GitHub">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
+            <path
+              d="M11.93 8.5a4.002 4.002 0 0 1-7.86 0H.75a.75.75 0 0 1 0-1.5h3.32a4.002 4.002 0 0 1 7.86 0h3.32a.75.75 0 0 1 0 1.5Zm-1.43-.75a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z" />
+          </svg>
+          <span class="gh-commits" data-commits>Commits</span>
+        </a>
+      </div>
+
+      <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ───────────────────────── HERO / HEADER ───────────────────────── -->
+    <section class="hero container">
+      <h1 class="hero__title">
+        Your AI Coding Agent <span class="grad">That Doesn't Hide</span> What It's Doing
+      </h1>
+      <p class="hero__sub">
+        NanoAgent works inside a real repository while keeping you in control — understand a codebase,
+        plan a change, edit files, run validation, review a diff, and automate reviews from the same
+        toolchain you already use. Every action is visible and reviewable.
+      </p>
+
+      <!-- ── install selector (Kilo-style) ── -->
+      <div class="installer" id="get">
+        <div class="installer__tabs" role="tablist" aria-label="Install NanoAgent">
+          <button class="itab is-active" role="tab" aria-selected="true" data-itab="cli">CLI</button>
+
+          <button class="itab" role="tab" aria-selected="false" data-itab="vscode">
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="currentColor">
+              <path
+                d="m17.583 2.058-3.43 3.118L8.62 1.04 7.39 1.96l5.06 4.62-4.86 4.43L2.5 6.7l-1.24.92 5.45 4.74L1.26 17.1l1.24.92 5.79-4.71 4.86 4.43-5.06 4.62 1.23.92 5.534-4.136 3.43 3.118 1.21-.62V2.678l-1.21-.62Zm.21 4.06v9.764l-5.39-4.882 5.39-4.882Z" />
+            </svg>
+            VS Code
+          </button>
+
+          <button class="itab" role="tab" aria-selected="false" data-itab="vs">Visual Studio</button>
+
+          <button class="itab" role="tab" aria-selected="false" data-itab="desktop">Desktop</button>
         </div>
-    </header>
 
-    <main class="flex-1">
-
-        <section class="relative px-4 sm:px-6 pt-12 sm:pt-20 pb-10 dot-bg">
-            <div class="max-w-6xl mx-auto">
-                <div class="animate-fade-in-up flex items-center gap-2 text-xs text-terminal-muted mb-8">
-                    <span class="w-1.5 h-1.5 rounded-full bg-terminal-green cursor-pulse"></span>
-                    <span>Desktop App + Terminal CLI</span><span class="text-terminal-dim">·</span><span>Open Source</span>
-                </div>
-                <div class="animate-fade-in-up delay-100 mb-6 overflow-x-auto">
-                    <pre class="ascii-art text-terminal-cyan/70 text-[0.32rem] sm:text-[0.48rem] md:text-[0.62rem] leading-tight select-none"><code> ███╗   ██╗  █████╗  ███╗   ██╗  ██████╗  █████╗   ██████╗  ███████╗  ███╗   ██╗  ████████╗
- ████╗  ██║ ██╔══██╗ ████╗  ██║ ██╔═══██╗ ██╔══██╗ ██╔════╝  ██╔════╝  ████╗  ██║  ╚══██╔══╝
- ██╔██╗ ██║ ███████║ ██╔██╗ ██║ ██║   ██║ ███████║ ██║  ███╗ █████╗    ██╔██╗ ██║     ██║
- ██║╚██╗██║ ██╔══██║ ██║╚██╗██║ ██║   ██║ ██╔══██║ ██║   ██║ ██╔══╝    ██║╚██╗██║     ██║
- ██║ ╚████║ ██║  ██║ ██║ ╚████║ ╚██████╔╝ ██║  ██║ ╚██████╔╝ ███████╗  ██║ ╚████║     ██║
- ╚═╝  ╚═══╝ ╚═╝  ╚═╝ ╚═╝  ╚═══╝  ╚═════╝  ╚═╝  ╚═╝  ╚═════╝  ╚══════╝  ╚═╝  ╚═══╝     ╚═╝</code></pre>
-                </div>
-                <h1 class="animate-fade-in-up delay-200 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] mb-6">
-                    Ship code with an<br><span class="text-terminal-cyan">AI teammate for your repo</span>
-                </h1>
-                <p class="animate-fade-in-up delay-300 text-xs sm:text-sm text-terminal-muted max-w-3xl mb-10 leading-relaxed">
-                    Inspect code, plan changes, make focused edits, run validations, and review pull requests from a desktop app or the <span class="text-terminal-cyan">nanoai</span> CLI — without giving up approval-first control.
-                </p>
-                <div class="animate-fade-in-up delay-400 flex flex-col sm:flex-row items-start gap-3">
-                    <a href="#install" class="tbtn-fill inline-flex items-center gap-2 px-5 py-2.5 bg-terminal-cyan text-terminal-bg text-sm font-bold">
-                        <span class="text-terminal-bg/60">$</span><span>install nanoagent</span>
-                    </a>
-                    <a href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener" class="tbtn inline-flex items-center gap-2 px-5 py-2.5 border border-terminal-border text-terminal-muted text-sm">
-                        <span>→</span><span>view on github</span>
-                    </a>
-                </div>
+        <div class="installer__panels">
+          <div class="ipanel is-active" data-ipanel="cli">
+            <!-- package-manager sub tabs -->
+            <div class="csub" role="tablist" aria-label="Choose install method">
+              <button class="csub__tab is-active" role="tab" aria-selected="false" data-csub="npm">npm</button>
+              <button class="csub__tab" role="tab" aria-selected="false" data-csub="pnpm">pnpm</button>
+              <button class="csub__tab" role="tab" aria-selected="false" data-csub="bun">bun</button>
+              <button class="csub__tab" role="tab" aria-selected="true" data-csub="pw">Powershell</button>
+              <button class="csub__tab" role="tab" aria-selected="true" data-csub="curl">curl</button>
             </div>
-        </section>
 
-        <section id="demo" class="relative px-4 sm:px-6 pt-10 pb-16">
-            <div class="max-w-6xl mx-auto">
-                <div class="section-line border-terminal-border pb-3 mb-6"><span class="text-terminal-cyan text-xs font-bold"># demo</span><span class="text-terminal-dim text-xs ml-2">─────────────────────────────────────────────────────────────────────</span></div>
-                <div class="border border-terminal-green/30 bg-terminal-green/[0.015] overflow-hidden">
-                    <div class="border-b border-terminal-green/20 px-4 py-1.5 text-[0.65rem] text-terminal-green/50 flex items-center justify-between"><span>session: example — working: ~/projects/my-app</span><span>model: openai/gpt-4o</span></div>
-                    <div class="p-4 sm:p-5 text-xs sm:text-sm leading-relaxed overflow-x-auto">
-                        <div class="flex gap-2 mb-3"><span class="text-terminal-amber shrink-0">❯</span><span class="text-white/90">Refactor the auth module to use JWT tokens</span></div>
-                        <div class="flex gap-2 mb-3"><span class="text-terminal-cyan shrink-0">◆</span><div><span class="text-white/80">I'll analyze the auth module and create a plan.</span><div class="mt-2 text-terminal-green/80">📋 Plan created: <span class="text-terminal-green">3 steps</span></div><div class="mt-1 text-terminal-muted text-[0.7rem] pl-3 border-l border-terminal-dim space-y-0.5"><div>1. Add JWT package dependencies</div><div>2. Create TokenService.cs with signing logic</div><div>3. Update AuthMiddleware to validate tokens</div></div><div class="mt-2 text-terminal-amber/80">⚠ Approve edits? <span class="text-terminal-dim">[y/N]</span></div><div class="mt-1 text-terminal-green/80">✅ Writing src/Auth/TokenService.cs...</div><div class="mt-1 text-terminal-green/80">✅ Running dotnet test — 12 passed</div></div></div>
-                        <div class="border-t border-terminal-border/50 pt-3 flex gap-2"><span class="text-terminal-cyan">❯</span><span class="text-white/40 cursor-blink"></span></div>
-                    </div>
+            <!-- curl -->
+            <div class="csub__panel" data-csubpanel="curl">
+              <div class="installer__command-block">
+                <div class="installer__screen" data-copy-group>
+                  <code class="installer__cmd"><span class="install__sigil">$</span> curl -fsSL https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh | bash</code>
+                  <button class="installer__copy" data-copy="curl -fsSL https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh | bash" aria-label="Copy bash install command">Copy</button>
                 </div>
-                <div class="mt-2 text-[0.6rem] sm:text-[0.65rem] text-terminal-dim leading-relaxed">enter: send · shift+enter: newline · <span class="text-terminal-amber">F2</span>: model · <span class="text-terminal-amber">F3</span>: plan · <span class="text-terminal-amber">F4</span>: files · ctrl+c: quit</div>
+              </div>
             </div>
-        </section>
 
-        <section id="features" class="relative px-4 sm:px-6 pt-10 pb-16 grid-bg">
-            <div class="max-w-6xl mx-auto">
-                <div class="section-line border-terminal-border pb-3 mb-3"><span class="text-terminal-cyan text-xs font-bold"># core-capabilities</span><span class="text-terminal-dim text-xs ml-2">─────────────────────────────────────────────────</span></div>
-                <p class="text-terminal-muted text-xs mb-8">Not just chat — real work.</p>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
-                    <div class="tcard border border-terminal-border p-5 flex flex-col">
-                        <div class="flex items-center gap-2 mb-3"><span class="text-terminal-cyan text-sm">▸</span><h3 class="text-sm font-bold text-white">Desktop app + terminal CLI</h3></div>
-                        <p class="text-xs text-terminal-muted leading-relaxed flex-1">Work visually in the desktop app or stay keyboard-first with the <span class="text-terminal-cyan">nanoai</span> CLI. Same agent, same workspace, your choice.</p>
-                        <div class="border-t border-terminal-border/50 mt-4 pt-3 space-y-2">
-                            <div class="flex items-center gap-3 text-[0.65rem] text-terminal-dim"><span>[desktop]</span><span>[cli]</span></div>
-                            <div class="flex flex-wrap gap-1"><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-cyan/50 bg-terminal-cyan/5">OpenAI</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-cyan/50 bg-terminal-cyan/5">ChatGPT Plus/Pro</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-cyan/50 bg-terminal-cyan/5">OpenRouter</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-cyan/50 bg-terminal-cyan/5">Anthropic</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-cyan/50 bg-terminal-cyan/5">Google AI Studio</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-cyan/50 bg-terminal-cyan/5">+ any compatible</span></div>
-                        </div>
-                    </div>
-                    <div class="tcard border border-terminal-green/30 bg-terminal-green/[0.015] p-5 flex flex-col">
-                        <div class="flex items-center gap-2 mb-3"><span class="text-terminal-green text-sm">▸</span><h3 class="text-sm font-bold text-white">Codebase indexing & search</h3></div>
-                        <p class="text-xs text-terminal-muted leading-relaxed flex-1">Builds <span class="text-terminal-green">.nanoagent/cache/codebase-index.json</span> for fast repo understanding. Search by concept, symbol, path, or behavior. Indexes incrementally and respects <span class="text-terminal-green">.gitignore</span> / <span class="text-terminal-green">.nanoignore</span>.</p>
-                        <div class="border-t border-terminal-green/15 mt-4 pt-3 space-y-2">
-                            <div class="flex flex-wrap gap-1"><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-green/70 bg-terminal-green/5">concept</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-green/70 bg-terminal-green/5">symbol</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-green/70 bg-terminal-green/5">path</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-green/70 bg-terminal-green/5">behavior</span></div>
-                            <div class="text-[0.6rem] text-terminal-dim">no full file contents stored · reads snippets from workspace · respects ignore rules</div>
-                        </div>
-                    </div>
-                    <div class="tcard border border-terminal-border p-5 flex flex-col">
-                        <div class="flex items-center gap-2 mb-3"><span class="text-terminal-amber text-sm">▸</span><h3 class="text-sm font-bold text-white">You stay in control</h3></div>
-                        <p class="text-xs text-terminal-muted leading-relaxed flex-1">Sensitive actions like file edits, command execution, network access, MCP tools, memory writes, and elevated operations are controlled by profiles, permissions, and approval prompts.</p>
-                        <div class="border-t border-terminal-border/50 mt-4 pt-3 flex flex-wrap gap-1"><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-green/60 bg-terminal-green/5">read-only</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">workspace-write</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-rose/60 bg-terminal-rose/5">full-access</span></div>
-                    </div>
+            <div class="csub__panel" data-csubpanel="pw">
+              <div class="installer__command-block">
+                <div class="installer__screen" data-copy-group>
+                  <code class="installer__cmd"><span class="install__sigil">PS&gt;</span> irm https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.ps1 | iex</code>
+                  <button class="installer__copy" data-copy="irm https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.ps1 | iex" aria-label="Copy PowerShell install command">Copy</button>
                 </div>
+              </div>
             </div>
-        </section>
 
-        <section class="relative px-4 sm:px-6 pt-10 pb-16">
-            <div class="max-w-6xl mx-auto">
-                <div class="section-line border-terminal-border pb-3 mb-8"><span class="text-terminal-cyan text-xs font-bold"># features</span><span class="text-terminal-dim text-xs ml-2">─────────────────────────────────────────────────────────────────────</span></div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    <div class="tcard border border-terminal-border p-5"><div class="flex items-center gap-2 mb-2"><span class="text-terminal-purple text-xs">◆</span><h3 class="text-xs font-bold text-white">Team memory & repo docs</h3></div><p class="text-[0.7rem] text-terminal-muted leading-relaxed mb-3">Reviewable memory files live in your repo: <span class="text-terminal-purple">architecture.md</span>, <span class="text-terminal-purple">conventions.md</span>, <span class="text-terminal-purple">decisions.md</span>, <span class="text-terminal-purple">known-issues.md</span>, <span class="text-terminal-purple">test-strategy.md</span>. Commit them, review them in PRs, keep your whole team aligned.</p><div class="flex flex-wrap gap-1"><span class="text-[0.55rem] px-1.5 py-0.5 text-terminal-purple/50 bg-terminal-purple/5">architecture.md</span><span class="text-[0.55rem] px-1.5 py-0.5 text-terminal-purple/50 bg-terminal-purple/5">conventions.md</span><span class="text-[0.55rem] px-1.5 py-0.5 text-terminal-purple/50 bg-terminal-purple/5">decisions.md</span><span class="text-[0.55rem] px-1.5 py-0.5 text-terminal-purple/50 bg-terminal-purple/5">known-issues.md</span><span class="text-[0.55rem] px-1.5 py-0.5 text-terminal-purple/50 bg-terminal-purple/5">test-strategy.md</span></div></div>
-                    <div class="tcard border border-terminal-border p-5"><div class="flex items-center gap-2 mb-2"><span class="text-terminal-amber text-xs">◆</span><h3 class="text-xs font-bold text-white">Budget controls</h3></div><p class="text-[0.7rem] text-terminal-muted leading-relaxed mb-3">Set spending limits for local or cloud mode. Prevent runaway API costs with <span class="text-terminal-amber">/budget</span>, <span class="text-terminal-amber">/budget local</span>, <span class="text-terminal-amber">/budget cloud</span>, and <span class="text-terminal-amber">/budget status</span>.</p><div class="flex flex-wrap gap-1"><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">/budget</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">/budget local</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">/budget cloud</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">/budget status</span></div></div>
-                    <div class="tcard border border-terminal-border p-5"><div class="flex items-center gap-2 mb-2"><span class="text-terminal-cyan text-xs">◆</span><h3 class="text-xs font-bold text-white">Workspaces & sections</h3></div><p class="text-[0.7rem] text-terminal-muted leading-relaxed mb-3">The desktop app organizes work into local workspaces with saved <span class="text-terminal-cyan">sections</span> — separate contexts for features, bug fixes, reviews, and planning. Each section has its own conversation history, plan, and file context.</p><div class="flex flex-wrap gap-1"><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-cyan/60 bg-terminal-cyan/5">feature</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-cyan/60 bg-terminal-cyan/5">bug-fix</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-cyan/60 bg-terminal-cyan/5">review</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-cyan/60 bg-terminal-cyan/5">planning</span></div></div>
-                    <div class="tcard border border-terminal-border p-5"><div class="flex items-center gap-2 mb-2"><span class="text-terminal-purple text-xs">◆</span><h3 class="text-xs font-bold text-white">Multiple working modes</h3></div><p class="text-[0.7rem] text-terminal-muted leading-relaxed mb-3">Switch between build, plan, review, general, and explore profiles for implementation, read-only planning, code review, delegated work, or quick investigation.</p><div class="flex flex-wrap gap-1"><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-purple/60 bg-terminal-purple/5">build</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-purple/60 bg-terminal-purple/5">plan</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-purple/60 bg-terminal-purple/5">review</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-purple/60 bg-terminal-purple/5">explore</span></div></div>
-                    <div class="tcard border border-terminal-border p-5"><div class="flex items-center gap-2 mb-2"><span class="text-terminal-cyan text-xs">◆</span><h3 class="text-xs font-bold text-white">Built-in PR/MR review automation</h3></div><p class="text-[0.7rem] text-terminal-muted leading-relaxed mb-3">Use NanoAgent in GitHub Actions, GitLab CI, or Bitbucket Pipelines to review diffs and post review comments automatically.</p><div class="flex items-center gap-2 text-[0.65rem] text-terminal-dim"><span>[github actions]</span><span>[gitlab ci]</span><span>[bitbucket pipelines]</span></div></div>
-                    <div class="tcard border border-terminal-border p-5"><div class="flex items-center gap-2 mb-2"><span class="text-terminal-green text-xs">◆</span><h3 class="text-xs font-bold text-white">Editor integration through ACP</h3></div><p class="text-[0.7rem] text-terminal-muted leading-relaxed">Run NanoAgent as an Agent Client Protocol server so compatible editors and workflow tools can send prompts, manage sessions, and receive tool progress updates.</p></div>
-                    <div class="tcard border border-terminal-border p-5"><div class="flex items-center gap-2 mb-2"><span class="text-terminal-amber text-xs">◆</span><h3 class="text-xs font-bold text-white">Undo and redo for tracked edits</h3></div><p class="text-[0.7rem] text-terminal-muted leading-relaxed">Roll back or re-apply tracked file edit transactions directly from desktop controls or terminal commands.</p></div>
-                    <div class="tcard border border-terminal-border p-5"><div class="flex items-center gap-2 mb-2"><span class="text-terminal-rose text-xs">◆</span><h3 class="text-xs font-bold text-white">Custom agents and skills</h3></div><p class="text-[0.7rem] text-terminal-muted leading-relaxed">Add project-specific instructions, reusable skills, custom subagents, custom tools, and MCP servers to adapt NanoAgent to your workflow.</p></div>
-                    <div class="tcard border border-terminal-border p-5"><div class="flex items-center gap-2 mb-2"><span class="text-terminal-cyan text-xs">◆</span><h3 class="text-xs font-bold text-white">Local-first workspace</h3></div><p class="text-[0.7rem] text-terminal-muted leading-relaxed">Workspace files, configuration, lesson memory, and optional audit logs are stored locally. Only needed prompts, snippets, tool outputs, and context are sent to the chosen model provider.</p></div>
-                    <div class="tcard border border-terminal-border p-5"><div class="flex items-center gap-2 mb-2"><span class="text-terminal-amber text-xs">◆</span><h3 class="text-xs font-bold text-white">Permission policies & sandboxing</h3></div><p class="text-[0.7rem] text-terminal-muted leading-relaxed mb-3">Actions can be allowed, denied, or require approval, with sandbox modes like read-only, workspace-write, and full-access when explicitly configured.</p><div class="flex flex-wrap gap-1"><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-green/60 bg-terminal-green/5">read-only</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">workspace-write</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-rose/60 bg-terminal-rose/5">full-access</span></div></div>
-                    <div class="tcard border border-terminal-border p-5 md:col-span-2 lg:col-span-3"><div class="flex items-start gap-2"><span class="text-terminal-rose text-xs shrink-0 mt-0.5">◆</span><div><h3 class="text-xs font-bold text-white mb-2">Secret redaction and safer logs</h3><p class="text-[0.7rem] text-terminal-muted leading-relaxed">NanoAgent redacts common secret patterns before storing or displaying tool output, memory, audit records, logs, conversation history, workspace instructions, and errors. Your tokens and keys stay out of your history. Codebase indexing never stores full file contents — it reads snippets from current workspace files and respects <span class="text-terminal-rose">.gitignore</span> / <span class="text-terminal-rose">.nanoignore</span> exclusion rules.</p></div></div></div>
-                </div>
+            <!-- npm -->
+            <div class="csub__panel is-active" data-csubpanel="npm">
+              <div class="installer__screen" data-copy-group>
+                <code class="installer__cmd"><span class="install__sigil">$</span> npm install -g nanoai-cli</code>
+                <button class="installer__copy" data-copy="npm install -g nanoai-cli" aria-label="Copy npm install command">Copy</button>
+              </div>
             </div>
-        </section>
 
-        <section id="cli-workflows" class="relative px-4 sm:px-6 pt-10 pb-16 grid-bg">
-            <div class="max-w-4xl mx-auto">
-                <div class="section-line border-terminal-border pb-3 mb-8"><span class="text-terminal-cyan text-xs font-bold"># cli-workflows</span><span class="text-terminal-dim text-xs ml-2">───────────────────────────────────────────────────</span></div>
-                <p class="text-terminal-muted text-xs mb-6">Beyond interactive mode — one-shot commands, piped input, and session resume.</p>
-                <div class="space-y-2">
-                    <div class="border border-terminal-border overflow-hidden"><div class="border-b border-terminal-border bg-white/[0.01] px-4 py-1.5 text-[0.65rem] text-terminal-dim flex items-center gap-2"><span class="text-terminal-green">$</span><span>one-shot — ask a question without entering interactive mode</span></div><div class="p-4 text-xs sm:text-sm flex items-start justify-between gap-3"><code class="text-terminal-green break-all">nanoai "Summarize this repository"</code><button onclick="copyCode(this)" class="shrink-0 text-terminal-dim hover:text-white transition-colors p-1" title="Copy"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button></div></div>
-                    <div class="border border-terminal-border overflow-hidden"><div class="border-b border-terminal-border bg-white/[0.01] px-4 py-1.5 text-[0.65rem] text-terminal-dim flex items-center gap-2"><span class="text-terminal-green">$</span><span>piped input — feed file content or command output directly</span></div><div class="p-4 text-xs sm:text-sm flex items-start justify-between gap-3"><code class="text-terminal-green break-all">cat error.log | nanoai --stdin "What caused this?"</code><button onclick="copyCode(this)" class="shrink-0 text-terminal-dim hover:text-white transition-colors p-1" title="Copy"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button></div></div>
-                    <div class="border border-terminal-border overflow-hidden"><div class="border-b border-terminal-border bg-white/[0.01] px-4 py-1.5 text-[0.65rem] text-terminal-dim flex items-center gap-2"><span class="text-terminal-green">$</span><span>resume — pick up where you left off in a saved section</span></div><div class="p-4 text-xs sm:text-sm flex items-start justify-between gap-3"><code class="text-terminal-green break-all">nanoai --section feature-auth "Continue the JWT refactor"</code><button onclick="copyCode(this)" class="shrink-0 text-terminal-dim hover:text-white transition-colors p-1" title="Copy"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button></div></div>
-                </div>
+            <!-- pnpm -->
+            <div class="csub__panel" data-csubpanel="pnpm">
+              <div class="installer__screen" data-copy-group>
+                <code class="installer__cmd"><span class="install__sigil">$</span> pnpm add -g nanoai-cli</code>
+                <button class="installer__copy" data-copy="pnpm add -g nanoai-cli" aria-label="Copy pnpm install command">Copy</button>
+              </div>
             </div>
-        </section>
 
-        <section id="extensibility" class="relative px-4 sm:px-6 pt-10 pb-16">
-            <div class="max-w-6xl mx-auto">
-                <div class="section-line border-terminal-border pb-3 mb-3"><span class="text-terminal-cyan text-xs font-bold"># extensibility</span><span class="text-terminal-dim text-xs ml-2">──────────────────────────────────────────────────────</span></div>
-                <p class="text-terminal-muted text-xs mb-8">Hooks, delegation, custom tools — make NanoAgent yours.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    <div class="tcard border border-terminal-purple/25 bg-terminal-purple/[0.015] p-5"><div class="flex items-center gap-2 mb-2"><span class="text-terminal-purple text-sm">▸</span><h3 class="text-xs font-bold text-white">Subagent delegation & orchestration</h3></div><p class="text-[0.7rem] text-terminal-muted leading-relaxed mb-3">Built-in and project-defined subagents handle specialized tasks. Use <span class="text-terminal-purple">@explore</span> for investigation, <span class="text-terminal-purple">@general</span> for delegated work, or <span class="text-terminal-purple">agent_delegate</span> / <span class="text-terminal-purple">agent_orchestrate</span> for multi-step coordination.</p><div class="flex flex-wrap gap-1"><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-purple/60 bg-terminal-purple/5">@explore</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-purple/60 bg-terminal-purple/5">@general</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-purple/60 bg-terminal-purple/5">agent_delegate</span><span class="text-[0.58rem] px-1.5 py-0.5 text-terminal-purple/60 bg-terminal-purple/5">agent_orchestrate</span></div></div>
-                    <div class="tcard border border-terminal-green/25 bg-terminal-green/[0.015] p-5"><div class="flex items-center gap-2 mb-2"><span class="text-terminal-green text-sm">▸</span><h3 class="text-xs font-bold text-white">Custom process tools</h3></div><p class="text-[0.7rem] text-terminal-muted leading-relaxed mb-3">Expose user-defined tools from <span class="text-terminal-green">agent-profile.json</span>. Write tools in any language — just read JSON from stdin, output text or JSON. Python, Bash, Go, Rust, whatever your team uses.</p><div class="text-[0.6rem] text-terminal-dim border-t border-terminal-green/15 pt-2 mt-1 space-y-0.5"><div><span class="text-terminal-green">stdin</span> → JSON payload</div><div><span class="text-terminal-green">stdout</span> → text or JSON response</div><div><span class="text-terminal-green">any language</span> — python, bash, go, rust...</div></div></div>
-                    <div class="tcard border border-terminal-amber/25 bg-terminal-amber/[0.015] p-5"><div class="flex items-center gap-2 mb-2"><span class="text-terminal-amber text-sm">▸</span><h3 class="text-xs font-bold text-white">Lifecycle hooks</h3></div><p class="text-[0.7rem] text-terminal-muted leading-relaxed mb-3">Automate around every phase of agent execution. Hooks fire on task, tool, file, shell, web, memory, permission, and delegation lifecycle events — for custom validation, logging, security gates, or workflow automation.</p><div class="flex flex-wrap gap-1"><span class="text-[0.55rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">task</span><span class="text-[0.55rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">tool</span><span class="text-[0.55rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">file</span><span class="text-[0.55rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">shell</span><span class="text-[0.55rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">web</span><span class="text-[0.55rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">memory</span><span class="text-[0.55rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">permission</span><span class="text-[0.55rem] px-1.5 py-0.5 text-terminal-amber/60 bg-terminal-amber/5">delegation</span></div></div>
-                    <div class="tcard border border-terminal-border p-5 md:col-span-2 lg:col-span-3"><div class="flex items-start gap-2"><span class="text-terminal-rose text-xs shrink-0 mt-0.5">◆</span><div><h3 class="text-xs font-bold text-white mb-2">Custom agents, skills & MCP servers</h3><p class="text-[0.7rem] text-terminal-muted leading-relaxed">Add project-specific instructions, reusable skills, custom subagents, and connect MCP servers for external tools and data sources — all governed by the same permission and approval system. Adapt NanoAgent to your team's workflow, not the other way around.</p></div></div></div>
-                </div>
+            <!-- bun -->
+            <div class="csub__panel" data-csubpanel="bun">
+              <div class="installer__screen" data-copy-group>
+                <code class="installer__cmd"><span class="install__sigil">$</span> bun add -g nanoai-cli</code>
+                <button class="installer__copy" data-copy="bun add -g nanoai-cli" aria-label="Copy bun install command">Copy</button>
+              </div>
             </div>
-        </section>
 
-        <!-- Comparison Table -->
-        <section id="comparison" class="relative px-4 sm:px-6 pt-10 pb-16 grid-bg">
-            <div class="max-w-6xl mx-auto">
-                <div class="section-line border-terminal-border pb-3 mb-3"><span class="text-terminal-cyan text-xs font-bold"># comparison</span><span class="text-terminal-dim text-xs ml-2">────────────────────────────────────────────────────</span></div>
-                <p class="text-terminal-muted text-xs mb-2">Feature comparison across AI coding agents.</p>
-                <p class="text-[0.65rem] text-terminal-dim mb-6"><span class="text-terminal-green">✅</span> = supported · <span class="text-terminal-dim">—</span> = not verified as first-class feature</p>
-                <div class="overflow-x-auto border border-terminal-border">
-                    <table id="comp-table" class="w-max min-w-full"></table>
-                </div>
-                <div class="mt-2 text-[0.55rem] text-terminal-dim">← scroll horizontally to see all features</div>
+            <div class="installer__actions">
+              <a class="btn btn--primary btn--lg" href="#start">See the quickstart</a>
+              <a class="btn btn--ghost btn--lg" href="https://github.com/rizwan3d/NanoAgent/releases/latest" target="_blank" rel="noopener">Latest release</a>
             </div>
-        </section>
-
-        <!-- Install -->
-        <section id="install" class="relative px-4 sm:px-6 pt-10 pb-16">
-            <div class="max-w-4xl mx-auto">
-                <div class="section-line border-terminal-border pb-3 mb-8"><span class="text-terminal-cyan text-xs font-bold"># install</span><span class="text-terminal-dim text-xs ml-2">──────────────────────────────────────────────────</span></div>
-                <div class="space-y-3 mb-10">
-                    <div class="border border-terminal-border overflow-hidden"><div class="border-b border-terminal-border bg-white/[0.01] px-4 py-1.5 text-[0.65rem] text-terminal-muted flex items-center gap-2"><span class="text-terminal-green">$</span><span>macOS / Linux</span></div><div class="p-4 text-xs sm:text-sm flex items-start justify-between gap-3"><code class="text-terminal-green break-all">curl -fsSL https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh | bash</code><button onclick="copyCode(this)" class="shrink-0 text-terminal-dim hover:text-white transition-colors p-1" title="Copy"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button></div></div>
-                    <div class="border border-terminal-border overflow-hidden"><div class="border-b border-terminal-border bg-white/[0.01] px-4 py-1.5 text-[0.65rem] text-terminal-muted flex items-center gap-2"><span class="text-terminal-cyan">PS></span><span>Windows PowerShell</span></div><div class="p-4 text-xs sm:text-sm flex items-start justify-between gap-3"><code class="text-terminal-cyan break-all">irm https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.ps1 | iex</code><button onclick="copyCode(this)" class="shrink-0 text-terminal-dim hover:text-white transition-colors p-1" title="Copy"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button></div></div>
-                    <p class="text-[0.65rem] text-terminal-dim text-center">Restart your shell if <span class="text-terminal-cyan/70">nanoai</span> is not immediately available.</p>
-                </div>
-                <div class="mb-4"><div class="flex items-center gap-2 mb-4"><span class="text-terminal-cyan text-xs font-bold">## desktop-downloads</span></div><p class="text-[0.65rem] text-terminal-dim mb-4">Pre-built desktop applications for every platform.</p></div>
-                <div class="border border-terminal-border overflow-hidden">
-                    <div class="border-b border-terminal-border bg-white/[0.01] grid grid-cols-2 text-[0.65rem] text-terminal-dim uppercase tracking-wider"><div class="px-4 py-2 font-bold">Platform</div><div class="px-4 py-2 font-bold text-right">Download</div></div>
-                    <div class="divide-y divide-terminal-border">
-                        <div class="grid grid-cols-2 text-xs hover:bg-white/[0.015] transition-colors"><div class="px-4 py-3 text-white/80 flex items-center gap-2"><span class="text-terminal-cyan text-[0.6rem]">●</span>Windows x64</div><div class="px-4 py-3 text-right"><a href="https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-win-x64-setup.exe" target="_blank" rel="noopener" class="text-terminal-cyan hover:underline">Installer →</a></div></div>
-                        <div class="grid grid-cols-2 text-xs hover:bg-white/[0.015] transition-colors"><div class="px-4 py-3 text-white/80 flex items-center gap-2"><span class="text-terminal-green text-[0.6rem]">●</span>Linux x64</div><div class="px-4 py-3 text-right"><a href="https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-linux-x64.zip" target="_blank" rel="noopener" class="text-terminal-cyan hover:underline">Zip →</a></div></div>
-                        <div class="grid grid-cols-2 text-xs hover:bg-white/[0.015] transition-colors"><div class="px-4 py-3 text-white/80 flex items-center gap-2"><span class="text-terminal-purple text-[0.6rem]">●</span>Linux arm64</div><div class="px-4 py-3 text-right"><a href="https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-linux-arm64.zip" target="_blank" rel="noopener" class="text-terminal-cyan hover:underline">Zip →</a></div></div>
-                        <div class="grid grid-cols-2 text-xs hover:bg-white/[0.015] transition-colors"><div class="px-4 py-3 text-white/80 flex items-center gap-2"><span class="text-terminal-amber text-[0.6rem]">●</span>macOS x64</div><div class="px-4 py-3 text-right"><a href="https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-osx-x64.zip" target="_blank" rel="noopener" class="text-terminal-cyan hover:underline">Zip →</a></div></div>
-                        <div class="grid grid-cols-2 text-xs hover:bg-white/[0.015] transition-colors"><div class="px-4 py-3 text-white/80 flex items-center gap-2"><span class="text-terminal-rose text-[0.6rem]">●</span>macOS arm64 <span class="text-[0.55rem] px-1 py-px bg-terminal-rose/10 text-terminal-rose/70">Apple Silicon</span></div><div class="px-4 py-3 text-right"><a href="https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-osx-arm64.zip" target="_blank" rel="noopener" class="text-terminal-cyan hover:underline">Zip →</a></div></div>
-                    </div>
-                </div>
+          </div>
+          <!-- VS Code -->
+          <div class="ipanel" data-ipanel="vscode">
+            <div class="installer__screen" data-copy-group>
+              <code class="installer__cmd"><span class="install__sigil">$</span> ext install rizwan3d.nanoagent</code>
+              <button class="installer__copy" data-copy="ext install rizwan3d.nanoagent"
+                aria-label="Copy install command">Copy</button>
             </div>
-        </section>
-
-        <!-- FAQ -->
-        <section id="faq" class="relative px-4 sm:px-6 pt-10 pb-16 grid-bg">
-            <div class="max-w-3xl mx-auto">
-                <div class="section-line border-terminal-border pb-3 mb-8"><span class="text-terminal-cyan text-xs font-bold"># faq</span><span class="text-terminal-dim text-xs ml-2">───────────────────────────────────────</span></div>
-                <div class="divide-y divide-terminal-border/40" id="faq-list"></div>
+            <div class="installer__actions">
+              <a class="btn btn--primary btn--lg"
+                href="https://marketplace.visualstudio.com/items?itemName=rizwan3d.nanoagent" target="_blank"
+                rel="noopener">Install for free</a>
+              <a class="btn btn--ghost btn--lg" href="https://github.com/rizwan3d/NanoAgent" target="_blank"
+                rel="noopener">View on GitHub</a>
             </div>
-        </section>
+            <p class="installer__foot">Docked tool window drives the local <code>nanoai</code> CLI over ACP.</p>
+          </div>
 
-        <section class="relative px-4 sm:px-6 pt-10 pb-16">
-            <div class="max-w-3xl mx-auto text-center">
-                <div class="text-[0.65rem] text-terminal-dim mb-8"># sponsor: <a href="https://alfain.co/" target="_blank" rel="noopener" class="text-terminal-muted hover:text-terminal-cyan transition-colors">ALFAIN Technologies (PVT) Limited</a> — alfain.co</div>
-                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight mb-4">Ready to meet your<br><span class="text-terminal-cyan">AI teammate?</span></h2>
-                <p class="text-[0.7rem] text-terminal-muted mb-8">Stop context-switching. Start building. NanoAgent keeps you in the flow state.</p>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-                    <a href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener" class="tbtn-fill inline-flex items-center gap-2 px-6 py-2.5 bg-terminal-cyan text-terminal-bg text-sm font-bold"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>star on github</span></a>
-                    <a href="https://github.com/rizwan3d/NanoAgent/issues" target="_blank" rel="noopener" class="tbtn inline-flex items-center gap-2 px-6 py-2.5 border border-terminal-border text-terminal-muted text-sm"><span>→</span><span>report an issue</span></a>
-                </div>
+          <!-- Visual Studio -->
+          <div class="ipanel" data-ipanel="vs">
+            <div class="installer__screen">
+              <code
+                class="installer__cmd"><span class="install__sigil">›</span> Extensions ▸ Manage Extensions ▸ search “NanoAgent”</code>
             </div>
-        </section>
-    </main>
+            <div class="installer__actions">
+              <a class="btn btn--primary btn--lg"
+                href="https://marketplace.visualstudio.com/items?itemName=rizwan3d.nanoagent-vs" target="_blank"
+                rel="noopener">Get the VS extension</a>
+              <a class="btn btn--ghost btn--lg" href="docs.html">Read the docs</a>
+            </div>
+            <p class="installer__foot">Docked tool window drives the local <code>nanoai</code> CLI over ACP.</p>
+          </div>
 
-    <footer class="border-t border-terminal-border bg-terminal-bg px-4 py-1.5">
-        <div class="max-w-6xl mx-auto flex items-center justify-between text-[0.6rem] text-terminal-dim">
-            <div class="flex items-center gap-2"><span>NanoAgent</span><span>│</span><span>Apache 2.0</span></div>
-            <div class="flex items-center gap-2"><a href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener" class="hover:text-terminal-muted transition-colors">github.com/rizwan3d/NanoAgent</a><span>│</span><a href="https://alfain.co/" target="_blank" rel="noopener" class="hover:text-terminal-muted transition-colors">alfain.co</a></div>
+
+          <!-- Desktop -->
+          <div class="ipanel" data-ipanel="desktop">
+            <div class="installer__screen">
+              <code
+                class="installer__cmd"><span class="install__sigil">↓</span> Windows · macOS · Linux (x64 / arm64)</code>
+            </div>
+            <div class="installer__actions">
+              <a class="btn btn--primary btn--lg" href="https://github.com/rizwan3d/NanoAgent/releases/latest"
+                target="_blank" rel="noopener">Download desktop app</a>
+              <a class="btn btn--ghost btn--lg" href="https://github.com/rizwan3d/NanoAgent" target="_blank"
+                rel="noopener">View on GitHub</a>
+            </div>
+            <p class="installer__foot">Verify with SHA256SUMS + build attestation.</p>
+          </div>
         </div>
-    </footer>
-</div>
+      </div>
 
-<div id="toast" class="fixed bottom-8 right-6 z-50 flex items-center gap-2 px-3 py-2 border border-terminal-green/30 bg-terminal-bg text-terminal-green text-xs opacity-0 translate-y-4 transition-all duration-300 pointer-events-none"><span>✓</span><span>copied to clipboard</span></div>
+      <!-- ── nano gif ── -->
+      <div class="hero__visual">
+        <div class="visual__frame">
+          <div class="visual__bar">
+            <span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span>
+            <span class="visual__title">nanoai</span>
+          </div>
+          <img src="assets/nano.gif" alt="NanoAgent running in a terminal" class="visual__img" loading="lazy" />
+        </div>
+        <div class="visual__halo" aria-hidden="true"></div>
+      </div>
+    </section>
 
-<script>
-lucide.createIcons();
+    <!-- ───────────────────────── WHY NANOAGENT ───────────────────────── -->
+    <section class="section container" id="why">
+      <header class="section__head">
+        <span class="eyebrow">Why NanoAgent</span>
+        <h2 class="section__title">Power-user features, nothing hidden</h2>
+        <p class="section__lede">Built for practical engineering work: real symbols, version-controlled memory,
+          scriptable runs, and a sandbox for anything sensitive.</p>
+      </header>
 
-// Comparison table data
-const H = ['CLI', 'Desktop / IDE / Web UI', 'Repo read/write', 'Shell / tests', 'MCP', 'Custom agents / modes', 'skills', 'Permissions', 'sandbox', 'PR / CI / background automation', 'ACP', 'lesson Memory', 'Repo Memory', 'Multi-provider', 'BYOK', 'Open source', 'GitHub support', 'GitLab support', 'Bitbucket support', 'Reads codebase', 'Edits files', 'Runs shell commands', 'Runs tests/builds', 'Browser', 'web access', 'Multi-agent / subagents', 'Parallel sessions/tasks', 'Custom tools', 'Hooks/workflows', 'Rules/instructions', 'LSP/code intelligence', 'Repo map/indexing', 'Terminal integration', 'Share/export sessions', 'Network controls', 'Secret redaction', 'Audit log', 'Undo/checkpoints', 'Policy/governance rules', 'budget controls', 'docs generation', 'Monorepos support', 'code review rules'];
+      <ul class="feature-list">
+        <li class="feature-list__item">
+          <div class="card__icon">🧩</div>
+          <div class="feature-list__text">
+            <h3>LSP-enabled</h3>
+            <p>Language Server Protocol integration gives the agent real symbols, types, and diagnostics — not guesses
+              about your code.</p>
+          </div>
+        </li>
+        <li class="feature-list__item">
+          <div class="card__icon">🧠</div>
+          <div class="feature-list__text">
+            <h3>Repo memory</h3>
+            <p>Team knowledge lives in version-controlled <code>.nanoagent/memory</code> files you can read, review, and
+              edit — not hidden agent notes.</p>
+          </div>
+        </li>
+        <li class="feature-list__item">
+          <div class="card__icon">⚙️</div>
+          <div class="feature-list__text">
+            <h3>Headless mode</h3>
+            <p>Non-interactive single-query mode for CI/CD pipelines, scripts, and automation. Supports piped stdin.</p>
+          </div>
+        </li>
+        <li class="feature-list__item">
+          <div class="card__icon">⌨️</div>
+          <div class="feature-list__text">
+            <h3><code>!</code> and <code>!!</code> shell</h3>
+            <p>Run shell commands inline with <code>!</code> and rerun the last one with <code>!!</code> — no need to
+              switch terminals.</p>
+          </div>
+        </li>
+        <li class="feature-list__item">
+          <div class="card__icon">🛡️</div>
+          <div class="feature-list__text">
+            <h3>Sandboxed execution</h3>
+            <p>Tools and commands run inside a sandbox with permission gates for file edits, network access, and elevated
+              operations.</p>
+          </div>
+        </li>
+        <li class="feature-list__item">
+          <div class="card__icon">🗺️</div>
+          <div class="feature-list__text">
+            <h3>Planning mode</h3>
+            <p>A read-only planning profile drafts a reviewable plan before a single file is touched.</p>
+          </div>
+        </li>
+        <li class="feature-list__item">
+          <div class="card__icon">📦</div>
+          <div class="feature-list__text">
+            <h3>SDK to embed in your app</h3>
+            <p>Drop NanoAgent into your own .NET application with the <a class="text-link" href="#sdk">SDK on NuGet</a>
+              and drive it programmatically.</p>
+          </div>
+        </li>
+      </ul>
 
-const A = [
-  ['NanoAgent',       '1111111111111111111111111111111110111111111', 1],
-  ['OpenAI Codex',    '1111111111011011000111110111110011000010011', 0],
-  ['Claude Code',     '1111111111011111101111111111110010000010011', 0],
-  ['GitHub Copilot',  '0111111111001001000111110111110000000100011', 0],
-  ['Cursor Agent',    '1111110111011111000111110101101111010100111', 0],
-  ['Gemini CLI',      '1111100111011011000111110100110010000100011', 0],
-  ['Kilo Code',       '1111111101011111000111111111010111010001111', 0],
-  ['OpenCode',        '1111111101011111100111110111011111000000011', 0],
-  ['Roo Code',        '0111110101011111000111111111010111010000101', 0],
-  ['OpenHands',       '1111110111101111111111111111110111010101111', 0],
-  ['Goose',           '1111111111111111110111111111110011011010011', 0],
-  ['Cline',           '1111111101111111100111111111110111010000101', 0],
-  ['Aider',           '1111000000000111000111101000010110000001000', 0],
-  ['Qwen Code',       '1111111101000111000111110101000010000000011', 0],
-];
+      <div class="section__actions">
+        <a class="btn btn--primary btn--lg" href="features.html">See all features</a>
+      </div>
+    </section>
 
-function buildTable() {
-    let html = '<thead><tr><th class="px-2 py-2 text-left text-[0.5rem] text-terminal-cyan font-bold sticky left-0 bg-terminal-bg z-10 border-r border-terminal-border min-w-[100px]">Agent</th>';
-    H.forEach(h => { html += '<th class="px-1 py-2 text-center text-[0.45rem] text-terminal-dim font-bold uppercase tracking-wider border-r border-terminal-border/30">' + h + '</th>'; });
-    html += '<th class="px-2 py-2 text-center text-[0.5rem] text-terminal-cyan font-bold sticky right-0 bg-terminal-bg z-10 border-l border-terminal-border">Score</th></tr></thead><tbody>';
+    <!-- ───────────────────────── COMPARE ───────────────────────── -->
+    <section class="section container" id="compare">
+      <header class="section__head">
+        <span class="eyebrow">Comparison</span>
+        <h2 class="section__title">How NanoAgent compares</h2>
+        <p class="section__lede">See what makes NanoAgent different from other AI coding tools.</p>
+      </header>
 
-    // Sort: highlighted first, then by score desc
-    const sorted = [...A].sort((a, b) => {
-        if (a[2] !== b[2]) return b[2] - a[2];
-        const sa = a[1].split('').reduce((s, c) => s + +c, 0);
-        const sb = b[1].split('').reduce((s, c) => s + +c, 0);
-        return sb - sa;
-    });
+      <div class="table-wrap">
+        <table class="compare">
+          <thead>
+            <tr>
+              <th scope="col" class="compare__feat">Feature</th>
+              <th scope="col" class="compare__us">NanoAgent</th>
+              <th scope="col">Codex</th>
+              <th scope="col">Claude Code</th>
+              <th scope="col">OpenCode</th>
+              <th scope="col">Kilo Code</th>
+              <th scope="col">GitHub Copilot</th>
+              <th scope="col">Aider</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Local-first</th>
+              <td class="y">✓</td>
+              <td class="p">◐</td>
+              <td class="p">◐</td>
+              <td class="y">✓</td>
+              <td class="p">◐</td>
+              <td>–</td>
+              <td class="y">✓</td>
+            </tr>
+            <tr>
+              <th scope="row">Repo memory</th>
+              <td class="y">✓</td>
+              <td class="p">◐</td>
+              <td class="y">✓</td>
+              <td class="p">◐</td>
+              <td class="p">◐</td>
+              <td class="p">◐</td>
+              <td>–</td>
+            </tr>
+            <tr>
+              <th scope="row">VS Code extension</th>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td>–</td>
+            </tr>
+            <tr>
+              <th scope="row">Visual Studio</th>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td>–</td>
+              <td>–</td>
+              <td>–</td>
+              <td class="y">✓</td>
+              <td>–</td>
+            </tr>
+            <tr>
+              <th scope="row">JetBrains plugin</th>
+              <td class="y">✓ (ACP)</td>
+              <td>–</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td>–</td>
+            </tr>
+            <tr>
+              <th scope="row">CI code reviews</th>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td>–</td>
+            </tr>
+            <tr>
+              <th scope="row">15+ AI providers</th>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td>–</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td class="y">✓</td>
+            </tr>
+            <tr>
+              <th scope="row">ACP protocol</th>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td>–</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td>–</td>
+            </tr>           
+            <tr>
+              <th scope="row">Sandboxed execution</th>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td>–</td>
+              <td>–</td>
+              <td>–</td>
+            </tr>
+            <tr>
+              <th scope="row">Open source</th>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td class="y">✓</td>
+            </tr>
+            <tr>
+              <th scope="row">LSP</th>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td>–</td>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td class="y">✓</td>
+              <td>–</td>
+            </tr>
+            <tr>
+              <th scope="row">Direct shell &amp; background terminals</th>
+              <td class="y">✓</td>
+              <td class="p">◐</td>
+              <td class="y">✓</td>
+              <td class="p">◐</td>
+              <td class="y">✓</td>
+              <td class="p">◐</td>
+              <td class="p">◐</td>
+            </tr>
+            <tr>
+              <th scope="row">Subagents &amp; orchestration</th>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td class="y">✓</td>
+              <td class="p">◐</td>
+              <td>–</td>
+            </tr>
+            <tr>
+              <th scope="row">Local codebase indexing</th>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td>–</td>
+              <td>–</td>
+              <td class="y">✓</td>
+              <td class="p">◐</td>
+              <td class="p">◐</td>
+            </tr>
+            <tr>
+              <th scope="row">Memory, audit &amp; hooks</th>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td>–</td>
+              <td>–</td>
+              <td>–</td>
+            </tr>
+            <tr>
+              <th scope="row">SDK to embed in your app</th>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td class="y">✓</td>
+              <td>–</td>
+              <td>–</td>
+              <td>–</td>
+              <td>–</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="compare__legend"><span class="y">✓</span> Yes · <span class="p">◐</span> Partial · <span
+          class="n">–</span> No</p>
+    </section>
 
-    sorted.forEach(row => {
-        const hl = row[2] === 1;
-        const vals = row[1];
-        const score = vals.split('').reduce((s, c) => s + +c, 0);
-        html += '<tr class="' + (hl ? 'hl-row' : 'hover:bg-white/[0.01]') + ' border-b border-terminal-border/30">';
-        html += '<td class="px-2 py-1.5 text-[0.55rem] font-bold sticky left-0 bg-terminal-bg z-10 border-r border-terminal-border ' + (hl ? 'text-terminal-green' : 'text-white/80') + '">' + row[0] + '</td>';
-        for (let i = 0; i < vals.length; i++) {
-            html += '<td class="px-1 py-1.5 text-center text-[0.6rem] border-r border-terminal-border/20 ' + (vals[i] === '1' ? 'chk' : 'na') + '">' + (vals[i] === '1' ? '✅' : '—') + '</td>';
-        }
-        html += '<td class="px-2 py-1.5 text-center text-[0.6rem] font-bold sticky right-0 bg-terminal-bg z-10 border-l border-terminal-border ' + (hl ? 'score-hl' : 'score-dim') + '">' + score + '/43</td>';
-        html += '</tr>';
-    });
+    <!-- ───────────────────────── PROVIDERS ───────────────────────── -->
+    <section class="section container" id="providers">
+      <header class="section__head">
+        <span class="eyebrow">Provider choice</span>
+        <h2 class="section__title">Use the model that fits your budget &amp; policy</h2>
+        <p class="section__lede">From subscription sign-in to API-key providers to fully local models — NanoAgent adapts
+          to what you already pay for.</p>
+      </header>
+      <ul class="providers">
+        <li>OpenAI</li>
+        <li>ChatGPT Plus / Pro</li>
+        <li>Anthropic Claude Pro / Max</li>
+        <li>GitHub Copilot</li>
+        <li>OpenRouter</li>
+        <li>Kilo Code</li>
+        <li>Cerebras</li>
+        <li>Groq</li>
+        <li>DeepSeek</li>
+        <li>Anthropic</li>
+        <li>Google AI Studio</li>
+        <li>Ollama</li>
+        <li>LM Studio</li>
+        <li>Ollama Cloud</li>
+        <li>OpenAI-compatible</li>
+      </ul>
+    </section>
 
-    html += '</tbody>';
-    document.getElementById('comp-table').innerHTML = html;
-}
-buildTable();
+    <!-- ───────────────────────── QUICKSTART ───────────────────────── -->
+    <section class="section container" id="start">
+      <header class="section__head">
+        <span class="eyebrow">Quickstart</span>
+        <h2 class="section__title">Up and running in two steps</h2>
+        <p class="section__lede">Install, then let NanoAgent walk you through provider setup on first launch — or
+          preseed it with environment variables.</p>
+      </header>
 
-// FAQ data
-const faqs = [
-    ['What is NanoAgent?', 'NanoAgent is an AI coding agent that works directly with your repository. It can inspect code, plan changes, make focused edits, run validation commands, and review pull requests — from either a desktop app or the <span class="text-terminal-cyan">nanoai</span> terminal CLI.'],
-    ['Is NanoAgent free?', 'Yes, NanoAgent itself is free and open source under the Apache 2.0 license. You only pay for the AI provider you choose to use — and free-tier models (like those available through OpenRouter) work out of the box with no cost. Budget controls let you cap spending with <span class="text-terminal-amber">/budget</span>.'],
-    ['How do I install NanoAgent?', 'For the CLI, run the one-line install script from your terminal (curl on macOS/Linux, irm on Windows PowerShell). For the desktop app, download the installer or zip for your platform from the GitHub releases. See the <a href="#install" class="text-terminal-cyan hover:underline">#install</a> section for details.'],
-    ['Which AI models does NanoAgent support?', 'NanoAgent works with OpenAI, ChatGPT Plus/Pro (browser sign-in), OpenRouter, Anthropic (Claude), Google AI Studio (Gemini), and any OpenAI-compatible provider — including local models through Ollama, LM Studio, or vLLM. Switch providers instantly with <span class="text-terminal-amber">F2</span> in the CLI.'],
-    ['How does NanoAgent handle code privacy and data?', 'NanoAgent is local-first: workspace files, configuration, memory, and audit logs stay on your machine. Codebase indexing <span class="text-white/80">never stores full file contents</span> — it builds a lightweight index and reads snippets from current workspace files on demand, respecting <span class="text-white/80">.gitignore</span> and <span class="text-white/80">.nanoignore</span> rules. Only the prompts, snippets, and tool outputs needed for the current task are sent to your AI provider. Built-in secret redaction strips API keys, tokens, and sensitive patterns from all stored output.'],
-    ['What agent modes does NanoAgent have?', 'NanoAgent has five working modes: <span class="text-white/80">Build</span> for implementation with full edit access, <span class="text-white/80">Plan</span> for read-only planning, <span class="text-white/80">Review</span> for code review, <span class="text-white/80">General</span> for delegated work, and <span class="text-white/80">Explore</span> for quick investigation. Each mode has its own permission profile. You can also delegate to subagents with <span class="text-terminal-purple">@explore</span> and <span class="text-terminal-purple">@general</span>.'],
-    ['Does NanoAgent understand my entire codebase?', 'Yes. NanoAgent builds a local codebase index (<span class="text-terminal-green">.nanoagent/cache/codebase-index.json</span>) that supports search by concept, symbol, path, or behavior. It refreshes incrementally, respects .gitignore/.nanoignore, and never uploads your whole project — just the snippets needed for the current task.'],
-    ['What programming languages does NanoAgent support?', 'NanoAgent is language-agnostic. It reads and edits files as text, so it works with any programming language. The quality of results depends on the underlying AI model\'s familiarity with the language.'],
-    ['Does NanoAgent support MCP?', 'Yes. You can add MCP servers to extend NanoAgent with custom tools and data sources — databases, APIs, internal services — all governed by the same permission and approval system.'],
-    ['Does NanoAgent support ACP?', 'Yes. NanoAgent can run as an Agent Client Protocol (ACP) server so compatible editors and workflow tools can send prompts, manage sessions, and receive real-time tool progress updates.'],
-    ['Can I extend NanoAgent with custom tools?', 'Yes. Define custom process tools in <span class="text-terminal-green">agent-profile.json</span> — write them in any language that reads JSON from stdin and outputs text/JSON. You can also add lifecycle hooks for task, tool, file, shell, web, memory, permission, and delegation events for automation around writes, tests, and security checks.'],
-    ['Is NanoAgent really open source?', 'Yes. The entire source code is available on <a href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener" class="text-terminal-cyan hover:underline">GitHub</a> under the Apache 2.0 license. No hidden tiers, no locked features, no telemetry phoning home.'],
-];
+      <div class="steps">
+        <div class="step">
+          <div class="step__num">1</div>
+          <div class="step__body">
+            <h3>Install the CLI</h3>
+            <div class="codebox">
+              <div class="codebox__tabs">
+                <button class="codetab is-active" data-code="sh">macOS / Linux</button>
+                <button class="codetab" data-code="ps">Windows</button>
+              </div>
+              <div class="codebox__body">
+                <pre class="codeblock is-active" data-code="sh" data-copy-group><button class="codeblock__copy" data-copy="curl -fsSL https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh | bash">Copy</button><code><span class="c-dim"># install</span>
+curl -fsSL https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh | bash
 
-const faqList = document.getElementById('faq-list');
-faqs.forEach(([q, a]) => {
-    faqList.innerHTML += '<div class="faq-item cursor-pointer" onclick="toggleFaq(this)"><div class="flex items-center justify-between py-3 px-1"><div class="flex items-center gap-2"><span class="text-terminal-amber text-xs">❯</span><span class="text-xs font-medium text-white">' + q + '</span></div><span class="text-terminal-dim text-[0.65rem] faq-chevron">▾</span></div><div class="faq-answer px-1 pb-3 pl-5"><p class="text-[0.7rem] text-terminal-muted leading-relaxed">' + a + '</p></div></div>';
-});
+<span class="c-dim"># start</span>
+nanoai</code></pre>
+                <pre class="codeblock" data-code="ps" data-copy-group><button class="codeblock__copy" data-copy="irm https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.ps1 | iex">Copy</button><code><span class="c-dim"># install</span>
+irm https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.ps1 | iex
 
-function toggleFaq(item) { const w = item.classList.contains('active'); document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active')); if (!w) item.classList.add('active'); }
+<span class="c-dim"># start</span>
+nanoai</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
 
-async function fetchStars() { try { const r = await fetch('https://api.github.com/repos/rizwan3d/NanoAgent'); const d = await r.json(); if (d.stargazers_count !== undefined) { const e = document.getElementById('star-count'); const c = d.stargazers_count; e.textContent = c >= 1000 ? (c / 1000).toFixed(1) + 'k' : c; } } catch (e) { document.getElementById('star-count').textContent = '★'; } }
-fetchStars();
+        <div class="step">
+          <div class="step__num">2</div>
+          <div class="step__body">
+            <h3>Pick a provider &amp; go</h3>
+            <p class="step__note">Launch and let onboarding walk you through setup — or preseed it and skip straight to
+              a run:</p>
+            <div class="codebox">
+              <div class="codebox__tabs">
+                <button class="codetab is-active" data-code="normal">Normal run</button>
+                <button class="codetab" data-code="headless">Headless</button>
+              </div>
+              <div class="codebox__body">
+                <pre class="codeblock is-active" data-code="normal" data-copy-group><button class="codeblock__copy" data-copy="nanoai">Copy</button><code><span class="c-dim"># launch — onboarding walks you through provider setup</span>
+nanoai</code></pre>
+                <pre class="codeblock" data-code="headless" data-copy-group><button class="codeblock__copy" data-copy='export NANOAGENT_PROVIDER="openai"
+export NANOAGENT_MODEL="gpt-5-5"
+export NANOAGENT_THINKING="on"
+export NANOAGENT_API_KEY="PASTE_NEW_ROTATED_KEY_HERE"
 
-function copyCode(b) { const c = b.closest('.p-4').querySelector('code'); navigator.clipboard.writeText(c.textContent.trim()).then(() => { showToast(); b.classList.add('text-terminal-green'); setTimeout(() => b.classList.remove('text-terminal-green'), 1500); }); }
-function showToast() { const t = document.getElementById('toast'); t.classList.remove('opacity-0','translate-y-4'); t.classList.add('opacity-100','translate-y-0'); setTimeout(() => { t.classList.remove('opacity-100','translate-y-0'); t.classList.add('opacity-0','translate-y-4'); }, 2000); }
+nanoai -p "Say hello in one short line" --yes'>Copy</button><code><span class="c-dim"># headless setup via environment variables</span>
+export NANOAGENT_PROVIDER="openai"
+export NANOAGENT_MODEL="gpt-5-5"
+export NANOAGENT_THINKING="on"
+export NANOAGENT_API_KEY="PASTE_NEW_ROTATED_KEY_HERE"
 
-const obs = new IntersectionObserver(e => { e.forEach(en => { if (en.isIntersecting) { en.target.style.animationPlayState = 'running'; obs.unobserve(en.target); } }); }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-document.querySelectorAll('.animate-fade-in-up').forEach(el => { el.style.animationPlayState = 'paused'; obs.observe(el); });
+nanoai -p "Say hello in one short line" --yes</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-const secs = document.querySelectorAll('section[id]'); const navs = document.querySelectorAll('header a[href^="#"]');
-window.addEventListener('scroll', () => { let c = ''; secs.forEach(s => { if (window.scrollY >= s.offsetTop - 80) c = s.getAttribute('id'); }); navs.forEach(l => { l.classList.remove('text-terminal-cyan'); if (l.getAttribute('href') === `#${c}`) l.classList.add('text-terminal-cyan'); }); });
-</script>
+    <!-- ───────────────────────── SDK / NUGET ───────────────────────── -->
+    <section class="section container" id="sdk">
+      <div class="bench">
+        <div class="bench__copy">
+          <span class="eyebrow">SDK for .NET</span>
+          <h2 class="section__title">Embed NanoAgent in your own app</h2>
+          <p class="section__lede">The NanoAgent SDK ships on NuGet. Add the package, point it at your provider, and
+            drive the same agent — profiles, permissions, memory, and all — from inside your application.</p>
+          <div class="bench__actions">
+            <a class="btn btn--ghost" href="docs.html#sdk">Read the SDK docs →</a>
+            <a class="btn btn--ghost" href="https://www.nuget.org/packages/NanoAgent/" target="_blank" rel="noopener">View
+              on NuGet →</a>
+          </div>
+        </div>
+        <pre class="codeblock codeblock--solo" data-copy-group><button class="codeblock__copy" data-copy="dotnet add package NanoAgent">Copy</button><code><span class="c-dim"># add the SDK to your project</span>
+dotnet add package NanoAgent
+
+<span class="c-dim"># or in your .csproj</span>
+&lt;PackageReference Include="NanoAgent" Version="*" /&gt;</code></pre>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── CTA ───────────────────────── -->
+    <section class="section container">
+      <div class="cta">
+        <div class="cta__glow" aria-hidden="true"></div>
+        <h2>Ship with an agent that keeps you in control.</h2>
+        <p>Local-first. Reviewable. Open source under Apache-2.0.</p>
+        <div class="cta__actions">
+          <a class="btn btn--primary btn--lg" href="#get">Get NanoAgent</a>
+          <a class="btn btn--ghost btn--lg" href="https://github.com/rizwan3d/NanoAgent" target="_blank"
+            rel="noopener">Star on GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ───────────────────────── FOOTER ───────────────────────── -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a class="brand" href="#top">
+          <img src="assets/logo.png" alt="" class="brand__mark" width="26" height="26" />
+          <span class="brand__name">NanoAgent</span>
+        </a>
+        <p>Your AI coding agent for desktop, terminal, and editor workflows.</p>
+      </div>
+      <nav class="footer__cols" aria-label="Footer">
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="#why">Why NanoAgent</a>
+          <a href="features.html">Features</a>
+          <a href="#compare">Compare</a>
+          <a href="#providers">Providers</a>
+          <a href="#start">Quickstart</a>
+        </div>
+        <div class="footer__col">
+          <h4>Resources</h4>
+          <a href="docs.html">Documentation</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/releases/latest" target="_blank" rel="noopener">Releases</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/releases" target="_blank" rel="noopener">Changelog</a>
+          <a href="https://www.nuget.org/packages/NanoAgent/" target="_blank" rel="noopener">NuGet SDK</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/blob/master/SECURITY.md" target="_blank"
+            rel="noopener">Security</a>
+        </div>
+        <div class="footer__col">
+          <h4>Community</h4>
+          <a href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/issues" target="_blank" rel="noopener">Issues</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/discussions" target="_blank"
+            rel="noopener">Discussions</a>
+          <a href="https://hackernoon.com/building-an-ai-coding-agent-that-doesnt-hide-what-its-doing"
+            target="_blank" rel="noopener">Blog</a>
+        </div>
+        <div class="footer__col">
+          <h4>More</h4>
+          <a href="https://github.com/rizwan3d/NanoAgent#readme" target="_blank" rel="noopener">About</a>
+          <a href="https://github.com/rizwan3d" target="_blank" rel="noopener">Creator</a>
+          <a href="https://github.com/rizwan3d" target="_blank" rel="noopener">@rizwan3d</a>
+        </div>
+      </nav>
+    </div>
+    <div class="container footer__base">
+      <span>© <span data-year>2026</span> NanoAgent · Apache-2.0 . Built with ❤ for the open-source community.</span>
+      <span class="footer__sponsor">Sponsored by <a href="https://alfain.co/" target="_blank" rel="noopener">ALFAIN
+          Technologies</a></span>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
 </body>
+
 </html>

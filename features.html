@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Features — NanoAgent</title>
+  <meta name="description"
+    content="Every NanoAgent feature in one place — CLI experience, headless & oneshot runs, ACP, MCP & Skills, repo memory, model providers, LSP code intelligence, sandboxing, editor integrations, CI reviews, and more." />
+  <meta name="theme-color" content="#000000" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Features — NanoAgent" />
+  <meta property="og:description"
+    content="The complete feature list for NanoAgent: a local-first AI coding agent for desktop, terminal, and editor workflows." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/logo.png" />
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://github.com" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- ambient background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <!-- ───────────────────────── NAV ───────────────────────── -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a class="brand" href="index.html#top" aria-label="NanoAgent home">
+        <img src="assets/logo.png" alt="" class="brand__mark" width="28" height="28" />
+        <span class="brand__name">NanoAgent</span>
+      </a>
+
+      <nav class="nav__links" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        
+        <a href="docs.html">Docs</a>
+      </nav>
+
+      <div class="nav__actions">
+        <a class="ghost-link" href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener"
+          aria-label="NanoAgent stars on GitHub">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
+            <path
+              d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z" />
+          </svg>
+          <span class="gh-stars" data-stars>Star</span>
+        </a>
+        <a class="ghost-link" href="https://github.com/rizwan3d/NanoAgent/commits/master" target="_blank" rel="noopener"
+          aria-label="NanoAgent commits on GitHub">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
+            <path
+              d="M11.93 8.5a4.002 4.002 0 0 1-7.86 0H.75a.75.75 0 0 1 0-1.5h3.32a4.002 4.002 0 0 1 7.86 0h3.32a.75.75 0 0 1 0 1.5Zm-1.43-.75a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z" />
+          </svg>
+          <span class="gh-commits" data-commits>Commits</span>
+        </a>
+      </div>
+
+      <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ───────────────────────── FEATURE CATEGORY NAV ───────────────────────── -->
+  <nav class="featnav" aria-label="Feature categories">
+    <div class="container featnav__inner">
+      <a href="#cli">CLI Experience</a>
+      <a href="#headless">Oneshot &amp; Headless</a>
+      <a href="#shell">Shell &amp; Terminals</a>
+      <a href="#tools">File &amp; Web Tools</a>
+      <a href="#acp">ACP</a>
+      <a href="#mcp">MCP &amp; Skills</a>
+      <a href="#memory">Repo Memory</a>
+      <a href="#providers">Model Providers</a>
+      <a href="#reasoning">Model &amp; Reasoning</a>
+      <a href="#agents">Profiles &amp; Subagents</a>
+      <a href="#lsp">LSP</a>
+      <a href="#index">Codebase Index</a>
+      <a href="#sandbox">Permissions &amp; Sandbox</a>
+      <a href="#editors">Editors &amp; Desktop</a>
+      <a href="#ci">CI Reviews</a>
+      <a href="#dx">Developer Experience</a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <!-- ───────────────────────── HEADER ───────────────────────── -->
+    <section class="feat-hero container">
+      <span class="eyebrow">Features</span>
+      <h1 class="hero__title">Everything NanoAgent <span class="grad">can do</span></h1>
+      <p class="hero__sub">
+        A local-first AI coding agent built for real engineering work — from the terminal to the editor to your CI
+        pipeline. Every capability below is sourced straight from the README and documentation, grouped so you can
+        jump to what matters.
+      </p>
+    </section>
+
+    <div class="container">
+      <!-- ───────── CLI EXPERIENCE ───────── -->
+      <section class="section featcat" id="cli">
+        <div class="featcat__head">
+          <div class="featcat__icon">🖥️</div>
+          <div class="featcat__titles">
+            <h2>CLI experience</h2>
+            <p>A keyboard-first agent that lives in your terminal via the <code>nanoai</code> command.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">⌨️</div>
+            <h3>Interactive sessions</h3>
+            <p>Full terminal UI with persistent conversation history and a live activity stream of every action and
+              reasoning step.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">↩️</div>
+            <h3>Session resume</h3>
+            <p>Pick up where you left off with <code>--session &lt;guid&gt;</code>; NanoAgent prints the resume command
+              on exit.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🎛️</div>
+            <h3>Rich CLI flags</h3>
+            <p><code>-p/--prompt</code>, <code>-y/--yes</code>, <code>--stdin</code>, <code>--session</code>,
+              <code>--profile</code>, <code>--thinking</code>, and <code>--acp</code> cover scripted and interactive
+              runs.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">⚡</div>
+            <h3>F2 model switch</h3>
+            <p>Swap the active model mid-session from the terminal without breaking your flow.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">💬</div>
+            <h3>Slash commands</h3>
+            <p>Type <code>/</code> for inline suggestions — <code>/help</code>, <code>/config</code>,
+              <code>/models</code>, <code>/profile</code>, <code>/clear</code>, <code>/exit</code> and many more.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🧱</div>
+            <h3>One-command install</h3>
+            <p>Bash installer for macOS/Linux and a PowerShell installer for Windows — no build step required.</p>
+          </div>
+        </div>
+
+        <h3 class="shortcuts__title">Terminal (TUI) shortcuts</h3>
+        <ul class="shortcuts">
+          <li>
+            <span class="shortcuts__keys"><kbd>F2</kbd></span>
+            <span>Switch the active model with the arrow-key picker</span>
+          </li>
+          <li>
+            <span class="shortcuts__keys"><kbd>/</kbd></span>
+            <span>Open inline slash-command suggestions</span>
+          </li>
+          <li>
+            <span class="shortcuts__keys"><kbd>↑</kbd><kbd>↓</kbd></span>
+            <span>Move through suggestions and picker options</span>
+          </li>
+          <li>
+            <span class="shortcuts__keys"><kbd>Enter</kbd></span>
+            <span>Accept the highlighted command or model</span>
+          </li>
+          <li>
+            <span class="shortcuts__keys"><kbd>Esc</kbd></span>
+            <span>Back out to the settings menu</span>
+          </li>
+          <li>
+            <span class="shortcuts__keys"><kbd>!</kbd></span>
+            <span>Run the line as a direct shell command</span>
+          </li>
+          <li>
+            <span class="shortcuts__keys"><kbd>!!</kbd></span>
+            <span>Launch a live background terminal</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ───────── ONESHOT & HEADLESS ───────── -->
+      <section class="section featcat" id="headless">
+        <div class="featcat__head">
+          <div class="featcat__icon">⚙️</div>
+          <div class="featcat__titles">
+            <h2>Oneshot &amp; headless</h2>
+            <p>Non-interactive runs for scripts, pipelines, and automation.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">🎯</div>
+            <h3>One-shot prompts</h3>
+            <p>Run a single query with <code>nanoai -p "…"</code> and capture the response — ideal for scripts and
+              cron jobs.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">⏩</div>
+            <h3>Piped stdin</h3>
+            <p>Feed context straight from a pipe with <code>--stdin</code> so the agent reads from upstream commands.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">✅</div>
+            <h3>Auto-approve</h3>
+            <p><code>-y/--yes</code> skips interactive prompts for fully unattended, fail-closed automation runs.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🔑</div>
+            <h3>Env-var setup</h3>
+            <p>Preseed everything with <code>NANOAGENT_PROVIDER</code>, <code>NANOAGENT_MODEL</code>,
+              <code>NANOAGENT_THINKING</code>, <code>NANOAGENT_REASONING</code> and <code>NANOAGENT_API_KEY</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── SHELL & TERMINALS ───────── -->
+      <section class="section featcat" id="shell">
+        <div class="featcat__head">
+          <div class="featcat__icon">⌨️</div>
+          <div class="featcat__titles">
+            <h2>Shell &amp; terminals</h2>
+            <p>Run commands without leaving the conversation.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">❗</div>
+            <h3><code>!</code> direct shell</h3>
+            <p>Prefix a line with <code>!</code> to run a local shell command directly — no agent round-trip, no
+              approval gate.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">‼️</div>
+            <h3><code>!!</code> background terminals</h3>
+            <p>Launch a background terminal with <code>!!</code> whose output streams live while the session keeps
+              going.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🧮</div>
+            <h3>Terminal management</h3>
+            <p>Track running terminals with <code>/terminals</code>; concurrency and TTL limits are configurable per
+              session.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🛠️</div>
+            <h3><code>shell_command</code> tool</h3>
+            <p>The agent executes system commands through a permission-gated tool with sandbox enforcement.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── FILE, SEARCH & WEB TOOLS ───────── -->
+      <section class="section featcat" id="tools">
+        <div class="featcat__head">
+          <div class="featcat__icon">📂</div>
+          <div class="featcat__titles">
+            <h2>File, search &amp; web tools</h2>
+            <p>The built-in toolset the agent uses to read your code and reach the web — every call permission-gated.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">📄</div>
+            <h3>File operations</h3>
+            <p><code>file_read</code>, <code>file_write</code>, and <code>file_delete</code> read and edit workspace
+              files under your permission policy.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🔎</div>
+            <h3>Navigate &amp; search</h3>
+            <p><code>directory_list</code>, <code>text_search</code>, and <code>search_files</code> browse structure and
+              find code by content or path.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🌐</div>
+            <h3><code>web_search</code></h3>
+            <p>Network-gated web search lets the agent pull in current information when you allow it.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🔗</div>
+            <h3><code>webfetch</code></h3>
+            <p>Fetch a URL over HTTP with approval — bring docs, issues, or specs straight into the conversation.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🧭</div>
+            <h3><code>headless_browser</code></h3>
+            <p>Chromium-family browser automation for pages that need real rendering — covered by the
+              <code>network</code> permission.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🚫</div>
+            <h3><code>.nanoignore</code> aware</h3>
+            <p>File tools respect <code>.nanoignore</code> so sensitive paths stay out of the agent's reach.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── ACP ───────── -->
+      <section class="section featcat" id="acp">
+        <div class="featcat__head">
+          <div class="featcat__icon">🔌</div>
+          <div class="featcat__titles">
+            <h2>ACP — Agent Client Protocol</h2>
+            <p>Drive the local CLI from any editor over a clean JSON-RPC channel.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">🔗</div>
+            <h3><code>nanoai --acp</code></h3>
+            <p>Starts a stdio-based JSON-RPC server speaking line-delimited messages over stdin/stdout.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🏠</div>
+            <h3>Purely local</h3>
+            <p>No network transport — editors talk to the agent as a local child process, keeping data on your
+              machine.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🧵</div>
+            <h3>Session methods</h3>
+            <p><code>session/new</code>, <code>load</code>, <code>prompt</code>, <code>cancel</code>, and
+              <code>close</code> — one active session per process.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🔐</div>
+            <h3>Optional token auth</h3>
+            <p>Require a token via <code>NANOAGENT_ACP_AUTH_TOKEN</code>; client <code>mcpServers</code> merge with your
+              config.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── MCP & SKILLS ───────── -->
+      <section class="section featcat" id="mcp">
+        <div class="featcat__head">
+          <div class="featcat__icon">🧰</div>
+          <div class="featcat__titles">
+            <h2>MCP &amp; Skills</h2>
+            <p>Extend the agent with external tools and reusable playbooks.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">🧩</div>
+            <h3>MCP servers</h3>
+            <p>Load Model Context Protocol servers over stdio or streamable HTTP, from user- or workspace-level config.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🎚️</div>
+            <h3>Tool filtering</h3>
+            <p><code>enabledTools</code>/<code>disabledTools</code> plus per-server startup and tool timeouts keep things
+              tight.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🔍</div>
+            <h3><code>/mcp</code> inspection</h3>
+            <p>List active servers, custom providers, and the dynamic tools they expose at a glance.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🧪</div>
+            <h3>Custom tools</h3>
+            <p>Any language that reads JSON stdin and writes stdout becomes a tool exposed as
+              <code>custom__&lt;name&gt;</code>.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">📓</div>
+            <h3>Skills</h3>
+            <p>Drop task- or tool-specific playbooks in <code>.nanoagent/skills</code> (e.g. a <code>dotnet</code> or
+              <code>code-review</code> SKILL.md).</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">💾</div>
+            <h3>Custom slash commands</h3>
+            <p>Save repeatable prompts in <code>.nanoagent/commands</code> with namespaces, front matter, and
+              <code>$ARGUMENTS</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── REPO MEMORY ───────── -->
+      <section class="section featcat" id="memory">
+        <div class="featcat__head">
+          <div class="featcat__icon">🧠</div>
+          <div class="featcat__titles">
+            <h2>Repo memory</h2>
+            <p>Team knowledge that lives in version control — reviewable, not hidden.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">📚</div>
+            <h3>Reviewable memory files</h3>
+            <p>Knowledge lives in <code>.nanoagent/memory</code> — architecture, conventions, decisions, known-issues,
+              and test-strategy markdown.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🎓</div>
+            <h3>Lessons</h3>
+            <p><code>lessons.jsonl</code> can auto-capture failures and fixes, then inject relevant lessons back into
+              future prompts.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">📌</div>
+            <h3>AGENTS.md instructions</h3>
+            <p>Persistent project instructions via <code>AGENTS.md</code>, plus full or appended system-prompt
+              overrides.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🛡️</div>
+            <h3>Approval &amp; redaction</h3>
+            <p>Memory writes require approval by default, and secret-looking values are redacted before storage.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── MODEL PROVIDERS ───────── -->
+      <section class="section featcat" id="providers">
+        <div class="featcat__head">
+          <div class="featcat__icon">🌐</div>
+          <div class="featcat__titles">
+            <h2>Model providers</h2>
+            <p>Use the model that fits your budget and policy — subscription, API key, or fully local.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">🔑</div>
+            <h3>Subscription sign-in</h3>
+            <p>OAuth into ChatGPT Plus/Pro and Anthropic Claude Pro/Max, plus device-code login for GitHub Copilot.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🗝️</div>
+            <h3>API-key providers</h3>
+            <p>OpenAI, Anthropic, Google AI Studio, OpenRouter, Kilo Code, Cerebras, Groq, DeepSeek, and Ollama Cloud.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">💻</div>
+            <h3>Local providers</h3>
+            <p>Run on-device with Ollama (<code>localhost:11434</code>) or LM Studio for fully offline workflows.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🔌</div>
+            <h3>OpenAI-compatible</h3>
+            <p>Point at any custom base URL and API key to plug in third-party or self-hosted endpoints.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🔎</div>
+            <h3>Model discovery</h3>
+            <p>NanoAgent automatically discovers available models from your selected provider.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">👤</div>
+            <h3>Provider profiles</h3>
+            <p>Save and switch between provider configurations; onboarding fails closed and offers reconfiguration.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── MODEL & REASONING ───────── -->
+      <section class="section featcat" id="reasoning">
+        <div class="featcat__head">
+          <div class="featcat__icon">🎚️</div>
+          <div class="featcat__titles">
+            <h2>Model &amp; reasoning controls</h2>
+            <p>Tune how the model thinks and switch it on the fly.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">🔀</div>
+            <h3>Model switching</h3>
+            <p>The <code>/models</code> picker, <code>/use &lt;model&gt;</code>, and F2 let you change models instantly.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🧠</div>
+            <h3>Thinking mode</h3>
+            <p><code>/thinking on|off</code> toggles whether the provider's extended reasoning is shown.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">📈</div>
+            <h3>Reasoning effort</h3>
+            <p><code>/reasoning</code> sets effort from <code>minimal</code> through <code>low/medium/high</code> up to
+              <code>xhigh</code> and <code>max</code>.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🪙</div>
+            <h3>Token &amp; cost tracking</h3>
+            <p>Cached input tokens are tracked separately from standard input for accurate pricing.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── PROFILES & SUBAGENTS ───────── -->
+      <section class="section featcat" id="agents">
+        <div class="featcat__head">
+          <div class="featcat__icon">🤝</div>
+          <div class="featcat__titles">
+            <h2>Profiles &amp; subagents</h2>
+            <p>Right-sized agents for building, planning, reviewing, and delegating.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">🏗️</div>
+            <h3>Primary profiles</h3>
+            <p><code>build</code> for edit-enabled implementation, <code>plan</code> for read-only investigation, and
+              <code>review</code> for findings-first code review.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🔭</div>
+            <h3>Subagents</h3>
+            <p><code>general</code> handles delegated implementation; <code>explore</code> does fast, read-only codebase
+              discovery.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">📣</div>
+            <h3><code>@subagent</code> handoff</h3>
+            <p>Mention a subagent directly — e.g. <code>@explore How does auth work?</code> — for a single-turn
+              handoff.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🧭</div>
+            <h3>Delegate &amp; orchestrate</h3>
+            <p><code>agent_delegate</code> hands off one focused task; <code>agent_orchestrate</code> coordinates
+              subtasks.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">❓</div>
+            <h3><code>ask_question</code> tool</h3>
+            <p>The agent can ask you a question with options, multi-select, or free-form text when it needs a decision.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">✍️</div>
+            <h3>Custom agent prompts</h3>
+            <p>Override any profile's prompt with markdown in <code>.nanoagent/agents/*.md</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── LSP ───────── -->
+      <section class="section featcat" id="lsp">
+        <div class="featcat__head">
+          <div class="featcat__icon">🧩</div>
+          <div class="featcat__titles">
+            <h2>LSP &amp; code intelligence</h2>
+            <p>Real symbols, types, and diagnostics from language servers — not guesses.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">🧠</div>
+            <h3>Language Server Protocol</h3>
+            <p>The <code>code_intelligence</code> tool gives the agent definitions, completions, diagnostics, and
+              read-only rename previews.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🌍</div>
+            <h3>Multi-language</h3>
+            <p>Built-in support for TypeScript/JavaScript, Python, C#, Rust, Go, and C/C++.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🔧</div>
+            <h3>Server detection &amp; status</h3>
+            <p>Discovers servers from built-ins and workspace overrides, with health and install hints on demand.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🩺</div>
+            <h3><code>/lsp</code> commands</h3>
+            <p><code>/lsp</code>, <code>/lsp refresh</code>, and <code>/lsp file &lt;path&gt;</code> manage code
+              intelligence from the session.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── CODEBASE INDEX ───────── -->
+      <section class="section featcat" id="index">
+        <div class="featcat__head">
+          <div class="featcat__icon">🗂️</div>
+          <div class="featcat__titles">
+            <h2>Codebase indexing</h2>
+            <p>Local embeddings for fast, relevant repository search.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">🧬</div>
+            <h3>Local embeddings</h3>
+            <p>Lightweight per-file vectors are cached in <code>.nanoagent/cache/codebase-index.json</code> — entirely
+              on-device.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">♻️</div>
+            <h3>Incremental updates</h3>
+            <p>Unchanged files are reused and only changed files re-indexed; optional auto-update runs after each turn.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🚫</div>
+            <h3>Ignore-aware</h3>
+            <p>Respects <code>.gitignore</code>, <code>.nanoignore</code>, and built-in exclusions.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🗄️</div>
+            <h3><code>/index</code> commands</h3>
+            <p><code>/index</code>, <code>update</code>, <code>status</code>, <code>rebuild</code>, and <code>list</code>
+              control the index.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── PERMISSIONS & SANDBOX ───────── -->
+      <section class="section featcat" id="sandbox">
+        <div class="featcat__head">
+          <div class="featcat__icon">🛡️</div>
+          <div class="featcat__titles">
+            <h2>Permissions &amp; sandboxing</h2>
+            <p>You decide what runs automatically, what needs approval, and what's denied.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">🚦</div>
+            <h3>Allow / Ask / Deny</h3>
+            <p>Per-tool permission modes gate file edits, shell commands, network, MCP tools, and memory writes.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">📦</div>
+            <h3>Sandbox modes</h3>
+            <p><code>ReadOnly</code>, <code>WorkspaceWrite</code>, and <code>DangerFullAccess</code> scope what the agent
+              may touch.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🧱</div>
+            <h3>OS-native sandboxing</h3>
+            <p>bubblewrap on Linux, sandbox-exec on macOS, and a Windows sandbox runner for foreground commands.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">⚖️</div>
+            <h3>Session overrides</h3>
+            <p><code>/allow</code> and <code>/deny</code> adjust rules on the fly; explicit deny patterns always win.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">↶</div>
+            <h3>Undo / redo</h3>
+            <p>Tracked file edits can be undone and redone with <code>/undo</code> and <code>/redo</code>.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🔒</div>
+            <h3>Secret redaction</h3>
+            <p>Pattern-based redaction protects credentials across output, memory, audit, and logs.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── EDITORS & DESKTOP ───────── -->
+      <section class="section featcat" id="editors">
+        <div class="featcat__head">
+          <div class="featcat__icon">🪟</div>
+          <div class="featcat__titles">
+            <h2>Editors &amp; desktop</h2>
+            <p>The same agent, wherever you work.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">🖥️</div>
+            <h3>Desktop app</h3>
+            <p>A visual workspace with chat, model controls, budget config, file-edit tracking, and per-workspace
+              sections.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🆚</div>
+            <h3>VS Code extension</h3>
+            <p><code>rizwan3d.nanoagent</code> docks a chat view and adds send-selection, review-file, review-diff,
+              plan, and apply-changes commands.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🟪</div>
+            <h3>Visual Studio extension</h3>
+            <p><code>NanoAgent.VS</code> keeps a NanoAgent tool window inside Visual Studio 2022+.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🧠</div>
+            <h3>JetBrains via ACP</h3>
+            <p>Any ACP-capable editor drives the local <code>nanoai</code> CLI over the protocol.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🔃</div>
+            <h3>Diff review &amp; apply</h3>
+            <p>Review Git diffs and apply suggested changes directly from the editor.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── CI REVIEWS ───────── -->
+      <section class="section featcat" id="ci">
+        <div class="featcat__head">
+          <div class="featcat__icon">✅</div>
+          <div class="featcat__titles">
+            <h2>CI code reviews</h2>
+            <p>Automated, findings-first reviews on every pull and merge request.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">🐙</div>
+            <h3>GitHub Actions</h3>
+            <p>A ready-made workflow runs NanoAgent against PR diffs and posts a review comment.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🦊</div>
+            <h3>GitLab CI</h3>
+            <p>A pipeline + script reviews merge requests and comments back using your GitLab token.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🪣</div>
+            <h3>Bitbucket Pipelines</h3>
+            <p>The same review automation wired for Bitbucket with an access-token integration.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">📝</div>
+            <h3>Review profile</h3>
+            <p>A read-only <code>pr-reviewer</code> profile computes the diff, skips drafts, and retains artifacts for
+              14 days.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────── DEVELOPER EXPERIENCE ───────── -->
+      <section class="section featcat" id="dx">
+        <div class="featcat__head">
+          <div class="featcat__icon">🧪</div>
+          <div class="featcat__titles">
+            <h2>Developer experience</h2>
+            <p>The tooling, transparency, and trust that make the agent practical day to day.</p>
+          </div>
+        </div>
+        <div class="grid grid--features">
+          <div class="card">
+            <div class="card__icon">💰</div>
+            <h3>Budget controls</h3>
+            <p>Optional local or cloud budgets with monthly USD caps, alert thresholds, and per-1M token pricing.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🪝</div>
+            <h3>Lifecycle hooks</h3>
+            <p>Run hooks around task, tool, file, shell, web, memory, permission, and delegation events with timeouts.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">📑</div>
+            <h3>Tool audit log</h3>
+            <p>Optionally record every tool call to <code>.nanoagent/logs/tool-audit.jsonl</code> for review.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🎨</div>
+            <h3>Tool-output modes</h3>
+            <p><code>full</code>, <code>compact</code>, or <code>preview</code> rendering — set per-profile or with
+              <code>/tooloutput</code>.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🧰</div>
+            <h3><code>/init</code> scaffolding</h3>
+            <p>Scaffold workspace-local <code>.nanoagent</code> files with recommended, minimal, or custom presets.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">📦</div>
+            <h3>SDK on NuGet</h3>
+            <p>Embed NanoAgent in your own .NET app via the <code>NanoAgent</code> package on NuGet.org.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">💿</div>
+            <h3>Cross-platform builds</h3>
+            <p>Windows x64 (installer + portable), macOS Apple Silicon &amp; Intel, and Linux x64/arm64.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🔏</div>
+            <h3>Verified releases</h3>
+            <p>Every release ships <code>SHA256SUMS</code> and GitHub artifact attestations for SLSA build provenance.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">⬆️</div>
+            <h3>In-place updates</h3>
+            <p><code>/update</code> checks for new versions and <code>/update now</code> installs immediately.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">🏠</div>
+            <h3>Local-first privacy</h3>
+            <p>Workspace files, config, sections, index cache, and credentials stay on your machine — only prompts and
+              selected context go to the provider.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">📊</div>
+            <h3>Anonymous telemetry, opt-out</h3>
+            <p>Aggregate, anonymous usage analytics only — turn it off entirely with <code>/disableanalytics</code>.</p>
+          </div>
+          <div class="card">
+            <div class="card__icon">📐</div>
+            <h3>Task-based benchmarks</h3>
+            <p>The <code>benchmarks/</code> suite tracks bug-fixing, repo understanding, patch quality, security review,
+              and tool safety over time.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ───────────────────────── CTA ───────────────────────── -->
+    <section class="section container">
+      <div class="cta">
+        <div class="cta__glow" aria-hidden="true"></div>
+        <h2>Ship with an agent that keeps you in control.</h2>
+        <p>Local-first. Reviewable. Open source under Apache-2.0.</p>
+        <div class="cta__actions">
+          <a class="btn btn--primary btn--lg" href="index.html#get">Get NanoAgent</a>
+          <a class="btn btn--ghost btn--lg" href="docs.html">Read the docs</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ───────────────────────── FOOTER ───────────────────────── -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a class="brand" href="index.html#top">
+          <img src="assets/logo.png" alt="" class="brand__mark" width="26" height="26" />
+          <span class="brand__name">NanoAgent</span>
+        </a>
+        <p>Your AI coding agent for desktop, terminal, and editor workflows.</p>
+      </div>
+      <nav class="footer__cols" aria-label="Footer">
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="index.html#why">Why NanoAgent</a>
+          <a href="features.html">Features</a>
+          <a href="index.html#compare">Compare</a>
+          <a href="index.html#providers">Providers</a>
+          <a href="index.html#start">Quickstart</a>
+        </div>
+        <div class="footer__col">
+          <h4>Resources</h4>
+          <a href="docs.html">Documentation</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/releases/latest" target="_blank" rel="noopener">Releases</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/releases" target="_blank" rel="noopener">Changelog</a>
+          <a href="https://www.nuget.org/packages/NanoAgent/" target="_blank" rel="noopener">NuGet SDK</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/blob/master/SECURITY.md" target="_blank"
+            rel="noopener">Security</a>
+        </div>
+        <div class="footer__col">
+          <h4>Community</h4>
+          <a href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/issues" target="_blank" rel="noopener">Issues</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/discussions" target="_blank"
+            rel="noopener">Discussions</a>
+          <a href="https://hackernoon.com/building-an-ai-coding-agent-that-doesnt-hide-what-its-doing"
+            target="_blank" rel="noopener">Blog</a>
+        </div>
+        <div class="footer__col">
+          <h4>More</h4>
+          <a href="https://github.com/rizwan3d/NanoAgent#readme" target="_blank" rel="noopener">About</a>
+          <a href="https://github.com/rizwan3d" target="_blank" rel="noopener">Creator</a>
+          <a href="https://github.com/rizwan3d" target="_blank" rel="noopener">@rizwan3d</a>
+        </div>
+      </nav>
+    </div>
+    <div class="container footer__base">
+       <span>© <span data-year>2026</span> NanoAgent · Apache-2.0 · Built with ❤ for the open-source community.</span>
+      <span class="footer__sponsor">Sponsored by <a href="https://alfain.co/" target="_blank" rel="noopener">ALFAIN
+          Technologies</a></span>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+
+</html>

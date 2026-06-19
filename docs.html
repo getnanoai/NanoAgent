@@ -92,6 +92,7 @@
           <ul class="docs__nav">
             <li><a href="#desktop">Desktop workflow</a></li>
             <li><a href="#terminal">Terminal workflow</a></li>
+            <li><a href="#terminal-keys">Terminal input &amp; keys</a></li>
             <li><a href="#commands">Terminal commands</a></li>
           </ul>
 
@@ -358,6 +359,50 @@ nanoai -p "Say hello in one short line"</code></pre>
                 </tbody>
               </table>
             </div>
+          </section>
+
+          <!-- TERMINAL INPUT & KEYS -->
+          <section class="doc-section" id="terminal-keys">
+            <h2>Terminal input &amp; keys</h2>
+            <p>The interactive terminal UI adds keyboard controls for editing, navigating history, queueing work, and
+              interrupting a running turn.</p>
+
+            <h3>Queue prompts and commands</h3>
+            <p>You no longer have to wait for the current turn to finish before lining up the next request. When NanoAgent
+              is busy or streaming, pressing <strong>Enter</strong> queues the prompt or slash command instead of
+              rejecting it. Queued items run automatically, in order, as soon as the active turn completes.</p>
+            <ul>
+              <li>The busy status line shows how many requests are waiting, for example <code>… - 2 queued</code>.</li>
+              <li>A summary line under the input reports the queue depth and reminds you that <strong>F4</strong> removes the newest queued item.</li>
+              <li>Press <strong>F4</strong> while busy to drop the most recently queued submission.</li>
+              <li>Queued slash commands run only when NanoAgent is ready; commands that are unavailable while working stay queued until the turn finishes.</li>
+            </ul>
+
+            <h3>Interrupt a running or stuck turn</h3>
+            <p>While a turn is running, the footer shows <code>Esc: interrupt</code> and <code>Esc again: abandon</code>.</p>
+            <ul>
+              <li>Press <strong>Esc</strong> once to request a graceful interrupt. The status changes to
+                <code>Interrupting</code> and NanoAgent cancels the active turn so the backend can stop cleanly.</li>
+              <li>Press <strong>Esc</strong> again if the turn does not stop promptly to abandon it locally. NanoAgent
+                detaches from the turn, returns to <code>Ready</code>, and ignores any late output that arrives from the
+                abandoned turn. Any queued submissions then start.</li>
+            </ul>
+
+            <h3>Edit and scroll</h3>
+            <ul>
+              <li><strong>Ctrl+A</strong> selects all input text so you can replace or delete a draft in one step.
+                Selected text is highlighted, and typing, Backspace, or Delete replaces the selection.</li>
+              <li>Auto-scroll pauses automatically when you scroll up to read earlier conversation history, so new
+                streamed output does not yank you back to the bottom. Scrolling back to the bottom resumes auto-scroll.</li>
+            </ul>
+
+            <h3>Tab-complete file and directory paths</h3>
+            <p>After a <code>!</code> or <code>!!</code> shell command and a space, <strong>Tab</strong> completes file and
+              directory paths from the workspace, the same way a normal terminal does. For example, <code>!cat ./sr</code>
+              then Tab completes the typed path component while preserving the directory portion exactly as you typed it.
+              Because shell commands usually take more arguments after a path, completing a path does not submit the
+              command — it only fills in the path so you can keep typing. Completing a directory appends a trailing
+              <code>/</code> so you can drill in further.</p>
           </section>
 
           <!-- TERMINAL COMMANDS -->

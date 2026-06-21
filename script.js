@@ -84,6 +84,10 @@
   /* ---- install selector tabs ---- */
   var itabs = document.querySelectorAll(".itab");
   var ipanels = document.querySelectorAll(".ipanel");
+  var visualImg = document.querySelector(".visual__img");
+  var visualBar = document.querySelector(".visual__bar");
+  // ponytail: desktop falls through to nano.gif, no image for it
+  var tabImg = { cli: "assets/cli.png", vscode: "assets/vscode.png", vs: "assets/vs.png", desktop: "assets/desktop.png" };
   itabs.forEach(function (tab) {
     tab.addEventListener("click", function () {
       var key = tab.getAttribute("data-itab");
@@ -95,6 +99,8 @@
       ipanels.forEach(function (p) {
         p.classList.toggle("is-active", p.getAttribute("data-ipanel") === key);
       });
+      if (visualImg && tabImg[key]) visualImg.src = tabImg[key];
+      if (visualBar) visualBar.style.display = key === "cli" ? "" : "none";
     });
   });
 

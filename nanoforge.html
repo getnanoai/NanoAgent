@@ -30,7 +30,7 @@
   </script>
 </head>
 
-<body>
+<body class="forge-page">
   <!-- ambient background -->
   <div class="bg-grid" aria-hidden="true"></div>
   <div class="bg-glow" aria-hidden="true"></div>
@@ -45,6 +45,36 @@
 
       <nav class="nav__links" aria-label="Primary">
         <a href="index.html">Home</a>
+        <details class="mega">
+          <summary>Product</summary>
+          <div class="mega__panel">
+            <div class="mega__grid">
+              <div class="mega__col">
+                <a class="mfeat" href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener">
+                  <span class="mfeat__ico">⌘</span>
+                  <span><strong>NanoAgent</strong><span>Open-source coding agent</span></span>
+                </a>
+                <div class="mega__links">
+                  <a href="docs.html#desktop">Desktop</a>
+                  <a href="docs.html#vscode">VS Code</a>
+                  <a href="docs.html#visual-studio">Visual Studio</a>
+                  <a href="docs.html#review">CodeReview</a>
+                  <a href="docs.html#review">CI</a>
+                </div>
+              </div>
+              <div class="mega__col">
+                <a class="mfeat" href="gateway.html">
+                  <span class="mfeat__ico">⇄</span>
+                  <span><strong>Gateway</strong><span>Model routing &amp; control</span></span>
+                </a>
+                <a class="mfeat" href="nanoforge.html">
+                  <span class="mfeat__ico">▤</span>
+                  <span><strong>NanoForge</strong><span>Full-stack app builder</span></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </details>
         <a href="features.html">Features</a>
         <a href="docs.html">Docs</a>
         <div class="nav__mobile-actions">
@@ -75,214 +105,214 @@
   <!-- ───────────────────────── CATEGORY NAV ───────────────────────── -->
   <nav class="featnav" aria-label="NanoForge sections">
     <div class="container featnav__inner">
-      <a href="#why">Why NanoForge</a>
-      <a href="#how">How it works</a>
-      <a href="#model">Bring your own model</a>
-      <a href="#engine">Powered by NanoAgent</a>
-      <a href="#ship">Ready to deploy</a>
+      <a href="#loop">The build loop</a>
+      <a href="#stack">The stack</a>
+      <a href="#own">You own it</a>
+      <a href="#agent">How it builds</a>
+      <a href="#ship">Ship anywhere</a>
     </div>
   </nav>
 
   <main id="top">
-    <!-- ───────────────────────── HEADER ───────────────────────── -->
-    <section class="feat-hero container">
-      <span class="eyebrow">NanoForge · Full-Stack App Builder</span>
-      <h1 class="hero__title">Describe an app. <span class="grad">Watch the agent build it</span> — end to end.</h1>
-      <p class="hero__sub">
-        NanoForge is NanoAgent's hosted full-stack app builder. Spin up a project and the agent scaffolds a real
-        React&nbsp;+&nbsp;Vite frontend, an Express&nbsp;+&nbsp;TypeScript API, and a managed PostgreSQL database — then
-        builds, runs, and live-previews it inside an isolated container. Every project is backed by its own GitHub repo
-        and database, with the same reviewable, in-control workflow NanoAgent is built on.
-      </p>
-      <div class="bench__actions">
-        <a class="btn btn--primary btn--lg" href="https://app.getnanoai.com" target="_blank" rel="noopener">Start building</a>
-        <a class="btn btn--ghost btn--lg" href="mailto:labs@nx3corp.com?subject=NanoForge%20—%20Full-Stack%20App%20Builder%20enquiry">Talk to sales</a>
-        <a class="btn btn--ghost btn--lg" href="docs.html">Read the docs</a>
+    <!-- ───────────────────────── HERO ───────────────────────── -->
+    <section class="container fhero">
+      <div class="fhero__copy">
+        <span class="eyebrow">NanoForge · Full-Stack App Builder</span>
+        <h1 class="fhero__title">Type a sentence.<br /><span class="fgrad">Get a running app.</span></h1>
+        <p class="fhero__sub">
+          Describe what you want and NanoForge's agent scaffolds, builds, and live-previews a real
+          React&nbsp;+&nbsp;Express&nbsp;+&nbsp;PostgreSQL app inside an isolated container — backed by its own GitHub
+          repo and database, with you reviewing every diff.
+        </p>
+
+        <!-- signature: a fake "describe an app" prompt bar -->
+        <div class="fprompt" aria-hidden="true">
+          <div class="fprompt__top"><b>Forge</b> / acme-dashboard · <span>main</span></div>
+          <div class="fprompt__body">
+            <span class="fprompt__caret">&gt;</span>
+            <span class="fprompt__type">Build a team dashboard with auth, projects, and a Postgres-backed activity feed</span>
+          </div>
+          <div class="fprompt__foot">
+            <span class="fprompt__model">claude-opus-4-8 · High</span>
+            <span class="fprompt__send">↑</span>
+          </div>
+        </div>
+
+        <div class="bench__actions">
+          <a class="btn btn--primary btn--lg" href="https://app.getnanoai.com" target="_blank" rel="noopener">Start building</a>
+        </div>
       </div>
 
-      <!-- ── product mockup ── -->
-      <div class="hero__visual forge-hero__visual">
+      <!-- product screenshot -->
+      <div class="fhero__shot">
         <div class="visual__frame">
           <div class="visual__bar">
             <span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span>
             <span class="visual__title">nanoforge · acme-dashboard</span>
           </div>
-          <img src="assets/forge.png" alt="NanoForge building a full-stack app — agent edits alongside a live preview" class="visual__img" loading="lazy" />
+          <img src="assets/forge.png" alt="NanoForge building a full-stack app — the agent edits alongside a live preview" class="visual__img" loading="lazy" />
         </div>
         <div class="visual__halo" aria-hidden="true"></div>
       </div>
-
-      <!-- ── stat strip ── -->
-      <ul class="forge-stats" aria-label="What every project ships with">
-        <li><b>React + Express + PostgreSQL</b><span>Production-shaped from the first prompt</span></li>
-        <li><b>PostgreSQL database</b><span>Provisioned per project, owned by you</span></li>
-        <li><b>Isolated container</b><span>Per-project builds, secrets sealed</span></li>
-        <li><b>Live preview</b><span>Hot-reloaded straight to your browser</span></li>
-      </ul>
     </section>
 
     <div class="container">
-      <!-- ───────── WHY NANOFORGE ───────── -->
-      <section class="section featcat" id="why">
-        <div class="featcat__head">
-          <div class="featcat__icon">★</div>
-          <div class="featcat__titles">
-            <h2>Why NanoForge?</h2>
-            <p>The fastest way from an idea to a real, running, deployable app — without giving up the code, the control, or the model you trust.</p>
-          </div>
+      <!-- ───────── THE BUILD LOOP ───────── -->
+      <section class="section featcat" id="loop">
+        <div class="section__head">
+          <span class="eyebrow">The build loop</span>
+          <h2 class="section__title">From prompt to production, on repeat</h2>
+          <p class="section__lede">Every change runs the same loop — you prompt, the agent works in an isolated
+            container on its own branch, you preview the live result, then ship.</p>
         </div>
-        <div class="grid grid--features">
-          <div class="card">
-            <div class="card__icon">⚡</div>
-            <h3>Idea to running app in minutes</h3>
-            <p>Describe what you want and the agent scaffolds, builds, and live-previews a real full-stack app — no setup, no blank-page paralysis.</p>
+        <ol class="fpipe">
+          <li class="fpipe__step">
+            <span class="fpipe__n">01 · PROMPT</span>
+            <h3>Describe it</h3>
+            <p>Create a project and a dedicated PostgreSQL database is provisioned, seeded from the full-stack template.
+              Then just ask.</p>
+          </li>
+          <li class="fpipe__step">
+            <span class="fpipe__n">02 · BUILD</span>
+            <h3>Agent works</h3>
+            <p>NanoAgent edits files, runs the dev server, and commits as it goes — all inside a sealed per-project
+              container.</p>
+          </li>
+          <li class="fpipe__step">
+            <span class="fpipe__n">03 · PREVIEW</span>
+            <h3>See it live</h3>
+            <p>A hot-reloaded preview streams to your browser through the proxy, so you watch the app take shape in real
+              time.</p>
+          </li>
+          <li class="fpipe__step">
+            <span class="fpipe__n">04 · SHIP</span>
+            <h3>Review &amp; deploy</h3>
+            <p>Read the diff, merge the branch, and deploy the single full-stack build to Docker or a VPS.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ───────── THE STACK ───────── -->
+      <section class="section featcat" id="stack">
+        <div class="section__head">
+          <span class="eyebrow">The stack</span>
+          <h2 class="section__title">Production-shaped from the first prompt</h2>
+          <p class="section__lede">Not a throwaway sandbox — a real, three-layer full-stack app wired together and
+            ready to deploy.</p>
+        </div>
+        <div class="fstack">
+          <div class="flayer">
+            <div class="flayer__tag"><span>🖥️</span> Frontend</div>
+            <p><b>React + Vite + TypeScript.</b> A fast, modern SPA with hot reload — the agent builds components, routes,
+              and state for you.</p>
           </div>
-          <div class="card">
-            <div class="card__icon">🧩</div>
-            <h3>Real code, never a black box</h3>
-            <p>Every project is a real GitHub repo with a clean commit history. Read it, diff it, branch it, and take it with you any time.</p>
+          <div class="flayer">
+            <div class="flayer__tag"><span>🔌</span> API</div>
+            <p><b>Express + TypeScript.</b> Typed routes and handlers that compile alongside the frontend into one
+              deployable process.</p>
           </div>
-          <div class="card">
-            <div class="card__icon">🙌</div>
-            <h3>You stay in control</h3>
-            <p>The agent commits as it works and you review every diff. Nothing ships that you didn't see and approve.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🚀</div>
-            <h3>Production-shaped from day one</h3>
-            <p>React + Express + PostgreSQL, wired together and ready to deploy — not a throwaway prototype you rebuild later.</p>
+          <div class="flayer">
+            <div class="flayer__tag"><span>🐘</span> Database</div>
+            <p><b>Managed PostgreSQL.</b> A dedicated database provisioned per project and wired into the app from day
+              one.</p>
           </div>
         </div>
       </section>
 
-      <!-- ───────── HOW IT WORKS ───────── -->
-      <section class="section featcat" id="how">
-        <div class="featcat__head">
-          <div class="featcat__icon">▤</div>
-          <div class="featcat__titles">
-            <h2>From prompt to running app</h2>
-            <p>Create a project, pick a model, and prompt. NanoForge handles the repo, the database, the container, and
-              the preview — you review the diffs.</p>
-          </div>
+      <!-- ───────── YOU OWN IT (bento) ───────── -->
+      <section class="section featcat" id="own">
+        <div class="section__head">
+          <span class="eyebrow">You own it</span>
+          <h2 class="section__title">Real code. Your repo. Your model.</h2>
+          <p class="section__lede">The fastest path from idea to running app — without giving up the code, the control,
+            or the model you trust.</p>
         </div>
-        <div class="steps">
-          <div class="step">
-            <div class="step__num">1</div>
-            <div class="step__body">
-              <h3>Create a project</h3>
-              <p class="step__note">A dedicated PostgreSQL database is provisioned, then seeded from
-                the full-stack base template.</p>
-            </div>
+        <div class="fbento">
+          <div class="fbento__tile">
+            <div class="fbento__ico">🧩</div>
+            <h3>Real GitHub repo, never a black box</h3>
+            <p>Every project is a real repo with a clean commit history under your org. Read it, diff it, branch it, and
+              take it with you any time.</p>
           </div>
-          <div class="step">
-            <div class="step__num">2</div>
-            <div class="step__body">
-              <h3>Prompt the agent</h3>
-              <p class="step__note">NanoAgent runs in an isolated build container on its own branch — editing files,
-                running the dev server, and committing as it goes.</p>
-            </div>
+          <div class="fbento__tile">
+            <div class="fbento__ico">🙌</div>
+            <h3>You review every diff</h3>
+            <p>The agent commits as it works and surfaces each change. Nothing merges that you didn't see and approve.</p>
           </div>
-          <div class="step">
-            <div class="step__num">3</div>
-            <div class="step__body">
-              <h3>Preview &amp; ship</h3>
-              <p class="step__note">Watch the live app through the preview proxy, review the diff, then merge and deploy
-                the single full-stack build to Docker or a VPS.</p>
-            </div>
+          <div class="fbento__tile fbento__tile--sm">
+            <div class="fbento__ico">🎛️</div>
+            <h3>Bring your own model</h3>
+            <p>Run each build on the model and provider you choose — your keys, no lock-in.</p>
           </div>
-        </div>
-      </section>
-
-      <!-- ───────── BRING YOUR OWN MODEL ───────── -->
-      <section class="section featcat" id="model">
-        <div class="featcat__head">
-          <div class="featcat__icon">🧠</div>
-          <div class="featcat__titles">
-            <h2>Bring your own model</h2>
-            <p>Pick the model that fits the job. NanoForge isn't locked to one provider — your model, your keys, your choice.</p>
-          </div>
-        </div>
-        <div class="grid grid--features">
-          <div class="card">
-            <div class="card__icon">🎛️</div>
-            <h3>Any model you trust</h3>
-            <p>Run each build session on the model you choose — swap models per project without changing how you work.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🤔</div>
+          <div class="fbento__tile fbento__tile--sm">
+            <div class="fbento__ico">🤔</div>
             <h3>Tuned for build work</h3>
-            <p>Sessions run with thinking and high-reasoning effort, so the agent plans before it writes — not just autocompletes.</p>
+            <p>Sessions run with thinking and high reasoning effort, so the agent plans before it writes.</p>
           </div>
-          <div class="card">
-            <div class="card__icon">🔓</div>
-            <h3>No provider lock-in</h3>
-            <p>Use your own credentials and the providers you already pay for. Switch any time — your projects come with you.</p>
+          <div class="fbento__tile fbento__tile--sm">
+            <div class="fbento__ico">📁</div>
+            <h3>Yours to keep</h3>
+            <p>Export, self-host, or hand off to your team — the project leaves with you.</p>
           </div>
         </div>
       </section>
 
-      <!-- ───────── POWERED BY NANOAGENT ───────── -->
-      <section class="section featcat" id="engine">
-        <div class="featcat__head">
-          <div class="featcat__icon">⚙️</div>
-          <div class="featcat__titles">
-            <h2>Powered by NanoAgent</h2>
-            <p>The same open-source agent developers run on the desktop — now running server-side to build your app.</p>
-          </div>
+      <!-- ───────── HOW IT BUILDS ───────── -->
+      <section class="section featcat" id="agent">
+        <div class="section__head">
+          <span class="eyebrow">Powered by NanoAgent</span>
+          <h2 class="section__title">How the agent builds</h2>
+          <p class="section__lede">The same open-source agent developers run on the desktop — now running server-side,
+            in the open, to build your app.</p>
         </div>
-        <div class="grid grid--features">
-          <div class="card">
-            <div class="card__icon">🪵</div>
+        <div class="fbento">
+          <div class="fbento__tile fbento__tile--sm">
+            <div class="fbento__ico">🪵</div>
             <h3>Reviewable by design</h3>
-            <p>The agent commits as it works, so every change lands in a git history you can read, diff, and revert.</p>
+            <p>Every change lands as a commit in a git history you can read, diff, and revert.</p>
           </div>
-          <div class="card">
-            <div class="card__icon">🌿</div>
+          <div class="fbento__tile fbento__tile--sm">
+            <div class="fbento__ico">🌿</div>
             <h3>Branch-per-session</h3>
-            <p>Every build runs on its own branch, so parallel experiments never collide and merging stays clean.</p>
+            <p>Each build runs on its own branch, so parallel experiments never collide.</p>
           </div>
-          <div class="card">
-            <div class="card__icon">📡</div>
+          <div class="fbento__tile fbento__tile--sm">
+            <div class="fbento__ico">📡</div>
             <h3>Live status &amp; commits</h3>
-            <p>Watch sessions move through Starting, Running, and Stopped — with the latest commit and any error surfaced.</p>
+            <p>Watch sessions move through <code>Starting</code>, <code>Running</code>, <code>Stopped</code> — with the
+              latest commit and any error surfaced.</p>
           </div>
-          <div class="card">
-            <div class="card__icon">🛡️</div>
+          <div class="fbento__tile">
+            <div class="fbento__ico">🛡️</div>
             <h3>Isolated &amp; secure</h3>
-            <p>Each project builds in its own container with secrets sealed in an encrypted store — tenants stay separated.</p>
+            <p>Each project builds in its own container with secrets sealed in an encrypted store — tenants stay fully
+              separated.</p>
+          </div>
+          <div class="fbento__tile">
+            <div class="fbento__ico">⚙️</div>
+            <h3>Open-source engine</h3>
+            <p>It's the same NanoAgent you can run yourself — no proprietary magic, just an agent that shows its work.</p>
           </div>
         </div>
       </section>
 
-      <!-- ───────── READY TO DEPLOY ───────── -->
+      <!-- ───────── SHIP ANYWHERE ───────── -->
       <section class="section featcat" id="ship">
-        <div class="featcat__head">
-          <div class="featcat__icon">🚀</div>
-          <div class="featcat__titles">
-            <h2>Build a ready-to-deploy product</h2>
-            <p>Not a demo you throw away — a real app you can ship to your users today.</p>
-          </div>
+        <div class="section__head">
+          <span class="eyebrow">Ship anywhere</span>
+          <h2 class="section__title">A product you can deploy today</h2>
+          <p class="section__lede">Not a demo you throw away — a real app you can put in front of your users.</p>
         </div>
-        <div class="grid grid--features">
-          <div class="card">
-            <div class="card__icon">📦</div>
+        <div class="fbento">
+          <div class="fbento__tile">
+            <div class="fbento__ico">📦</div>
             <h3>One build, ship anywhere</h3>
-            <p>The frontend and API compile into a single Express process — drop it on Docker or a VPS and go live.</p>
+            <p>Frontend and API compile into a single Express process — drop it on Docker or a VPS and go live.</p>
           </div>
-          <div class="card">
-            <div class="card__icon">🐘</div>
+          <div class="fbento__tile">
+            <div class="fbento__ico">🐘</div>
             <h3>Real database, provisioned</h3>
             <p>Every project gets a dedicated PostgreSQL database, wired into the app from the first prompt.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">📁</div>
-            <h3>It's yours to keep</h3>
-            <p>Projects are real GitHub repos under your org — export, self-host, or hand off to your team any time.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">👁️</div>
-            <h3>Preview before you ship</h3>
-            <p>A live, hot-reloaded preview streams straight to your browser, so you see exactly what you're shipping.</p>
           </div>
         </div>
       </section>

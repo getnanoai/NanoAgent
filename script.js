@@ -303,13 +303,21 @@
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (plans) {
         if (!Array.isArray(plans) || !plans.length) throw new Error("no plans");
+        var allFeatures = Array.from(plans.reduce(function (set, plan) {
+          (plan.features || []).forEach(function (feature) { set.add(feature); });
+          return set;
+        }, new Set())).sort(function (a, b) {
+          return label(a).localeCompare(label(b));
+        });
         pricingEl.innerHTML = plans.map(function (p) {
           var featured = p.code === "team";
           var cta = p.isContactSales
             ? '<a class="btn btn--primary" href="mailto:labs@nx3corp.com?subject=NanoAgent%20Gateway%20—%20Enterprise%20enquiry">Talk to sales</a>'
             : '<a class="btn btn--' + (featured ? "primary" : "ghost") + '" href="https://app.getnanoai.com" target="_blank" rel="noopener">Get started</a>';
-          var feats = (p.features || []).slice().sort().map(function (f) {
-            return "<li>" + esc(label(f)) + "</li>";
+          var featureSet = new Set(p.features || []);
+          var feats = allFeatures.map(function (f) {
+            var hasFeature = featureSet.has(f);
+            return '<li class="' + (hasFeature ? "is-included" : "is-unavailable") + '">' + esc(label(f)) + "</li>";
           }).join("");
           return '<div class="plan' + (featured ? " plan--featured" : "") + '">' +
             (featured ? '<span class="plan__badge">Popular</span>' : "") +

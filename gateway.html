@@ -4,15 +4,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gateway — NanoAgent</title>
+  <title>Gateway - NanoAgent</title>
   <meta name="description"
-    content="NanoAgent Gateway is an enterprise AI provider proxy: one OpenAI-compatible endpoint for every model, with policy controls, guardrails, usage metering, SSO, audit logging, and SOC2-ready reporting." />
+    content="NanoAgent Gateway gives teams one OpenAI-compatible endpoint for AI traffic, with visibility and enterprise-ready controls." />
   <meta name="theme-color" content="#000000" />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Gateway — NanoAgent" />
+  <meta property="og:title" content="Gateway - NanoAgent" />
   <meta property="og:description"
-    content="One OpenAI-compatible endpoint for every model — with policy, guardrails, metering, SSO, and audit built in." />
+    content="One OpenAI-compatible endpoint for AI traffic with visibility built in." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/logo.png" />
 
@@ -20,9 +19,8 @@
   <link rel="preconnect" href="https://github.com" />
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- PostHog analytics -->
   <script>
-    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    !function (t, e) { var o, n, p, r; e.__SV || (window.posthog = e, e._i = [], e.init = function (i, s, a) { function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } } (p = t.createElement("script")).type = "text/javascript", p.crossOrigin = "anonymous", p.async = !0, p.src = s.api_host.replace(".i.posthog.com", "-assets.i.posthog.com") + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r); var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a]) }, e.__SV = 1) }(document, window.posthog || []);
     posthog.init("phc_AKZFSyU239kkQ5GQ2y4idb8MtFX96kVekgezgnsELHRk", {
       api_host: "https://us.i.posthog.com",
       person_profiles: "identified_only"
@@ -31,11 +29,9 @@
 </head>
 
 <body>
-  <!-- ambient background -->
   <div class="bg-grid" aria-hidden="true"></div>
   <div class="bg-glow" aria-hidden="true"></div>
 
-  <!-- ───────────────────────── NAV ───────────────────────── -->
   <header class="nav" id="nav">
     <div class="container nav__inner">
       <a class="brand" href="index.html#top" aria-label="NanoAgent home">
@@ -45,11 +41,42 @@
 
       <nav class="nav__links" aria-label="Primary">
         <a href="index.html">Home</a>
+        <details class="mega">
+          <summary>Product</summary>
+          <div class="mega__panel">
+            <div class="mega__grid">
+              <div class="mega__col">
+                <a class="mfeat" href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener">
+                  <span class="mfeat__ico">⌘</span>
+                  <span><strong>NanoAgent</strong><span>Open-source coding agent</span></span>
+                </a>
+                <div class="mega__links">
+                  <a href="docs.html#desktop">Desktop</a>
+                  <a href="docs.html#vscode">VS Code</a>
+                  <a href="docs.html#visual-studio">Visual Studio</a>
+                  <a href="docs.html#review">CodeReview</a>
+                  <a href="docs.html#review">CI</a>
+                </div>
+              </div>
+              <div class="mega__col">
+                <a class="mfeat" href="gateway.html">
+                  <span class="mfeat__ico">⇄</span>
+                  <span><strong>Gateway</strong><span>Model routing &amp; control</span></span>
+                </a>
+                <a class="mfeat" href="nanoforge.html">
+                  <span class="mfeat__ico">▤</span>
+                  <span><strong>NanoForge</strong><span>Full-stack app builder</span></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </details>
         <a href="features.html">Features</a>
         <a href="docs.html">Docs</a>
         <div class="nav__mobile-actions">
           <a class="btn btn--ghost nav__cta" href="https://app.getnanoai.com" target="_blank" rel="noopener">Login</a>
-          <a class="btn btn--primary nav__cta" href="https://app.getnanoai.com" target="_blank" rel="noopener">Register</a>
+          <a class="btn btn--primary nav__cta" href="https://app.getnanoai.com" target="_blank"
+            rel="noopener">Register</a>
         </div>
       </nav>
 
@@ -63,7 +90,8 @@
           <span class="gh-stars" data-stars>Star</span>
         </a>
         <a class="btn btn--ghost nav__cta" href="https://app.getnanoai.com" target="_blank" rel="noopener">Login</a>
-        <a class="btn btn--primary nav__cta" href="https://app.getnanoai.com" target="_blank" rel="noopener">Register</a>
+        <a class="btn btn--primary nav__cta" href="https://app.getnanoai.com" target="_blank"
+          rel="noopener">Register</a>
       </div>
 
       <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
@@ -72,57 +100,45 @@
     </div>
   </header>
 
-  <!-- ───────────────────────── CATEGORY NAV ───────────────────────── -->
   <nav class="featnav" aria-label="Gateway sections">
     <div class="container featnav__inner">
-      <a href="#routing">Model Routing</a>
-      <a href="#policy">Policy Engine</a>
-      <a href="#guardrails">Guardrails</a>
-      <a href="#metering">Usage &amp; Billing</a>
-      <a href="#identity">Identity &amp; Access</a>
-      <a href="#audit">Audit &amp; Compliance</a>
-      <a href="#alerts">Alerts &amp; Incidents</a>
-      <a href="#scale">Reliability &amp; Scale</a>
       <a href="#pricing">Pricing</a>
     </div>
   </nav>
 
   <main id="top">
-    <!-- ───────────────────────── HEADER ───────────────────────── -->
     <section class="feat-hero container">
-      <span class="eyebrow">Enterprise Gateway</span>
-      <h1 class="hero__title">Govern every model call <span class="grad">across your organization</span></h1>
-      <p class="hero__sub">
-        NanoAgent Gateway is the control plane for enterprise AI. Put a single OpenAI-compatible endpoint in front of
-        every provider, and give security, finance, and platform teams what they need: policy enforcement, guardrails,
-        cost attribution, SSO, and an immutable audit trail — self-hosted in your own cloud. Every capability below is
-        backed by the NanoAgent Enterprise platform.
-      </p>
-      <div class="bench__actions">
-        <a class="btn btn--primary btn--lg" href="mailto:labs@nx3corp.com?subject=NanoAgent%20Gateway%20—%20Enterprise%20enquiry">Talk to sales</a>
-        <a class="btn btn--ghost btn--lg" href="https://app.getnanoai.com" target="_blank" rel="noopener">Book a demo</a>
-        <a class="btn btn--ghost btn--lg" href="docs.html">Read the docs</a>
-      </div>
-    </section>
-
-    <div class="container">
-      <!-- ───────── HOW IT WORKS ───────── -->
-      <section class="section featcat" id="how">
-        <div class="featcat__head">
-          <div class="featcat__icon">⇄</div>
-          <div class="featcat__titles">
-            <h2>Drop-in OpenAI-compatible proxy</h2>
-            <p>Change one base URL. The Gateway speaks the OpenAI API your tools already use.</p>
+      <div class="gateway-hero-layout">
+        <div class="gateway-hero-copy">
+          <span class="eyebrow">Enterprise Gateway</span>
+          <h1 class="hero__title">One AI gateway for security, finance, and platform teams <span class="grad">to control
+              every model call</span></h1>
+          <p class="hero__sub">
+            NanoAgent Gateway is the control plane for enterprise AI. Put a single OpenAI-compatible endpoint in front
+            of your AI traffic, and give security, finance, and platform teams the visibility and operational control
+            they need.
+          </p>
+          <div class="bench__actions">
+            <a class="btn btn--primary btn--lg"
+              href="mailto:labs@nx3corp.com?subject=NanoAgent%20Gateway%20-%20Enterprise%20enquiry">Talk to sales</a>
           </div>
         </div>
-        <div class="codebox">
-          <div class="codebox__tabs">
-            <button class="codetab is-active" data-code="aisdk">AI SDK</button>
-            <button class="codetab" data-code="python">Python</button>
-            <button class="codetab" data-code="curl">curl</button>
+        <div class="gateway-hero-panel">
+          <div class="featcat__head gateway-hero-panel__head">
+            <div class="featcat__titles">
+              <h2>Drop-in OpenAI-compatible proxy</h2>
+              <p>Change one base URL. The Gateway speaks the OpenAI API your tools already use.</p>
+            </div>
           </div>
-          <div class="codebox__body">
-            <pre class="codeblock codeblock--ln is-active" data-code="aisdk"><button class="codeblock__copy" data-copy="import { streamText } from 'ai'
+          <div class="codebox">
+            <div class="codebox__tabs">
+              <button class="codetab is-active" data-code="aisdk">AI SDK</button>
+              <button class="codetab" data-code="python">Python</button>
+              <button class="codetab" data-code="curl">curl</button>
+            </div>
+            <div class="codebox__body">
+              <pre class="codeblock codeblock--ln is-active"
+                data-code="aisdk"><button class="codeblock__copy" data-copy="import { streamText } from 'ai'
 import { createOpenAI } from '@ai-sdk/openai'
 
 const nano = createOpenAI({
@@ -134,7 +150,8 @@ const result = streamText({
   model: nano.chat('anthropic/claude-opus-4-8'),
   prompt: 'Why is the sky blue?',
 })">Copy</button><code><span class="cl"><span class="t-kw">import</span> { streamText } <span class="t-kw">from</span> <span class="t-str">'ai'</span></span><span class="cl"><span class="t-kw">import</span> { createOpenAI } <span class="t-kw">from</span> <span class="t-str">'@ai-sdk/openai'</span></span><span class="cl"> </span><span class="cl"><span class="t-kw">const</span> nano = <span class="t-fn">createOpenAI</span>({</span><span class="cl">  baseURL: <span class="t-str">'https://app.getnanoai.com/v1'</span>,</span><span class="cl">  apiKey: process.env.NANOAGENT_API_KEY,</span><span class="cl">})</span><span class="cl"> </span><span class="cl"><span class="t-kw">const</span> result = <span class="t-fn">streamText</span>({</span><span class="cl">  model: nano.<span class="t-fn">chat</span>(<span class="t-str">'anthropic/claude-opus-4-8'</span>),</span><span class="cl">  prompt: <span class="t-str">'Why is the sky blue?'</span>,</span><span class="cl">})</span></code></pre>
-            <pre class="codeblock codeblock--ln" data-code="python"><button class="codeblock__copy" data-copy="import os
+              <pre class="codeblock codeblock--ln"
+                data-code="python"><button class="codeblock__copy" data-copy="import os
 from openai import OpenAI
 
 client = OpenAI(
@@ -147,7 +164,8 @@ stream = client.chat.completions.create(
     messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Why is the sky blue?&quot;}],
     stream=True,
 )">Copy</button><code><span class="cl"><span class="t-kw">import</span> os</span><span class="cl"><span class="t-kw">from</span> openai <span class="t-kw">import</span> OpenAI</span><span class="cl"> </span><span class="cl">client = <span class="t-fn">OpenAI</span>(</span><span class="cl">    base_url=<span class="t-str">"https://app.getnanoai.com/v1"</span>,</span><span class="cl">    api_key=os.environ[<span class="t-str">"NANOAGENT_API_KEY"</span>],</span><span class="cl">)</span><span class="cl"> </span><span class="cl">stream = client.chat.completions.<span class="t-fn">create</span>(</span><span class="cl">    model=<span class="t-str">"anthropic/claude-opus-4-8"</span>,</span><span class="cl">    messages=[{<span class="t-str">"role"</span>: <span class="t-str">"user"</span>, <span class="t-str">"content"</span>: <span class="t-str">"Why is the sky blue?"</span>}],</span><span class="cl">    stream=<span class="t-kw">True</span>,</span><span class="cl">)</span></code></pre>
-            <pre class="codeblock codeblock--ln" data-code="curl"><button class="codeblock__copy" data-copy="# point any OpenAI-compatible client at the Gateway
+              <pre class="codeblock codeblock--ln"
+                data-code="curl"><button class="codeblock__copy" data-copy="# point any OpenAI-compatible client at the Gateway
 curl https://app.getnanoai.com/v1/chat/completions \
   -H &quot;Authorization: Bearer $NANOAGENT_API_KEY&quot; \
   -H &quot;Content-Type: application/json&quot; \
@@ -156,19 +174,67 @@ curl https://app.getnanoai.com/v1/chat/completions \
     &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Why is the sky blue?&quot;}],
     &quot;stream&quot;: true
   }'">Copy</button><code><span class="cl"><span class="c-dim"># point any OpenAI-compatible client at the Gateway</span></span><span class="cl"><span class="t-fn">curl</span> https://app.getnanoai.com/v1/chat/completions \</span><span class="cl">  -H <span class="t-str">"Authorization: Bearer $NANOAGENT_API_KEY"</span> \</span><span class="cl">  -H <span class="t-str">"Content-Type: application/json"</span> \</span><span class="cl">  -d <span class="t-str">'{</span></span><span class="cl"><span class="t-str">    "model": "anthropic/claude-opus-4-8",</span></span><span class="cl"><span class="t-str">    "messages": [{"role": "user", "content": "Why is the sky blue?"}],</span></span><span class="cl"><span class="t-str">    "stream": true</span></span><span class="cl"><span class="t-str">  }'</span></span></code></pre>
+            </div>
           </div>
+          <p class="installer__foot">Standard routes: <code>POST /v1/chat/completions</code> and
+            <code>GET /v1/models</code>. Streaming responses, headers, and finish reasons pass through transparently.
+          </p>
         </div>
-        <p class="installer__foot">Standard routes: <code>POST /v1/chat/completions</code> and <code>GET /v1/models</code>.
-          Streaming responses, headers, and finish reasons pass through transparently.</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <section class="section gateway-audience" id="why">
+        <div class="section__head">
+          <span class="eyebrow">Why Teams Buy</span>
+          <h2 class="section__title">Built to help enterprise teams say yes to AI adoption faster</h2>
+          <p class="section__lede">Gateway gives each stakeholder a clear reason to move forward without slowing down
+            developers.</p>
+        </div>
+        <div class="grid gateway-audience__grid">
+          <article class="gateway-audience__card">
+            <span class="gateway-audience__label">Security</span>
+            <h3>See AI traffic clearly across your organization</h3>
+            <p>Track how teams use models, watch for anomalies, and keep operations visible as adoption grows.</p>
+          </article>
+          <article class="gateway-audience__card">
+            <span class="gateway-audience__label">Finance</span>
+            <h3>Turn AI spend into something you can actually measure</h3>
+            <p>Attribute usage by team, app, project, and user so budgets, quotas, and cost reviews stop being
+              guesswork.</p>
+          </article>
+          <article class="gateway-audience__card">
+            <span class="gateway-audience__label">Platform</span>
+            <h3>Give developers one stable interface as your stack evolves</h3>
+            <p>Keep clients pointed at one endpoint while your team manages changes behind the scenes.</p>
+          </article>
+        </div>
       </section>
 
-      <!-- ───────── WHY NANO GATEWAY ───────── -->
-      <section class="section featcat" id="why">
+      <div class="gateway-stats" aria-label="Gateway highlights">
+        <div class="gateway-stat">
+          <span class="gateway-stat__eyebrow">01 · ACCESS</span>
+          <strong>1 endpoint</strong>
+          <p>for teams that need one consistent AI entry point</p>
+        </div>
+        <div class="gateway-stat">
+          <span class="gateway-stat__eyebrow">02 · MIGRATE</span>
+          <strong>0 client rewrites</strong>
+          <p>for tools already built on the OpenAI API shape</p>
+        </div>
+        <div class="gateway-stat">
+          <span class="gateway-stat__eyebrow">03 · OBSERVE</span>
+          <strong>Full visibility</strong>
+          <p>across spend, access patterns, and usage</p>
+        </div>
+      </div>
+
+      <section class="section featcat">
         <div class="featcat__head">
           <div class="featcat__icon">★</div>
           <div class="featcat__titles">
             <h2>Why Nano Gateway?</h2>
-            <p>One control plane between your apps and every model — without rewriting a line of client code.</p>
+            <p>One control plane between your apps and every model without rewriting a line of client code.</p>
           </div>
         </div>
         <div class="grid grid--features">
@@ -180,378 +246,50 @@ curl https://app.getnanoai.com/v1/chat/completions \
           </div>
           <div class="card">
             <div class="card__icon">🛡️</div>
-            <h3>Governance built in</h3>
-            <p>Policy enforcement, guardrails, SSO, and an immutable audit trail wrap every call — no extra integration
-              work.</p>
+            <h3>Operations built in</h3>
+            <p>Visibility features wrap every call without forcing teams to rebuild their tooling.</p>
           </div>
           <div class="card">
             <div class="card__icon">💸</div>
             <h3>Cost in your control</h3>
-            <p>Attribute spend per team, override pricing per model, and meter usage for billing across every provider.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🏢</div>
-            <h3>Self-hosted</h3>
-            <p>Runs in your own cloud. Keys, prompts, and traffic never leave your perimeter.</p>
+            <p>Attribute spend per team and monitor usage trends so AI costs stay understandable as demand grows.</p>
           </div>
         </div>
       </section>
 
-      <!-- ───────── MODEL ROUTING ───────── -->
-      <section class="section featcat" id="routing">
-        <div class="featcat__head">
-          <div class="featcat__icon">🌐</div>
-          <div class="featcat__titles">
-            <h2>Model routing &amp; providers</h2>
-            <p>One catalog across every upstream provider, with central control over what ships to users.</p>
-          </div>
-        </div>
-        <div class="grid grid--features">
-          <div class="card">
-            <div class="card__icon">🔀</div>
-            <h3>Multi-provider proxy</h3>
-            <p>Route to any provider exposing an OpenAI-compatible chat-completions API, behind a single team endpoint.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🗝️</div>
-            <h3>Central credential vault</h3>
-            <p>Store and rotate upstream provider keys server-side — clients authenticate to the Gateway, never to the
-              provider.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🎚️</div>
-            <h3>Model enable / disable</h3>
-            <p>Selectively expose upstream models to end users and refresh model catalogs on demand.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🏷️</div>
-            <h3>Per-model pricing</h3>
-            <p>Override pricing at model granularity — input, output, cached-input, and cache-write rates.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🪄</div>
-            <h3>Transparent model rewrite</h3>
-            <p>Map a client's requested model ID to the real upstream name, with optional per-model system-prompt
-              injection.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">📏</div>
-            <h3>Context-window sync</h3>
-            <p>Context windows are synchronised from upstream on each provider refresh and tracked per model.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ───────── POLICY ENGINE ───────── -->
-      <section class="section featcat" id="policy">
-        <div class="featcat__head">
-          <div class="featcat__icon">⚖️</div>
-          <div class="featcat__titles">
-            <h2>Policy engine</h2>
-            <p>Scope-based access control over who can call which model, how much, and from where.</p>
-          </div>
-        </div>
-        <div class="grid grid--features">
-          <div class="card">
-            <div class="card__icon">🎯</div>
-            <h3>Scoped rules</h3>
-            <p>Target rules at the whole org, a team, an API-key scope, or an individual user.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🚦</div>
-            <h3>Allow / deny modes</h3>
-            <p>Run default-allow with a blocklist or default-deny with a whitelist, depending on your risk posture.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">💰</div>
-            <h3>Budget limits</h3>
-            <p>Per-scope USD spend ceilings stop runaway cost before the request goes upstream.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">⏱️</div>
-            <h3>Token &amp; request limits</h3>
-            <p>Windowed token and request-count caps per scope, over an hour, day, or month.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🎲</div>
-            <h3>Sampling enforcement</h3>
-            <p>Apply a rule probabilistically — e.g. audit or shadow-check 10% of calls.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🌍</div>
-            <h3>IP / CIDR rules</h3>
-            <p>Allow or deny by client IP or network range, with trusted-proxy resolution behind load balancers.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ───────── GUARDRAILS ───────── -->
-      <section class="section featcat" id="guardrails">
-        <div class="featcat__head">
-          <div class="featcat__icon">🛡️</div>
-          <div class="featcat__titles">
-            <h2>Guardrails</h2>
-            <p>Inline content checks that run before a single response byte reaches the client.</p>
-          </div>
-        </div>
-        <div class="grid grid--features">
-          <div class="card">
-            <div class="card__icon">💉</div>
-            <h3>Prompt-injection detection</h3>
-            <p>Pattern-based detection against OWASP LLM injection techniques.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🔏</div>
-            <h3>Sensitive-data detection</h3>
-            <p>Catch PII, API keys, and credential patterns in prompts and responses.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">✂️</div>
-            <h3>Block or redact</h3>
-            <p>Per-pattern action modes — block the request outright or mask the matched content.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">⚡</div>
-            <h3>Real-time evaluation</h3>
-            <p>Guardrails run inline, so a block happens before any bytes are streamed back.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ───────── USAGE & BILLING ───────── -->
-      <section class="section featcat" id="metering">
-        <div class="featcat__head">
-          <div class="featcat__icon">📊</div>
-          <div class="featcat__titles">
-            <h2>Usage &amp; billing</h2>
-            <p>Every call measured, sliced, and reconciled against plan quotas.</p>
-          </div>
-        </div>
-        <div class="grid grid--features">
-          <div class="card">
-            <div class="card__icon">🪙</div>
-            <h3>Granular metering</h3>
-            <p>Track input, output, and cached tokens, request counts, and latency on every call.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🔬</div>
-            <h3>Multi-dimensional slicing</h3>
-            <p>Break usage down by provider, model, team, user, API key, app, and project.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">📈</div>
-            <h3>Logs &amp; summaries</h3>
-            <p>Query per-request logs and aggregated trends over windows from 1 to 365 days.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🧾</div>
-            <h3>Live quota usage</h3>
-            <p>See live consumption against plan quotas, separate from audit-gated reporting.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">💳</div>
-            <h3>Stripe billing</h3>
-            <p>Checkout, subscription management, and invoice retrieval with normalised webhook events.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🛑</div>
-            <h3>Quota enforcement</h3>
-            <p>Block calls once an org hits its monthly spend, token, or request limit.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ───────── IDENTITY & ACCESS ───────── -->
-      <section class="section featcat" id="identity">
-        <div class="featcat__head">
-          <div class="featcat__icon">🔐</div>
-          <div class="featcat__titles">
-            <h2>Identity &amp; access</h2>
-            <p>Multi-tenant auth that plugs into your existing identity provider.</p>
-          </div>
-        </div>
-        <div class="grid grid--features">
-          <div class="card">
-            <div class="card__icon">🏢</div>
-            <h3>JWT multi-tenancy</h3>
-            <p>Org-scoped JWT identity keeps every tenant's data and policy cleanly separated.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🔑</div>
-            <h3>Scoped API keys</h3>
-            <p>Org- and team-scoped keys with names, scopes, and optional expiry.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">👥</div>
-            <h3>RBAC</h3>
-            <p>Custom roles built from 22+ discrete permissions, assigned across nested teams.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🪪</div>
-            <h3>SSO — OIDC &amp; SAML</h3>
-            <p>OIDC (Google, GitHub, Okta) and SAML 2.0 (Okta, Azure AD) with per-domain SSO enforcement.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🔄</div>
-            <h3>SCIM provisioning</h3>
-            <p>SCIM 2.0 just-in-time user and group sync from your IdP, with domain verification.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🏷️</div>
-            <h3>Request attribution</h3>
-            <p>App and project names from request headers are stored with usage and forwarded upstream.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ───────── AUDIT & COMPLIANCE ───────── -->
-      <section class="section featcat" id="audit">
-        <div class="featcat__head">
-          <div class="featcat__icon">📋</div>
-          <div class="featcat__titles">
-            <h2>Audit &amp; compliance</h2>
-            <p>An immutable record of every change, with the reports auditors ask for.</p>
-          </div>
-        </div>
-        <div class="grid grid--features">
-          <div class="card">
-            <div class="card__icon">📝</div>
-            <h3>Full audit log</h3>
-            <p>Every mutation captured with actor, action, resource, and detail — exportable to CSV or JSON.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🔎</div>
-            <h3>Access reviews</h3>
-            <p>Snapshot users, roles, teams, and their permission assignments for periodic review.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">📤</div>
-            <h3>Policy &amp; guardrail exports</h3>
-            <p>Export full policy state and a timestamped log of every guardrail match and action.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🔁</div>
-            <h3>Key-rotation report</h3>
-            <p>Flag provider credentials older than 90 / 180 / 365 days and surface expiring keys.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">📦</div>
-            <h3>SOC2-ready bundles</h3>
-            <p>Evidence assembled from access reviews, policy exports, and incident history.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🗓️</div>
-            <h3>Data retention</h3>
-            <p>Configurable retention windows for usage logs, audit events, and guardrail events.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ───────── ALERTS & INCIDENTS ───────── -->
-      <section class="section featcat" id="alerts">
-        <div class="featcat__head">
-          <div class="featcat__icon">🚨</div>
-          <div class="featcat__titles">
-            <h2>Alerts &amp; incidents</h2>
-            <p>Metric-driven alerting with on-call workflows built in.</p>
-          </div>
-        </div>
-        <div class="grid grid--features">
-          <div class="card">
-            <div class="card__icon">📐</div>
-            <h3>Alert rules</h3>
-            <p>Fire on spend, request count, latency, or error rate — including composite AND/OR conditions.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🧯</div>
-            <h3>Incident grouping</h3>
-            <p>Alert events roll up into incidents with acknowledge and resolve workflows.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">📟</div>
-            <h3>Escalation policies</h3>
-            <p>On-call chains with delays and automatic escalation when nobody responds.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🔕</div>
-            <h3>Silencing &amp; maintenance</h3>
-            <p>Mute individual rules with an expiry and suppress alerting during maintenance windows.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ───────── RELIABILITY & SCALE ───────── -->
-      <section class="section featcat" id="scale">
-        <div class="featcat__head">
-          <div class="featcat__icon">⚙️</div>
-          <div class="featcat__titles">
-            <h2>Reliability &amp; scale</h2>
-            <p>Cloud-native and stateless — runs as one box or N replicas behind a load balancer.</p>
-          </div>
-        </div>
-        <div class="grid grid--features">
-          <div class="card">
-            <div class="card__icon">📡</div>
-            <h3>Horizontal scaling</h3>
-            <p>Stateless API replicas behind nginx, with Redis for distributed locks and shared cache.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🗄️</div>
-            <h3>Durable storage</h3>
-            <p>PostgreSQL-backed state with connection pooling and retry-on-failure; S3/MinIO for blobs.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🩺</div>
-            <h3>Health &amp; readiness</h3>
-            <p>A <code>/health/ready</code> probe checks database and Redis connectivity.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🔂</div>
-            <h3>Leader-elected jobs</h3>
-            <p>Redis leader election keeps background jobs from double-running metering or alerts across replicas.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🚧</div>
-            <h3>Opt-in rate limiting</h3>
-            <p>Fixed-window per-IP throttling with configurable permit and queue limits.</p>
-          </div>
-          <div class="card">
-            <div class="card__icon">🧰</div>
-            <h3>Single-box mode</h3>
-            <p>Leave Redis empty and storage local to run the whole Gateway with zero extra infrastructure.</p>
-          </div>
-        </div>
-      </section>
-      <!-- ───────── PRICING ───────── -->
       <section class="section featcat" id="pricing">
         <div class="featcat__head">
           <div class="featcat__icon">💵</div>
           <div class="featcat__titles">
             <h2>Pricing</h2>
-            <p>Start free. Scale to governance, identity, and on-premise as your org grows.</p>
+            <p>Start free, then grow into broader operational visibility and control as adoption expands.</p>
           </div>
         </div>
+        <div class="pricing-intro">
+          <p>Compare every plan at a glance with full feature checklists inside each card.</p>
+          <span>Included features are highlighted and unavailable ones stay visible but muted.</span>
+        </div>
         <div class="pricing" data-pricing>
-          <p class="pricing__loading">Loading plans…</p>
+          <p class="pricing__loading">Loading plans...</p>
         </div>
       </section>
     </div>
 
-    <!-- ───────────────────────── CTA ───────────────────────── -->
     <section class="section container">
       <div class="cta">
         <div class="cta__glow" aria-hidden="true"></div>
         <h2>Bring your AI traffic under enterprise control.</h2>
-        <p>Route, govern, meter, and audit every model call — self-hosted, on your terms, without changing your tools.</p>
+        <p>Bring visibility to every model call without changing your tools.</p>
         <div class="cta__actions">
-          <a class="btn btn--primary btn--lg" href="mailto:labs@nx3corp.com?subject=NanoAgent%20Gateway%20—%20Enterprise%20enquiry">Talk to sales</a>
-          <a class="btn btn--ghost btn--lg" href="https://app.getnanoai.com" target="_blank" rel="noopener">Book a demo</a>
+          <a class="btn btn--primary btn--lg"
+            href="mailto:labs@nx3corp.com?subject=NanoAgent%20Gateway%20-%20Enterprise%20enquiry">Talk to sales</a>
+          <a class="btn btn--ghost btn--lg" href="https://app.getnanoai.com" target="_blank" rel="noopener">Book a
+            demo</a>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- ───────────────────────── FOOTER ───────────────────────── -->
   <footer class="footer">
     <div class="container footer__inner">
       <div class="footer__brand">
@@ -583,10 +321,9 @@ curl https://app.getnanoai.com/v1/chat/completions \
           <h4>Community</h4>
           <a href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener">GitHub</a>
           <a href="https://github.com/rizwan3d/NanoAgent/issues" target="_blank" rel="noopener">Issues</a>
-          <a href="https://github.com/rizwan3d/NanoAgent/discussions" target="_blank"
-            rel="noopener">Discussions</a>
-          <a href="https://hackernoon.com/building-an-ai-coding-agent-that-doesnt-hide-what-its-doing"
-            target="_blank" rel="noopener">Blog</a>
+          <a href="https://github.com/rizwan3d/NanoAgent/discussions" target="_blank" rel="noopener">Discussions</a>
+          <a href="https://hackernoon.com/building-an-ai-coding-agent-that-doesnt-hide-what-its-doing" target="_blank"
+            rel="noopener">Blog</a>
         </div>
         <div class="footer__col">
           <h4>More</h4>
@@ -597,7 +334,7 @@ curl https://app.getnanoai.com/v1/chat/completions \
       </nav>
     </div>
     <div class="container footer__base">
-      <span>© <span data-year>2026</span> NanoAgent · Apache-2.0 · Built with ❤ for the open-source community.</span>
+      <span>&copy; <span data-year>2026</span> NanoAgent · Apache-2.0 · Built with love for the open-source community.</span>
       <span class="footer__sponsor">Sponsored by <a href="https://alfain.co/" target="_blank" rel="noopener">ALFAIN
           Technologies</a></span>
     </div>

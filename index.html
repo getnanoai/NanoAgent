@@ -626,18 +626,21 @@ nanoai -p "Say hello in one short line"</code></pre>
           <span class="eyebrow">NuGet library</span>
           <h2 class="section__title">The core <code>NanoAgent</code> package also ships on NuGet</h2>
           <p class="section__lede">Tagged releases publish the <code>NanoAgent</code> library to NuGet.org alongside the
-            drive the same agent — profiles, permissions, memory, and all — from inside your application.</p>
+            desktop and CLI assets. The end-user command-line experience is still distributed through the release
+            installers.</p>
           <div class="bench__actions">
-            <a class="btn btn--ghost" href="docs.html#sdk">Read the SDK docs →</a>
             <a class="btn btn--ghost" href="https://www.nuget.org/packages/NanoAgent/" target="_blank" rel="noopener">View
-              on NuGet →</a>
-          </div>
+              on NuGet</a>
+            <a class="btn btn--ghost" href="docs.html#install">See install docs</a>
         </div>
-        <pre class="codeblock codeblock--solo" data-copy-group><button class="codeblock__copy" data-copy="dotnet add package NanoAgent">Copy</button><code><span class="c-dim"># add the SDK to your project</span>
-dotnet add package NanoAgent
+          </div>
+        <pre class="codeblock codeblock--solo"><code><span class="c-dim"># release assets</span>
+NanoAgent.Desktop-*
+NanoAgent.CLI-*
+SHA256SUMS
 
-<span class="c-dim"># or in your .csproj</span>
-&lt;PackageReference Include="NanoAgent" Version="*" /&gt;</code></pre>
+<span class="c-dim"># package publication</span>
+NuGet.org -> NanoAgent</code></pre>
       </div>
     </section>
 

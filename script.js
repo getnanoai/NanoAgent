@@ -86,7 +86,7 @@
   var ipanels = document.querySelectorAll(".ipanel");
   var visualImg = document.querySelector(".visual__img");
   var visualBar = document.querySelector(".visual__bar");
-  // ponytail: desktop falls through to nano.gif, no image for it
+  // desktop falls through to nano.gif, no image for it
   var tabImg = { cli: "assets/cli.png", vscode: "assets/vscode.png", vs: "assets/vs.png", desktop: "assets/desktop.png" };
   itabs.forEach(function (tab) {
     tab.addEventListener("click", function () {
@@ -270,5 +270,59 @@
         }
       })
       .catch(function () { /* keep default label */ });
+  }
+
+  /* ---- live pricing plans ---- */
+  var pricingEl = document.querySelector("[data-pricing]");
+  if (pricingEl) {
+    // Codes that don't title-case cleanly; everything else is auto-formatted.
+    var FEATURE_LABELS = {
+      byo_provider_keys: "BYO provider keys",
+      sso_saml: "SSO (SAML & OIDC)",
+      scim: "SCIM provisioning",
+      custom_rbac_roles: "Custom RBAC roles",
+      input_output_logging: "Input / output logging",
+      on_premise_deployment: "On-premise deployment",
+      nanoforge: "NanoForge",
+    };
+    var label = function (code) {
+      return FEATURE_LABELS[code] ||
+        code.replace(/_/g, " ").replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+    };
+    var esc = function (s) {
+      var d = document.createElement("div"); d.textContent = String(s == null ? "" : s); return d.innerHTML;
+    };
+    var priceLabel = function (p) {
+      if (p.isContactSales) return "<span>Custom pricing</span>";
+      var price = p.prices && p.prices[0];
+      if (!price || Number(price.baseAmount) === 0) return "$0<span> / mo</span>";
+      var amt = Number(price.baseAmount);
+      return "$" + (amt % 1 ? amt.toFixed(2) : amt) + "<span> / " + esc(price.billingInterval) + "</span>";
+    };
+    fetch("https://app.getnanoai.com/api/v1/public/packages")
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (plans) {
+        if (!Array.isArray(plans) || !plans.length) throw new Error("no plans");
+        pricingEl.innerHTML = plans.map(function (p) {
+          var featured = p.code === "team";
+          var cta = p.isContactSales
+            ? '<a class="btn btn--primary" href="mailto:labs@nx3corp.com?subject=NanoAgent%20Gateway%20—%20Enterprise%20enquiry">Talk to sales</a>'
+            : '<a class="btn btn--' + (featured ? "primary" : "ghost") + '" href="https://app.getnanoai.com" target="_blank" rel="noopener">Get started</a>';
+          var feats = (p.features || []).slice().sort().map(function (f) {
+            return "<li>" + esc(label(f)) + "</li>";
+          }).join("");
+          return '<div class="plan' + (featured ? " plan--featured" : "") + '">' +
+            (featured ? '<span class="plan__badge">Popular</span>' : "") +
+            '<h3 class="plan__name">' + esc(p.name) + "</h3>" +
+            '<p class="plan__desc">' + esc(p.description) + "</p>" +
+            '<div class="plan__price">' + priceLabel(p) + "</div>" +
+            '<ul class="plan__features">' + feats + "</ul>" +
+            cta + "</div>";
+        }).join("");
+      })
+      .catch(function () {
+        pricingEl.innerHTML = '<p class="pricing__loading">Pricing unavailable — ' +
+          '<a href="https://app.getnanoai.com" target="_blank" rel="noopener">see plans</a>.</p>';
+      });
   }
 })();

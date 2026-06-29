@@ -45,8 +45,42 @@
 
       <nav class="nav__links" aria-label="Primary">
         <a href="index.html">Home</a>
+        <details class="mega">
+          <summary>Product</summary>
+          <div class="mega__panel">
+            <div class="mega__grid">
+              <div class="mega__col">
+                <a class="mfeat" href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener">
+                  <span class="mfeat__ico">⌘</span>
+                  <span><strong>NanoAgent</strong><span>Open-source coding agent</span></span>
+                </a>
+                <div class="mega__links">
+                  <a href="docs.html#desktop">Desktop</a>
+                  <a href="docs.html#vscode">VS Code</a>
+                  <a href="docs.html#visual-studio">Visual Studio</a>
+                  <a href="docs.html#review">CodeReview</a>
+                  <a href="docs.html#review">CI</a>
+                </div>
+              </div>
+              <div class="mega__col">
+                <a class="mfeat" href="gateway.html">
+                  <span class="mfeat__ico">⇄</span>
+                  <span><strong>Gateway</strong><span>Model routing &amp; control</span></span>
+                </a>
+                <a class="mfeat" href="nanoforge.html">
+                  <span class="mfeat__ico">▤</span>
+                  <span><strong>NanoForge</strong><span>Full-stack app builder</span></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </details>
         <a href="features.html">Features</a>
         <a href="docs.html">Docs</a>
+        <div class="nav__mobile-actions">
+          <a class="btn btn--ghost nav__cta" href="https://app.getnanoai.com" target="_blank" rel="noopener">Login</a>
+          <a class="btn btn--primary nav__cta" href="https://app.getnanoai.com" target="_blank" rel="noopener">Register</a>
+        </div>
       </nav>
 
       <div class="nav__actions">
@@ -58,14 +92,8 @@
           </svg>
           <span class="gh-stars" data-stars>Star</span>
         </a>
-        <a class="ghost-link" href="https://github.com/rizwan3d/NanoAgent/commits/master" target="_blank" rel="noopener"
-          aria-label="NanoAgent commits on GitHub">
-          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
-            <path
-              d="M11.93 8.5a4.002 4.002 0 0 1-7.86 0H.75a.75.75 0 0 1 0-1.5h3.32a4.002 4.002 0 0 1 7.86 0h3.32a.75.75 0 0 1 0 1.5Zm-1.43-.75a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z" />
-          </svg>
-          <span class="gh-commits" data-commits>Commits</span>
-        </a>
+        <a class="btn btn--ghost nav__cta" href="https://app.getnanoai.com" target="_blank" rel="noopener">Login</a>
+        <a class="btn btn--primary nav__cta" href="https://app.getnanoai.com" target="_blank" rel="noopener">Register</a>
       </div>
 
       <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
@@ -136,7 +164,6 @@
           <ul class="docs__nav">
             <li><a href="#privacy">Privacy &amp; local data</a></li>
             <li><a href="#troubleshooting">Troubleshooting</a></li>
-            <li><a href="#sdk">NuGet SDK (.NET)</a></li>
             <li><a href="#build">Build from source</a></li>
             <li><a href="#license">License</a></li>
           </ul>
@@ -215,13 +242,16 @@
             <h3>Headless / preseeded setup</h3>
             <p>If you already know the provider settings you want, skip the interactive onboarding by setting
               <code>NANOAGENT_PROVIDER</code>, <code>NANOAGENT_MODEL</code>, <code>NANOAGENT_THINKING</code>, optional
-              <code>NANOAGENT_REASONING</code>, and <code>NANOAGENT_API_KEY</code> before the first run. NanoAgent treats
-              that as a complete headless setup and saves it as the active provider profile.</p>
+              <code>NANOAGENT_REASONING</code>, optional <code>NANOAGENT_PROJECT_NAME</code>, and
+              <code>NANOAGENT_API_KEY</code> before the first run. NanoAgent treats that as a complete headless setup and
+              saves it as the active provider profile. When <code>NANOAGENT_PROJECT_NAME</code> is set, NanoAgent sends
+              that value as the <code>X-Project</code> header on provider requests.</p>
             <h4>PowerShell example</h4>
             <pre><code>$env:NANOAGENT_PROVIDER="openrouter"
 $env:NANOAGENT_MODEL="poolside/laguna-m.1:free"
 $env:NANOAGENT_THINKING="on"
 $env:NANOAGENT_REASONING="high"
+$env:NANOAGENT_PROJECT_NAME="customer-portal"
 $env:NANOAGENT_API_KEY="PASTE_NEW_ROTATED_KEY_HERE"
 
 nanoai -p "Say hello in one short line"</code></pre>
@@ -230,6 +260,7 @@ nanoai -p "Say hello in one short line"</code></pre>
 export NANOAGENT_MODEL="poolside/laguna-m.1:free"
 export NANOAGENT_THINKING="on"
 export NANOAGENT_REASONING="high"
+export NANOAGENT_PROJECT_NAME="customer-portal"
 export NANOAGENT_API_KEY="PASTE_NEW_ROTATED_KEY_HERE"
 
 nanoai -p "Say hello in one short line"</code></pre>
@@ -1306,12 +1337,13 @@ Review the requested code or change set with a findings-first posture.</code></p
               a session override with <code>/allow</code>, or update configuration.</p>
 
             <h3>Shell sandboxing fails on Windows</h3>
-            <p>Foreground shell commands in <code>read-only</code> and <code>workspace-write</code> modes use the Windows
+            <p>Foreground shell commands and background terminals in <code>read-only</code> and
+              <code>workspace-write</code> modes use the Windows
               sandbox runner. If a restricted command still fails, inspect
               <code>%APPDATA%\NanoAgent\.sandbox\sandbox.log</code>, rerun the Windows sandbox setup if prompted, and
-              verify the working directory still exists. Restricted pseudo-terminal sessions and restricted background
-              terminals are not wired to the Windows sandbox runner yet; those requests fail closed — rerun without
-              <code>pty</code>, use a foreground command, or approve sandbox escalation only when you trust the command.</p>
+              verify the working directory still exists. Restricted pseudo-terminal sessions are not supported by the
+              Windows sandbox runner. Those requests fail closed; rerun without <code>pty</code>, use a non-PTY
+              foreground command or background terminal, or approve sandbox escalation only when you trust the command.</p>
 
             <h3>The agent cannot read a file</h3>
             <p>Check that the path is inside the workspace and not excluded by <code>.nanoagent/.nanoignore</code> or
@@ -1320,66 +1352,6 @@ Review the requested code or change set with a findings-first posture.</code></p
             <h3>Undo did not revert a shell side effect</h3>
             <p>Undo/redo only covers tracked file edit transactions. It does not revert arbitrary shell command side
               effects, package installs, generated files, external tools, or network actions.</p>
-          </section>
-
-          <!-- NUGET SDK -->
-          <section class="doc-section" id="sdk">
-            <h2>NuGet SDK (.NET)</h2>
-            <p>The <code>NanoAgent</code> package on
-              <a href="https://www.nuget.org/packages/NanoAgent/" target="_blank" rel="noopener">NuGet.org</a> provides
-              the core libraries and application services behind NanoAgent — the same core that powers the desktop app,
-              the <code>nanoai</code> terminal command, and the editor extensions. Add the package to drive the coding
-              agent from your own application — an app builder, a server, a bot, or automation — without implementing the
-              interactive console UI. The release workflows pack and publish the package for every <code>v*</code> tag
-              release. If you want the end-user command-line experience instead, install the <code>nanoai</code> CLI from
-              the <a href="#install">release installers</a>; the CLI is not distributed as a NuGet package.</p>
-
-            <h3>Install</h3>
-            <pre><code>dotnet add package NanoAgent</code></pre>
-            <p>Or add a reference directly in your <code>.csproj</code>:</p>
-            <pre><code>&lt;PackageReference Include="NanoAgent" Version="*" /&gt;</code></pre>
-            <p>The package targets <code>net10.0</code>, so your project needs a .NET SDK compatible with
-              <code>net10.0</code>. Pin <code>Version</code> to a specific release for reproducible builds instead of
-              using <code>*</code>.</p>
-
-            <h3>Embed the SDK</h3>
-            <p>The <code>NanoAgent.Sdk</code> namespace lets you drive the coding agent from your own application without
-              the interactive console UI. Configure a provider and model with the fluent builder, then run turns and
-              subscribe to progress events. Provider credentials are held in memory only — embedding the SDK never
-              touches the machine-wide NanoAgent configuration.</p>
-            <pre><code>using NanoAgent.Sdk;
-
-await using NanoAgentClient client = NanoAgentClient.CreateBuilder()
-    .UseAnthropic(apiKey, "claude-opus-4-8")   // or UseOpenAi / UseOllama / UseOpenAiCompatible / ...
-    .WithWorkspace("/path/to/repo")
-    .AutoApproveTools()                          // for trusted / sandboxed automation
-    .Build();
-
-// Surface progress in your UI (final answer is still returned from RunTurnAsync).
-client.AssistantMessageChunkReceived += (_, e) => Console.Write(e.Text);
-client.ToolCallsStarted += (_, e) => Console.WriteLine($"Running {e.ToolCalls.Count} tool(s)...");
-client.StatusMessage   += (_, e) => Console.WriteLine($"[{e.Severity}] {e.Message}");
-
-await client.InitializeAsync();
-ConversationTurnResult result = await client.RunTurnAsync("Build a TODO app");
-Console.WriteLine(result.ResponseText);</code></pre>
-
-            <h3>Extend with your own tools and services</h3>
-            <p>Register custom tools the agent can call, attach MCP servers, and override or add any dependency-injection
-              service:</p>
-            <pre><code>NanoAgentClient client = NanoAgentClient.CreateBuilder()
-    .UseAnthropic(apiKey)
-    .AddTool(new MyDeployTool())                 // custom ITool the agent can call
-    .AddMcpServer(new BackendMcpServerConfiguration("docs") { Url = "https://..." })
-    .ConfigureServices(services => { /* override or add any DI service */ })
-    .Build();</code></pre>
-            <p>The CLI and desktop apps continue to use the same core through their existing entry points; the SDK is an
-              additive layer on top.</p>
-
-            <div class="doc-note">The SDK runs the agent in-process. Permission policy, sandbox modes, and built-in deny
-              rules still apply — review <a href="#permissions">Permissions &amp; sandboxing</a> before calling
-              <code>AutoApproveTools()</code> or granting an embedded agent write or shell access in a host application.
-            </div>
           </section>
 
           <!-- BUILD -->
@@ -1505,3 +1477,4 @@ npm run package:vsix</code></pre>
 </body>
 
 </html>
+

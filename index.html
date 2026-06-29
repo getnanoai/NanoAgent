@@ -296,8 +296,8 @@
           <div class="card__icon">⌨️</div>
           <div class="feature-list__text">
             <h3><code>!</code> and <code>!!</code> shell</h3>
-            <p>Run shell commands inline with <code>!</code> and rerun the last one with <code>!!</code> — no need to
-              switch terminals.</p>
+            <p>Run shell commands inline with <code>!</code> and launch live background terminals with
+              <code>!!</code> — no need to switch terminals.</p>
           </div>
         </li>
         <li class="feature-list__item">
@@ -318,9 +318,9 @@
         <li class="feature-list__item">
           <div class="card__icon">📦</div>
           <div class="feature-list__text">
-            <h3>SDK to embed in your app</h3>
-            <p>Drop NanoAgent into your own .NET application with the <a class="text-link" href="#sdk">SDK on NuGet</a>
-              and drive it programmatically.</p>
+            <h3>NuGet library releases</h3>
+            <p>Tagged releases also publish the <code>NanoAgent</code> library to NuGet.org for teams that want the core
+              package alongside the CLI installers.</p>
           </div>
         </li>
       </ul>
@@ -394,8 +394,8 @@
               <td>–</td>
             </tr>
             <tr>
-              <th scope="row">JetBrains plugin</th>
-              <td class="y">✓ (ACP)</td>
+              <th scope="row">ACP-compatible editors</th>
+              <td class="y">✓</td>
               <td>–</td>
               <td class="y">✓</td>
               <td class="y">✓</td>
@@ -504,7 +504,7 @@
               <td>–</td>
             </tr>
             <tr>
-              <th scope="row">SDK to embed in your app</th>
+              <th scope="row">NuGet library release</th>
               <td class="y">✓</td>
               <td>–</td>
               <td class="y">✓</td>
@@ -596,18 +596,22 @@ nanoai</code></pre>
               <div class="codebox__body">
                 <pre class="codeblock is-active" data-code="normal" data-copy-group><button class="codeblock__copy" data-copy="nanoai">Copy</button><code><span class="c-dim"># launch — onboarding walks you through provider setup</span>
 nanoai</code></pre>
-                <pre class="codeblock" data-code="headless" data-copy-group><button class="codeblock__copy" data-copy='export NANOAGENT_PROVIDER="openai"
-export NANOAGENT_MODEL="gpt-5-5"
+                <pre class="codeblock" data-code="headless" data-copy-group><button class="codeblock__copy" data-copy='export NANOAGENT_PROVIDER="openrouter"
+export NANOAGENT_MODEL="poolside/laguna-m.1:free"
 export NANOAGENT_THINKING="on"
+export NANOAGENT_REASONING="high"
+export NANOAGENT_PROJECT_NAME="customer-portal"
 export NANOAGENT_API_KEY="PASTE_NEW_ROTATED_KEY_HERE"
 
-nanoai -p "Say hello in one short line" --yes'>Copy</button><code><span class="c-dim"># headless setup via environment variables</span>
-export NANOAGENT_PROVIDER="openai"
-export NANOAGENT_MODEL="gpt-5-5"
+nanoai -p "Say hello in one short line"'>Copy</button><code><span class="c-dim"># headless setup via environment variables</span>
+export NANOAGENT_PROVIDER="openrouter"
+export NANOAGENT_MODEL="poolside/laguna-m.1:free"
 export NANOAGENT_THINKING="on"
+export NANOAGENT_REASONING="high"
+export NANOAGENT_PROJECT_NAME="customer-portal"
 export NANOAGENT_API_KEY="PASTE_NEW_ROTATED_KEY_HERE"
 
-nanoai -p "Say hello in one short line" --yes</code></pre>
+nanoai -p "Say hello in one short line"</code></pre>
               </div>
             </div>
           </div>
@@ -619,9 +623,9 @@ nanoai -p "Say hello in one short line" --yes</code></pre>
     <section class="section container" id="sdk">
       <div class="bench">
         <div class="bench__copy">
-          <span class="eyebrow">SDK for .NET</span>
-          <h2 class="section__title">Embed NanoAgent in your own app</h2>
-          <p class="section__lede">The NanoAgent SDK ships on NuGet. Add the package, point it at your provider, and
+          <span class="eyebrow">NuGet library</span>
+          <h2 class="section__title">The core <code>NanoAgent</code> package also ships on NuGet</h2>
+          <p class="section__lede">Tagged releases publish the <code>NanoAgent</code> library to NuGet.org alongside the
             drive the same agent — profiles, permissions, memory, and all — from inside your application.</p>
           <div class="bench__actions">
             <a class="btn btn--ghost" href="docs.html#sdk">Read the SDK docs →</a>

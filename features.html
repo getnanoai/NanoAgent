@@ -45,9 +45,42 @@
 
       <nav class="nav__links" aria-label="Primary">
         <a href="index.html">Home</a>
+        <details class="mega">
+          <summary>Product</summary>
+          <div class="mega__panel">
+            <div class="mega__grid">
+              <div class="mega__col">
+                <a class="mfeat" href="https://github.com/rizwan3d/NanoAgent" target="_blank" rel="noopener">
+                  <span class="mfeat__ico">⌘</span>
+                  <span><strong>NanoAgent</strong><span>Open-source coding agent</span></span>
+                </a>
+                <div class="mega__links">
+                  <a href="docs.html#desktop">Desktop</a>
+                  <a href="docs.html#vscode">VS Code</a>
+                  <a href="docs.html#visual-studio">Visual Studio</a>
+                  <a href="docs.html#review">CodeReview</a>
+                  <a href="docs.html#review">CI</a>
+                </div>
+              </div>
+              <div class="mega__col">
+                <a class="mfeat" href="gateway.html">
+                  <span class="mfeat__ico">⇄</span>
+                  <span><strong>Gateway</strong><span>Model routing &amp; control</span></span>
+                </a>
+                <a class="mfeat" href="nanoforge.html">
+                  <span class="mfeat__ico">▤</span>
+                  <span><strong>NanoForge</strong><span>Full-stack app builder</span></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </details>
         <a href="features.html">Features</a>
-        
         <a href="docs.html">Docs</a>
+        <div class="nav__mobile-actions">
+          <a class="btn btn--ghost nav__cta" href="https://app.getnanoai.com" target="_blank" rel="noopener">Login</a>
+          <a class="btn btn--primary nav__cta" href="https://app.getnanoai.com" target="_blank" rel="noopener">Register</a>
+        </div>
       </nav>
 
       <div class="nav__actions">
@@ -59,14 +92,8 @@
           </svg>
           <span class="gh-stars" data-stars>Star</span>
         </a>
-        <a class="ghost-link" href="https://github.com/rizwan3d/NanoAgent/commits/master" target="_blank" rel="noopener"
-          aria-label="NanoAgent commits on GitHub">
-          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
-            <path
-              d="M11.93 8.5a4.002 4.002 0 0 1-7.86 0H.75a.75.75 0 0 1 0-1.5h3.32a4.002 4.002 0 0 1 7.86 0h3.32a.75.75 0 0 1 0 1.5Zm-1.43-.75a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z" />
-          </svg>
-          <span class="gh-commits" data-commits>Commits</span>
-        </a>
+        <a class="btn btn--ghost nav__cta" href="https://app.getnanoai.com" target="_blank" rel="noopener">Login</a>
+        <a class="btn btn--primary nav__cta" href="https://app.getnanoai.com" target="_blank" rel="noopener">Register</a>
       </div>
 
       <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
@@ -694,7 +721,7 @@
           </div>
           <div class="card">
             <div class="card__icon">🧠</div>
-            <h3>JetBrains via ACP</h3>
+            <h3>ACP-compatible editors</h3>
             <p>Any ACP-capable editor drives the local <code>nanoai</code> CLI over the protocol.</p>
           </div>
           <div class="card">
@@ -733,8 +760,8 @@
           <div class="card">
             <div class="card__icon">📝</div>
             <h3>Review profile</h3>
-            <p>A read-only <code>pr-reviewer</code> profile computes the diff, skips drafts, and retains artifacts for
-              14 days.</p>
+            <p>Review automation runs the pull or merge request diff through a read-only review profile so findings stay
+              focused on bugs, regressions, and missing tests.</p>
           </div>
         </div>
       </section>
@@ -777,8 +804,9 @@
           </div>
           <div class="card">
             <div class="card__icon">📦</div>
-            <h3>SDK on NuGet</h3>
-            <p>Embed NanoAgent in your own .NET app via the <code>NanoAgent</code> package on NuGet.org.</p>
+            <h3>NuGet library releases</h3>
+            <p>Tagged releases also publish the <code>NanoAgent</code> library to NuGet.org alongside the desktop and
+              CLI assets.</p>
           </div>
           <div class="card">
             <div class="card__icon">💿</div>
@@ -803,14 +831,15 @@
           </div>
           <div class="card">
             <div class="card__icon">📊</div>
-            <h3>Anonymous telemetry, opt-out</h3>
-            <p>Aggregate, anonymous usage analytics only — turn it off entirely with <code>/disableanalytics</code>.</p>
+            <h3>Lesson memory</h3>
+            <p>Reusable workspace lessons can be stored in <code>.nanoagent/memory/lessons.jsonl</code> so the agent can
+              avoid repeating local mistakes.</p>
           </div>
           <div class="card">
             <div class="card__icon">📐</div>
-            <h3>Task-based benchmarks</h3>
-            <p>The <code>benchmarks/</code> suite tracks bug-fixing, repo understanding, patch quality, security review,
-              and tool safety over time.</p>
+            <h3>Plugin marketplace</h3>
+            <p>Browse, install, list, and uninstall data-only plugins with the built-in <code>/plugin</code> command
+              family.</p>
           </div>
         </div>
       </section>

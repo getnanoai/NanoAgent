@@ -312,7 +312,7 @@
         pricingEl.innerHTML = plans.map(function (p) {
           var featured = p.code === "team";
           var cta = p.isContactSales
-            ? '<a class="btn btn--primary" href="mailto:labs@nx3corp.com?subject=NanoAgent%20Gateway%20—%20Enterprise%20enquiry">Talk to sales</a>'
+            ? '<a class="btn btn--primary" href="mailto:abdullah@alfain.tech?subject=NanoAgent%20Gateway%20—%20Enterprise%20enquiry">Talk to sales</a>'
             : '<a class="btn btn--' + (featured ? "primary" : "ghost") + '" href="https://app.getnanoai.com" target="_blank" rel="noopener">Get started</a>';
           var featureSet = new Set(p.features || []);
           var feats = allFeatures.map(function (f) {

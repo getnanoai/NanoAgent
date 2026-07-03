@@ -34,8 +34,6 @@
 </head>
 
 <body>
-  <!-- ambient background -->
-
   <!-- ───────────────────────── NAV ───────────────────────── -->
   <header class="nav" id="nav">
     <div class="container nav__inner">
@@ -875,6 +873,200 @@
     </section>
 
     <!-- ───────────────────────── SDK / NUGET ───────────────────────── -->
+    <section class="section container container">
+      <div class="gateway-highlight">
+        <div class="gateway-highlight__intro">
+          <h2 class="gateway-highlight__title">One gateway, every model.</h2>
+          <p class="gateway-highlight__lede">NanoAgent Gateway is the control plane for enterprise AI. Put a single
+            OpenAI-compatible endpoint in front of your traffic and give security, finance, and platform teams the
+            visibility and control they need.</p>
+        </div>
+
+        <div class="gateway-highlight__grid">
+          <div class="gateway-highlight__stack" aria-label="Gateway capabilities">
+            <article class="gateway-highlight__card">
+              <span class="gateway-highlight__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3.5 18 6v5.5c0 3.8-2.3 7.2-6 8.9-3.7-1.7-6-5.1-6-8.9V6l6-2.5Z" />
+                  <path d="M9.5 11.5 11 13l3.5-3.5" />
+                </svg>
+              </span>
+              <div class="gateway-highlight__copy">
+                <h3>Security</h3>
+                <p>Track how teams use models and watch for anomalies as adoption grows.</p>
+              </div>
+            </article>
+
+            <article class="gateway-highlight__card">
+              <span class="gateway-highlight__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 4v16" />
+                  <path d="M17 7.5c0-1.9-2.2-3.5-5-3.5S7 5.6 7 7.5 9.2 11 12 11s5 1.6 5 3.5S14.8 18 12 18s-5-1.6-5-3.5" />
+                </svg>
+              </span>
+              <div class="gateway-highlight__copy">
+                <h3>Finance</h3>
+                <p>Attribute usage by team, app, project, and user so budgets stop being guesswork.</p>
+              </div>
+            </article>
+
+            <article class="gateway-highlight__card">
+              <span class="gateway-highlight__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 4 5 7.5 12 11l7-3.5L12 4Z" />
+                  <path d="M5 12.5 12 16l7-3.5" />
+                  <path d="M5 17.5 12 21l7-3.5" />
+                </svg>
+              </span>
+              <div class="gateway-highlight__copy">
+                <h3>Platform</h3>
+                <p>Keep clients pointed at one endpoint while your team manages changes behind the scenes.</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="gateway-highlight__panel">
+            <div class="codebox gateway-highlight__codebox">
+              <div class="codebox__tabs">
+                <button class="codetab is-active" data-code="aisdk">AI SDK</button>
+                <button class="codetab" data-code="python">Python</button>
+                <button class="codetab" data-code="curl">curl</button>
+              </div>
+              <div class="codebox__body">
+                <pre class="codeblock codeblock--ln is-active"
+                  data-code="aisdk"><button class="codeblock__copy" data-copy="import { streamText } from 'ai'
+import { createOpenAI } from '@ai-sdk/openai'
+
+const nano = createOpenAI({
+  baseURL: 'https://app.getnanoai.com/v1',
+  apiKey: process.env.NANOAGENT_API_KEY,
+})
+
+const result = streamText({
+  model: nano.chat('anthropic/claude-opus-4-8'),
+  prompt: 'Why is the sky blue?',
+})">Copy</button><code><span class="cl"><span class="t-kw">import</span> { streamText } <span class="t-kw">from</span> <span class="t-str">'ai'</span></span><span class="cl"><span class="t-kw">import</span> { createOpenAI } <span class="t-kw">from</span> <span class="t-str">'@ai-sdk/openai'</span></span><span class="cl"> </span><span class="cl"><span class="t-kw">const</span> nano = <span class="t-fn">createOpenAI</span>({</span><span class="cl">  baseURL: <span class="t-str">'https://app.getnanoai.com/v1'</span>,</span><span class="cl">  apiKey: process.env.NANOAGENT_API_KEY,</span><span class="cl">})</span><span class="cl"> </span><span class="cl"><span class="t-kw">const</span> result = <span class="t-fn">streamText</span>({</span><span class="cl">  model: nano.<span class="t-fn">chat</span>(<span class="t-str">'anthropic/claude-opus-4-8'</span>),</span><span class="cl">  prompt: <span class="t-str">'Why is the sky blue?'</span>,</span><span class="cl">})</span></code></pre>
+                <pre class="codeblock codeblock--ln"
+                  data-code="python"><button class="codeblock__copy" data-copy="import os
+from openai import OpenAI
+
+client = OpenAI(
+    base_url=&quot;https://app.getnanoai.com/v1&quot;,
+    api_key=os.environ[&quot;NANOAGENT_API_KEY&quot;],
+)
+
+stream = client.chat.completions.create(
+    model=&quot;anthropic/claude-opus-4-8&quot;,
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Why is the sky blue?&quot;}],
+    stream=True,
+)">Copy</button><code><span class="cl"><span class="t-kw">import</span> os</span><span class="cl"><span class="t-kw">from</span> openai <span class="t-kw">import</span> OpenAI</span><span class="cl"> </span><span class="cl">client = <span class="t-fn">OpenAI</span>(</span><span class="cl">    base_url=<span class="t-str">"https://app.getnanoai.com/v1"</span>,</span><span class="cl">    api_key=os.environ[<span class="t-str">"NANOAGENT_API_KEY"</span>],</span><span class="cl">)</span><span class="cl"> </span><span class="cl">stream = client.chat.completions.<span class="t-fn">create</span>(</span><span class="cl">    model=<span class="t-str">"anthropic/claude-opus-4-8"</span>,</span><span class="cl">    messages=[{<span class="t-str">"role"</span>: <span class="t-str">"user"</span>, <span class="t-str">"content"</span>: <span class="t-str">"Why is the sky blue?"</span>}],</span><span class="cl">    stream=<span class="t-kw">True</span>,</span><span class="cl">)</span></code></pre>
+                <pre class="codeblock codeblock--ln"
+                  data-code="curl"><button class="codeblock__copy" data-copy="# point any OpenAI-compatible client at the Gateway
+curl https://app.getnanoai.com/v1/chat/completions \
+  -H &quot;Authorization: Bearer $NANOAGENT_API_KEY&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+    &quot;model&quot;: &quot;anthropic/claude-opus-4-8&quot;,
+    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Why is the sky blue?&quot;}],
+    &quot;stream&quot;: true
+  }'">Copy</button><code><span class="cl"><span class="c-dim"># point any OpenAI-compatible client at the Gateway</span></span><span class="cl"><span class="t-fn">curl</span> https://app.getnanoai.com/v1/chat/completions \</span><span class="cl">  -H <span class="t-str">"Authorization: Bearer $NANOAGENT_API_KEY"</span> \</span><span class="cl">  -H <span class="t-str">"Content-Type: application/json"</span> \</span><span class="cl">  -d <span class="t-str">'{</span></span><span class="cl"><span class="t-str">    "model": "anthropic/claude-opus-4-8",</span></span><span class="cl"><span class="t-str">    "messages": [{"role": "user", "content": "Why is the sky blue?"}],</span></span><span class="cl"><span class="t-str">    "stream": true</span></span><span class="cl"><span class="t-str">  }'</span></span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gateway-highlight__actions">
+          <a class="btn btn--primary btn--gateway-highlight" href="gateway.html">Explore the Gateway
+            <span class="btn__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14" />
+                <path d="m13 6 6 6-6 6" />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container">
+      <div class="gateway-highlight forge-highlight">
+          <div class="forge-highlight__eyebrow">NanoForge · Full-stack app builder</div>
+          <div class="gateway-highlight__intro">
+            <h2 class="gateway-highlight__title">Describe what you want. NanoForge builds it.</h2>
+            <p class="gateway-highlight__lede">NanoForge's agent scaffolds, builds, and live-previews a real React +
+              Express + PostgreSQL app in an isolated container, backed by its own GitHub repo and database.</p>
+          </div>
+
+          <div class="gateway-highlight__grid forge-highlight__grid">
+            <div class="gateway-highlight__stack" aria-label="NanoForge capabilities">
+              <article class="gateway-highlight__card forge-highlight__card">
+                <span class="gateway-highlight__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8 8 4 12l4 4" />
+                    <path d="m16 8 4 4-4 4" />
+                    <path d="M14 5 10 19" />
+                  </svg>
+                </span>
+                <div class="gateway-highlight__copy">
+                  <h3>Full-stack generation</h3>
+                  <p>React frontend, Express API, and PostgreSQL schema generated together from one description.</p>
+                </div>
+              </article>
+
+              <article class="gateway-highlight__card forge-highlight__card">
+                <span class="gateway-highlight__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3.5 19 7.5v9L12 20.5 5 16.5v-9L12 3.5Z" />
+                    <path d="M5 7.5 12 11l7-3.5" />
+                    <path d="M12 11v9.5" />
+                  </svg>
+                </span>
+                <div class="gateway-highlight__copy">
+                  <h3>Isolated preview environment</h3>
+                  <p>Each app runs in its own container with a live URL and hot reload before it touches your machine.</p>
+                </div>
+              </article>
+
+              <article class="gateway-highlight__card forge-highlight__card">
+                <span class="gateway-highlight__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 7a3 3 0 1 1 2.12 5.12L13 16.24V20" />
+                    <path d="M9 17a3 3 0 1 1-2.12-5.12L11 7.76V4" />
+                  </svg>
+                </span>
+                <div class="gateway-highlight__copy">
+                  <h3>Review every diff</h3>
+                  <p>Changes are committed to a dedicated GitHub repo so you can inspect, approve, or edit before merging.</p>
+                </div>
+              </article>
+            </div>
+
+            <div class="gateway-highlight__panel forge-highlight__panel">
+              <img src="assets/forge.png" alt="NanoForge full-stack app builder preview" class="forge-highlight__image" loading="lazy" />
+            </div>
+          </div>
+
+          <div class="gateway-highlight__actions">
+            <a class="btn btn--primary btn--gateway-highlight" href="nanoforge.html">Explore NanoForge
+              <span class="btn__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="m13 6 6 6-6 6" />
+                </svg>
+              </span>
+            </a>
+          </div>
+      </div>
+    </section>
+
     <section class="section container" id="sdk">
       <div class="nuget-card">
         <div class="nuget-card__icon" aria-hidden="true">
@@ -936,7 +1128,6 @@
     <!-- ───────────────────────── CTA ───────────────────────── -->
     <section class="section container container-full">
       <div class="cta">
-        <div class="cta__glow" aria-hidden="true"></div>
         <div class="cta__badge" aria-hidden="true">
          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="white" d="M280.5 426.5C214.5 418.5 168 371 168 309.5C168 284.5 177 257.5 192 239.5C185.5 223 186.5 188 194 173.5C214 171 241 181.5 257 196C276 190 296 187 320.5 187C345 187 365 190 383 195.5C398.5 181.5 426 171 446 173.5C453 187 454 222 447.5 239C463.5 258 472 283.5 472 309.5C472 371 425.5 417.5 358.5 426C375.5 437 387 461 387 488.5L387 540.5C387 555.5 399.5 564 414.5 558C505 523.5 576 433 576 321C576 179.5 461 64 319.5 64C178 64 64 179.5 64 321C64 432 134.5 524 229.5 558.5C243 563.5 256 554.5 256 541L256 501C249 504 240 506 232 506C199 506 179.5 488 165.5 454.5C160 441 154 433 142.5 431.5C136.5 431 134.5 428.5 134.5 425.5C134.5 419.5 144.5 415 154.5 415C169 415 181.5 424 194.5 442.5C204.5 457 215 463.5 227.5 463.5C240 463.5 248 459 259.5 447.5C268 439 274.5 431.5 280.5 426.5z"/></svg>
         </div>

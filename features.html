@@ -17,6 +17,9 @@
   <meta property="og:image" content="assets/logo.png" />
 
   <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://github.com" />
   <link rel="stylesheet" href="styles.css" />
 
@@ -31,9 +34,6 @@
 </head>
 
 <body>
-  <!-- ambient background -->
-  <div class="bg-grid" aria-hidden="true"></div>
-  <div class="bg-glow" aria-hidden="true"></div>
 
   <!-- ───────────────────────── NAV ───────────────────────── -->
   <header class="nav" id="nav">
@@ -846,9 +846,11 @@
     </div>
 
     <!-- ───────────────────────── CTA ───────────────────────── -->
-    <section class="section container">
+    <section class="section container container-full">
       <div class="cta">
-        <div class="cta__glow" aria-hidden="true"></div>
+        <div class="cta__badge" aria-hidden="true">
+          <img src="assets/logo.png" alt="" width="26" height="26" />
+        </div>
         <h2>Ship with an agent that keeps you in control.</h2>
         <p>Local-first. Reviewable. Open source under Apache-2.0.</p>
         <div class="cta__actions">

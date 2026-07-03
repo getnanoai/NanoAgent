@@ -16,6 +16,9 @@
   <meta property="og:image" content="assets/logo.png" />
 
   <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://github.com" />
   <link rel="stylesheet" href="styles.css" />
 
@@ -29,8 +32,6 @@
 </head>
 
 <body>
-  <div class="bg-grid" aria-hidden="true"></div>
-  <div class="bg-glow" aria-hidden="true"></div>
 
   <header class="nav" id="nav">
     <div class="container nav__inner">
@@ -100,14 +101,8 @@
     </div>
   </header>
 
-  <nav class="featnav" aria-label="Gateway sections">
-    <div class="container featnav__inner">
-      <a href="#pricing">Pricing</a>
-    </div>
-  </nav>
-
   <main id="top">
-    <section class="feat-hero container">
+    <section class="feat-hero container container-full gateway-hero">
       <div class="gateway-hero-layout">
         <div class="gateway-hero-copy">
           <span class="eyebrow">Enterprise Gateway</span>
@@ -275,9 +270,11 @@ curl https://app.getnanoai.com/v1/chat/completions \
       </section>
     </div>
 
-    <section class="section container">
+    <section class="section container container-full">
       <div class="cta">
-        <div class="cta__glow" aria-hidden="true"></div>
+        <div class="cta__badge" aria-hidden="true">
+           <img src="assets/logo.png" alt="" width="26" height="26" />
+        </div>
         <h2>Bring your AI traffic under enterprise control.</h2>
         <p>Bring visibility to every model call without changing your tools.</p>
         <div class="cta__actions">

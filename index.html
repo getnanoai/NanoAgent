@@ -17,6 +17,9 @@
   <meta property="og:image" content="assets/logo.png" />
 
   <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://github.com" />
   <link rel="stylesheet" href="styles.css" />
 
@@ -32,8 +35,6 @@
 
 <body>
   <!-- ambient background -->
-  <div class="bg-grid" aria-hidden="true"></div>
-  <div class="bg-glow" aria-hidden="true"></div>
 
   <!-- ───────────────────────── NAV ───────────────────────── -->
   <header class="nav" id="nav">
@@ -111,41 +112,116 @@
     <!-- ───────────────────────── HERO / HEADER ───────────────────────── -->
     <section class="hero container">
       <h1 class="hero__title">
-        Your AI Coding Agent <span class="grad">That Doesn't Hide</span> What It's Doing
+        Code faster without
+        <span class="grad">giving up control.</span> 
       </h1>
       <p class="hero__sub">
-        NanoAgent works inside a real repository while keeping you in control — understand a codebase,
-        plan a change, edit files, run validation, review a diff, and automate reviews from the same
-        toolchain you already use. Every action is visible and reviewable.
+        NanoAgent runs on your machine. It understands your repository, plans changes, edits files, runs validation, and reviews diffs. Quietly capable, incredibly precise.
       </p>
 
       <!-- ── install selector (Kilo-style) ── -->
       <div class="installer" id="get">
         <div class="installer__tabs" role="tablist" aria-label="Install NanoAgent">
-          <button class="itab is-active" role="tab" aria-selected="true" data-itab="cli">CLI</button>
+          <button class="itab is-active" role="tab" aria-selected="true" data-itab="cli">
+            <span class="itab__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 6l6 6-6 6" />
+                <path d="M13 18h7" />
+              </svg>
+            </span>
+            CLI
+          </button>
 
           <button class="itab" role="tab" aria-selected="false" data-itab="vscode">
-            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="currentColor">
-              <path
-                d="m17.583 2.058-3.43 3.118L8.62 1.04 7.39 1.96l5.06 4.62-4.86 4.43L2.5 6.7l-1.24.92 5.45 4.74L1.26 17.1l1.24.92 5.79-4.71 4.86 4.43-5.06 4.62 1.23.92 5.534-4.136 3.43 3.118 1.21-.62V2.678l-1.21-.62Zm.21 4.06v9.764l-5.39-4.882 5.39-4.882Z" />
-            </svg>
+            <span class="itab__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                <path
+                  d="m17.583 2.058-3.43 3.118L8.62 1.04 7.39 1.96l5.06 4.62-4.86 4.43L2.5 6.7l-1.24.92 5.45 4.74L1.26 17.1l1.24.92 5.79-4.71 4.86 4.43-5.06 4.62 1.23.92 5.534-4.136 3.43 3.118 1.21-.62V2.678l-1.21-.62Zm.21 4.06v9.764l-5.39-4.882 5.39-4.882Z" />
+              </svg>
+            </span>
             VS Code
           </button>
 
-          <button class="itab" role="tab" aria-selected="false" data-itab="vs">Visual Studio</button>
+          <button class="itab" role="tab" aria-selected="false" data-itab="vs">
+            <span class="itab__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 7.5 12 4l7 3.5v9L12 20l-7-3.5Z" />
+                <path d="M12 4v16" />
+                <path d="M5 7.5 12 11l7-3.5" />
+              </svg>
+            </span>
+            Visual Studio
+          </button>
 
-          <button class="itab" role="tab" aria-selected="false" data-itab="desktop">Desktop</button>
+          <button class="itab" role="tab" aria-selected="false" data-itab="desktop">
+            <span class="itab__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4.5" width="18" height="12.5" rx="2" />
+                <path d="M9 20h6" />
+                <path d="M12 17v3" />
+              </svg>
+            </span>
+            Desktop
+          </button>
         </div>
 
         <div class="installer__panels">
           <div class="ipanel is-active" data-ipanel="cli">
             <!-- package-manager sub tabs -->
             <div class="csub" role="tablist" aria-label="Choose install method">
-              <button class="csub__tab is-active" role="tab" aria-selected="false" data-csub="npm">npm</button>
-              <button class="csub__tab" role="tab" aria-selected="false" data-csub="pnpm">pnpm</button>
-              <button class="csub__tab" role="tab" aria-selected="false" data-csub="bun">bun</button>
-              <button class="csub__tab" role="tab" aria-selected="true" data-csub="pw">Powershell</button>
-              <button class="csub__tab" role="tab" aria-selected="true" data-csub="curl">curl</button>
+              <button class="csub__tab is-active" role="tab" aria-selected="false" data-csub="npm">
+                <span class="csub__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                    <path d="M2 7h20v10h-8v-6h-4v6H2Z" />
+                  </svg>
+                </span>
+                npm
+              </button>
+              <button class="csub__tab" role="tab" aria-selected="false" data-csub="pnpm">
+                <span class="csub__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                  </svg>
+                </span>
+                pnpm
+              </button>
+              <button class="csub__tab" role="tab" aria-selected="false" data-csub="bun">
+                <span class="csub__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="7.5" />
+                    <path d="M9.5 10.5h.01" />
+                    <path d="M14.5 10.5h.01" />
+                    <path d="M9.5 14c1.6 1.5 3.4 1.5 5 0" />
+                  </svg>
+                </span>
+                bun
+              </button>
+              <button class="csub__tab" role="tab" aria-selected="true" data-csub="pw">
+                <span class="csub__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6h11l-4 5 4 5H4Z" />
+                    <path d="M16 18h4" />
+                  </svg>
+                </span>
+                Powershell
+              </button>
+              <button class="csub__tab" role="tab" aria-selected="true" data-csub="curl">
+                <span class="csub__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 7h10l-4 5 4 5H7" />
+                  </svg>
+                </span>
+                curl
+              </button>
             </div>
 
             <!-- curl -->
@@ -260,21 +336,108 @@
     </section>
 
     <!-- ───────────────────────── WHY NANOAGENT ───────────────────────── -->
+    <section class="workstrip" aria-labelledby="workstrip-title">
+      <div class="container workstrip__inner">
+        <p class="workstrip__eyebrow" id="workstrip-title">Works Where You Work</p>
+        <ul class="workstrip__list" aria-label="NanoAgent surfaces">
+          <li class="workstrip__item">
+            <span class="workstrip__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18 3 12l6-6" />
+                <path d="m15 6 6 6-6 6" />
+                <path d="m14 4-4 16" />
+              </svg>
+            </span>
+            <span>VS Code</span>
+          </li>
+          <li class="workstrip__item">
+            <span class="workstrip__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="12" rx="1.8" />
+                <path d="M8 20h8" />
+                <path d="M12 16v4" />
+              </svg>
+            </span>
+            <span>Visual Studio</span>
+          </li>
+          <li class="workstrip__item">
+            <span class="workstrip__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 12h8" />
+                <path d="m9 7 5 5-5 5" />
+                <path d="M16 19h4" />
+              </svg>
+            </span>
+            <span>Terminal</span>
+          </li>
+          <li class="workstrip__item">
+            <span class="workstrip__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="16" height="11" rx="1.8" />
+                <path d="M2 20h20" />
+                <path d="M9 15h6" />
+              </svg>
+            </span>
+            <span>Desktop</span>
+          </li>
+          <li class="workstrip__item">
+            <span class="workstrip__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="6" height="6" rx="1.5" />
+                <rect x="14" y="14" width="6" height="6" rx="1.5" />
+                <path d="M10 7h4v10" />
+              </svg>
+            </span>
+            <span>CI/CD Workflows</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
     <section class="section container" id="why">
       <header class="section__head">
-        <span class="eyebrow">Why NanoAgent</span>
-        <h2 class="section__title">Power-user features, nothing hidden</h2>
-        <p class="section__lede">Built for practical engineering work: real symbols, version-controlled memory,
-          scriptable runs, and a sandbox for anything sensitive.</p>
-      </header>
-
+        <h2 class="section__title">Why NanoAgent?</h2>
+        <p class="section__lede">Because an AI coding assistant should be powerful, transparent, and respect your workspace.</p>
+       </header>     
       <ul class="feature-list">
-        <li class="feature-list__item">
-          <div class="card__icon">🧩</div>
+         <li class="feature-list__item">
+          <div class="card__icon">🔒</div>
           <div class="feature-list__text">
-            <h3>LSP-enabled</h3>
-            <p>Language Server Protocol integration gives the agent real symbols, types, and diagnostics — not guesses
-              about your code.</p>
+            <h3>Your code never leaves your machine</h3>
+            <p>NanoAgent runs locally, indexes locally, and stores embeddings locally. No uploading repositories to
+              third-party servers.</p>
+          </div>
+        </li>
+        <li class="feature-list__item">
+          <div class="card__icon">👁️</div>
+          <div class="feature-list__text">
+            <h3>It shows its work</h3>
+            <p>Every plan, edit, and validation step is visible before it touches your files. You approve the path
+              forward.</p>
+          </div>
+        </li>
+        <li class="feature-list__item">
+          <div class="card__icon">🧭</div>
+          <div class="feature-list__text">
+            <h3>You stay in control</h3>
+            <p>Destructive actions require explicit approval. NanoAgent asks before running shells, writing files, or
+              committing changes.</p>
+          </div>
+        </li>
+        <li class="feature-list__item">
+          <div class="card__icon">🖥️</div>
+          <div class="feature-list__text">
+            <h3>Fits your existing workflow</h3>
+            <p>Works in the terminal, on the desktop, inside VS Code and Visual Studio, and as a CI reviewer for pull
+              requests.</p>
+          </div>
+        </li>
+        <li class="feature-list__item">
+          <div class="card__icon">🏗️</div>
+          <div class="feature-list__text">
+            <h3>Built for real codebases</h3>
+            <p>LSP-powered semantic understanding, graph-aware indexing, and diff-based edits make it precise in large
+              projects.</p>
           </div>
         </li>
         <li class="feature-list__item">
@@ -286,18 +449,18 @@
           </div>
         </li>
         <li class="feature-list__item">
-          <div class="card__icon">⚙️</div>
-          <div class="feature-list__text">
-            <h3>Headless mode</h3>
-            <p>Non-interactive single-query mode for CI/CD pipelines, scripts, and automation. Supports piped stdin.</p>
-          </div>
-        </li>
-        <li class="feature-list__item">
           <div class="card__icon">⌨️</div>
           <div class="feature-list__text">
             <h3><code>!</code> and <code>!!</code> shell</h3>
             <p>Run shell commands inline with <code>!</code> and launch live background terminals with
               <code>!!</code> — no need to switch terminals.</p>
+          </div>
+        </li>
+        <li class="feature-list__item">
+          <div class="card__icon">🌿</div>
+          <div class="feature-list__text">
+            <h3>Git sidebar</h3>
+            <p>Stage changes, review diffs, create commits, and manage branches in one place.</p>
           </div>
         </li>
         <li class="feature-list__item">
@@ -308,21 +471,8 @@
               operations.</p>
           </div>
         </li>
-        <li class="feature-list__item">
-          <div class="card__icon">🗺️</div>
-          <div class="feature-list__text">
-            <h3>Planning mode</h3>
-            <p>A read-only planning profile drafts a reviewable plan before a single file is touched.</p>
-          </div>
-        </li>
-        <li class="feature-list__item">
-          <div class="card__icon">📦</div>
-          <div class="feature-list__text">
-            <h3>NuGet library releases</h3>
-            <p>Tagged releases also publish the <code>NanoAgent</code> library to NuGet.org for teams that want the core
-              package alongside the CLI installers.</p>
-          </div>
-        </li>
+       
+        
       </ul>
 
       <div class="section__actions">
@@ -330,12 +480,89 @@
       </div>
     </section>
 
+    <!-- ───────────────────────── PRECISION GRID ───────────────────────── -->
+    <section class="section container" id="precision">
+      <header class="precision__head">
+        <h2 class="precision__title">Precision engineered for complex codebases.</h2>
+        <p class="precision__lede">NanoAgent isn't a chatbot. It's a structured workflow engine that operates
+          autonomously but transparently.</p>
+      </header>
+
+      <div class="precision-grid">
+        <article class="precision-card">
+          <div class="precision-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="6.5"></circle>
+              <path d="M16 16 21 21"></path>
+            </svg>
+          </div>
+          <h3>Repository Understanding</h3>
+          <p>NanoAgent builds a semantic graph of your entire codebase locally. It knows where things are and how they
+            connect.</p>
+        </article>
+
+        <article class="precision-card">
+          <div class="precision-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 18V8"></path>
+              <path d="M6 18h12"></path>
+              <circle cx="6" cy="6" r="2"></circle>
+              <circle cx="18" cy="8" r="2"></circle>
+              <circle cx="14" cy="18" r="2"></circle>
+              <path d="M7.8 7 16.2 7"></path>
+              <path d="M16.6 9.7 14.9 16.2"></path>
+            </svg>
+          </div>
+          <h3>Strategic Planning</h3>
+          <p>Before writing a single line of code, the agent formulates a step-by-step plan for your approval.</p>
+        </article>
+
+        <article class="precision-card">
+          <div class="precision-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 20h4"></path>
+              <path d="M14.5 5.5 18.5 9.5"></path>
+              <path d="M6.5 17.5 17 7a1.414 1.414 0 0 0-2-2L4.5 15.5 4 20l4.5-.5Z"></path>
+            </svg>
+          </div>
+          <h3>Precision Editing</h3>
+          <p>Applies targeted modifications to files. No messy copy-pasting, just clean, structural diffs.</p>
+        </article>
+
+        <article class="precision-card">
+          <div class="precision-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 21s7-3.5 7-10V5l-7-2-7 2v6c0 6.5 7 10 7 10Z"></path>
+              <path d="m9.4 11.7 1.8 1.8 3.8-4.2"></path>
+            </svg>
+          </div>
+          <h3>Automated Validation</h3>
+          <p>Runs your tests and linters in the background, automatically fixing errors until the build goes green.</p>
+        </article>
+
+        <article class="precision-card">
+          <div class="precision-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
+              <circle cx="12" cy="12" r="2.5"></circle>
+            </svg>
+          </div>
+          <h3>Human Review</h3>
+          <p>You remain in the driver's seat. Review the proposed diffs before they are committed.</p>
+        </article>
+      </div>
+    </section>
+
     <!-- ───────────────────────── COMPARE ───────────────────────── -->
     <section class="section container" id="compare">
-      <header class="section__head">
-        <span class="eyebrow">Comparison</span>
-        <h2 class="section__title">How NanoAgent compares</h2>
-        <p class="section__lede">See what makes NanoAgent different from other AI coding tools.</p>
+      <header class="section__head compare__head">
+        <h2 class="section__title">How NanoAgent compares.</h2>
+        <p class="section__lede">A practical look at what makes NanoAgent different from the tools you already know.</p>
       </header>
 
       <div class="table-wrap">
@@ -473,6 +700,16 @@
               <td class="p">◐</td>
               <td class="p">◐</td>
             </tr>
+                        <tr>
+              <th scope="row">Git sidebar</th>
+              <td class="y">&#10003;</td>
+              <td>&ndash;</td>
+              <td>&ndash;</td>
+              <td>&ndash;</td>
+              <td>&ndash;</td>
+              <td class="p">&#9679;</td>
+              <td>&ndash;</td>
+            </tr>
             <tr>
               <th scope="row">Subagents &amp; orchestration</th>
               <td class="y">✓</td>
@@ -518,6 +755,8 @@
       </div>
       <p class="compare__legend"><span class="y">✓</span> Yes · <span class="p">◐</span> Partial · <span
           class="n">–</span> No</p>
+      <p class="compare__note">Comparison is based on publicly documented capabilities as of mid-2026. Features change
+        quickly; verify details on each product's official site before making a decision.</p>
     </section>
 
     <!-- ───────────────────────── PROVIDERS ───────────────────────── -->
@@ -547,71 +786,87 @@
       </ul>
     </section>
 
-    <!-- ───────────────────────── QUICKSTART ───────────────────────── -->
+    <!-- ───────────────────────── PRIVACY SHOWCASE ───────────────────────── -->
     <section class="section container" id="start">
-      <header class="section__head">
-        <span class="eyebrow">Quickstart</span>
-        <h2 class="section__title">Up and running in two steps</h2>
-        <p class="section__lede">Install, then let NanoAgent walk you through provider setup on first launch — or
-          preseed it with environment variables.</p>
-      </header>
+      <div class="privacy-showcase">
+        <div class="privacy-showcase__copy">
+          <h2 class="privacy-showcase__title">
+            <span>Your code.</span>
+            <span>Your machine.</span>
+            <span class="privacy-showcase__accent">Zero compromise.</span>
+          </h2>
+          <p class="privacy-showcase__lede">In a world of cloud-hosted AI, NanoAgent takes a different path. Your
+            proprietary source code never leaves your workstation unless you push it.</p>
 
-      <div class="steps">
-        <div class="step">
-          <div class="step__num">1</div>
-          <div class="step__body">
-            <h3>Install the CLI</h3>
-            <div class="codebox">
-              <div class="codebox__tabs">
-                <button class="codetab is-active" data-code="sh">macOS / Linux</button>
-                <button class="codetab" data-code="ps">Windows</button>
+          <ul class="privacy-points">
+            <li class="privacy-points__item">
+              <span class="privacy-points__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="5" y="10" width="14" height="10" rx="2" />
+                  <path d="M8 10V7.5A4 4 0 0 1 12 3.5a4 4 0 0 1 4 4V10" />
+                </svg>
+              </span>
+              <div>
+                <h3>Total Privacy</h3>
+                <p>Operates entirely within your local environment or secure VPC.</p>
               </div>
-              <div class="codebox__body">
-                <pre class="codeblock is-active" data-code="sh" data-copy-group><button class="codeblock__copy" data-copy="curl -fsSL https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh | bash">Copy</button><code><span class="c-dim"># install</span>
-curl -fsSL https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh | bash
-
-<span class="c-dim"># start</span>
-nanoai</code></pre>
-                <pre class="codeblock" data-code="ps" data-copy-group><button class="codeblock__copy" data-copy="irm https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.ps1 | iex">Copy</button><code><span class="c-dim"># install</span>
-irm https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.ps1 | iex
-
-<span class="c-dim"># start</span>
-nanoai</code></pre>
+            </li>
+            <li class="privacy-points__item">
+              <span class="privacy-points__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="7" y="7" width="10" height="10" rx="1.5" />
+                  <path d="M9 1.5v3" />
+                  <path d="M15 1.5v3" />
+                  <path d="M9 19.5v3" />
+                  <path d="M15 19.5v3" />
+                  <path d="M1.5 9h3" />
+                  <path d="M1.5 15h3" />
+                  <path d="M19.5 9h3" />
+                  <path d="M19.5 15h3" />
+                </svg>
+              </span>
+              <div>
+                <h3>Zero Latency</h3>
+                <p>Local models mean instant responses and no rate limits.</p>
               </div>
-            </div>
-          </div>
+            </li>
+            <li class="privacy-points__item">
+              <span class="privacy-points__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <ellipse cx="12" cy="5.5" rx="6.5" ry="3" />
+                  <path d="M5.5 5.5v6c0 1.7 2.9 3 6.5 3s6.5-1.3 6.5-3v-6" />
+                  <path d="M5.5 11.5v6c0 1.7 2.9 3 6.5 3s6.5-1.3 6.5-3v-6" />
+                </svg>
+              </span>
+              <div>
+                <h3>Local Indexing</h3>
+                <p>Vector embeddings are stored locally, avoiding third-party data collection.</p>
+              </div>
+            </li>
+          </ul>
         </div>
 
-        <div class="step">
-          <div class="step__num">2</div>
-          <div class="step__body">
-            <h3>Pick a provider &amp; go</h3>
-            <p class="step__note">Launch and let onboarding walk you through setup — or preseed it and skip straight to
-              a run:</p>
-            <div class="codebox">
-              <div class="codebox__tabs">
-                <button class="codetab is-active" data-code="normal">Normal run</button>
-                <button class="codetab" data-code="headless">Headless</button>
-              </div>
-              <div class="codebox__body">
-                <pre class="codeblock is-active" data-code="normal" data-copy-group><button class="codeblock__copy" data-copy="nanoai">Copy</button><code><span class="c-dim"># launch — onboarding walks you through provider setup</span>
-nanoai</code></pre>
-                <pre class="codeblock" data-code="headless" data-copy-group><button class="codeblock__copy" data-copy='export NANOAGENT_PROVIDER="openrouter"
-export NANOAGENT_MODEL="poolside/laguna-m.1:free"
-export NANOAGENT_THINKING="on"
-export NANOAGENT_REASONING="high"
-export NANOAGENT_PROJECT_NAME="customer-portal"
-export NANOAGENT_API_KEY="PASTE_NEW_ROTATED_KEY_HERE"
+        <div class="privacy-orbit" aria-hidden="true">
+          <div class="privacy-orbit__panel">
+            <div class="privacy-orbit__ring privacy-orbit__ring--outer"></div>
+            <div class="privacy-orbit__ring privacy-orbit__ring--mid"></div>
+            <div class="privacy-orbit__ring privacy-orbit__ring--inner"></div>
 
-nanoai -p "Say hello in one short line"'>Copy</button><code><span class="c-dim"># headless setup via environment variables</span>
-export NANOAGENT_PROVIDER="openrouter"
-export NANOAGENT_MODEL="poolside/laguna-m.1:free"
-export NANOAGENT_THINKING="on"
-export NANOAGENT_REASONING="high"
-export NANOAGENT_PROJECT_NAME="customer-portal"
-export NANOAGENT_API_KEY="PASTE_NEW_ROTATED_KEY_HERE"
+            <span class="privacy-orbit__dot privacy-orbit__dot--top"></span>
+            <span class="privacy-orbit__dot privacy-orbit__dot--right"></span>
+            <span class="privacy-orbit__dot privacy-orbit__dot--bottom"></span>
+            <span class="privacy-orbit__dot privacy-orbit__dot--left"></span>
 
-nanoai -p "Say hello in one short line"</code></pre>
+            <div class="privacy-orbit__core">
+              <div class="privacy-orbit__lock">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="5" y="11" width="14" height="9" rx="2" />
+                  <path d="M8.5 11V8.5A3.5 3.5 0 0 1 12 5a3.5 3.5 0 0 1 3.5 3.5V11" />
+                </svg>
               </div>
             </div>
           </div>
@@ -621,26 +876,60 @@ nanoai -p "Say hello in one short line"</code></pre>
 
     <!-- ───────────────────────── SDK / NUGET ───────────────────────── -->
     <section class="section container" id="sdk">
-      <div class="bench">
-        <div class="bench__copy">
-          <span class="eyebrow">NuGet library</span>
-          <h2 class="section__title">The core <code>NanoAgent</code> package also ships on NuGet</h2>
-          <p class="section__lede">Tagged releases publish the <code>NanoAgent</code> library to NuGet.org alongside the
-            desktop and CLI assets. The end-user command-line experience is still distributed through the release
-            installers.</p>
-          <div class="bench__actions">
-            <a class="btn btn--ghost" href="https://www.nuget.org/packages/NanoAgent/" target="_blank" rel="noopener">View
-              on NuGet</a>
-            <a class="btn btn--ghost" href="docs.html#install">See install docs</a>
+      <div class="nuget-card">
+        <div class="nuget-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3.5 18.8 7v10L12 20.5 5.2 17V7L12 3.5Z" />
+            <path d="M5.2 7 12 11l6.8-4" />
+            <path d="M12 11v9.5" />
+          </svg>
         </div>
-          </div>
-        <pre class="codeblock codeblock--solo"><code><span class="c-dim"># release assets</span>
-NanoAgent.Desktop-*
-NanoAgent.CLI-*
-SHA256SUMS
 
-<span class="c-dim"># package publication</span>
-NuGet.org -> NanoAgent</code></pre>
+        <div class="nuget-card__body">
+          <h2 class="nuget-card__title">NuGet library</h2>
+          <p class="nuget-card__lede">The core NanoAgent package also ships on NuGet. Tagged releases publish the
+            NanoAgent library to NuGet.org alongside the desktop and CLI assets. The end-user command-line experience is
+            still distributed through the release installers.</p>
+
+          <div class="nuget-card__actions">
+            <a class="btn btn--primary btn--nuget" href="https://www.nuget.org/packages/NanoAgent/" target="_blank"
+              rel="noopener">
+              <span class="btn__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 4.5 17.5 7.5v7L12 17.5l-5.5-3v-7L12 4.5Z" />
+                  <path d="M6.5 7.5 12 10.5l5.5-3" />
+                  <path d="M12 10.5v7" />
+                </svg>
+              </span>
+              View on NuGet
+              <span class="btn__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 5h5v5" />
+                  <path d="M10 14 19 5" />
+                  <path d="M19 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4" />
+                </svg>
+              </span>
+            </a>
+            <a class="btn btn--ghost btn--nuget-secondary" href="docs.html#install">
+              <span class="btn__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H19v14.5a1.5 1.5 0 0 0-1.5-1.5H6.5A2.5 2.5 0 0 0 4 19.5Z" />
+                  <path d="M19 4v14.5" />
+                  <path d="M8 8h7" />
+                </svg>
+              </span>
+              See install docs
+            </a>
+          </div>
+
+          <div class="nuget-card__command">
+            <code>dotnet add package <span>NanoAgent</span></code>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -676,7 +965,7 @@ NuGet.org -> NanoAgent</code></pre>
           <a href="features.html">Features</a>
           <a href="#compare">Compare</a>
           <a href="#providers">Providers</a>
-          <a href="#start">Quickstart</a>
+          <a href="#start">Privacy</a>
         </div>
         <div class="footer__col">
           <h4>Resources</h4>
@@ -715,3 +1004,4 @@ NuGet.org -> NanoAgent</code></pre>
 </body>
 
 </html>
+

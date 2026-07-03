@@ -17,6 +17,9 @@
   <meta property="og:image" content="assets/logo.png" />
 
   <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://github.com" />
   <link rel="stylesheet" href="styles.css" />
 
@@ -30,10 +33,7 @@
   </script>
 </head>
 
-<body class="forge-page">
-  <!-- ambient background -->
-  <div class="bg-grid" aria-hidden="true"></div>
-  <div class="bg-glow" aria-hidden="true"></div>
+<body>
 
   <!-- ───────────────────────── NAV ───────────────────────── -->
   <header class="nav" id="nav">
@@ -115,10 +115,10 @@
 
   <main id="top">
     <!-- ───────────────────────── HERO ───────────────────────── -->
-    <section class="container fhero">
+    <section class="hero container container-full fhero">
       <div class="fhero__copy">
         <span class="eyebrow">NanoForge · Full-Stack App Builder</span>
-        <h1 class="fhero__title">Type a sentence.<br /><span class="fgrad">Get a running app.</span></h1>
+        <h1 class="fhero__title">From prompt to<br /><span class="fgrad">production-grade app</span>.</h1>
         <p class="fhero__sub">
           Describe what you want and NanoForge's agent scaffolds, builds, and live-previews a real
           React&nbsp;+&nbsp;Express&nbsp;+&nbsp;PostgreSQL app inside an isolated container — backed by its own GitHub
@@ -319,10 +319,13 @@
     </div>
 
     <!-- ───────────────────────── CTA ───────────────────────── -->
-    <section class="section container">
+    <section class="section container container-full">
       <div class="cta">
-        <div class="cta__glow" aria-hidden="true"></div>
-        <h2>Build a full-stack app without leaving the prompt.</h2>
+       
+        <div class="cta__badge" aria-hidden="true">
+          <img src="assets/logo.png" alt="" width="26" height="26" />
+        </div>
+        <h2>Ship full-stack apps faster with NanoForge.</h2>
         <p>Scaffold, build, preview, and ship — backed by real git and a real database, with you reviewing every change.</p>
         <div class="cta__actions">
           <a class="btn btn--primary btn--lg" href="https://app.getnanoai.com" target="_blank" rel="noopener">Start building</a>

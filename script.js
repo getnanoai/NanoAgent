@@ -239,7 +239,7 @@
   /* ---- live GitHub star count ---- */
   var starEl = document.querySelector("[data-stars]");
   if (starEl) {
-    fetch("https://api.github.com/repos/rizwan3d/NanoAgent")
+    fetch("https://api.github.com/repos/getnanoai/NanoAgent")
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (d) {
         if (d && typeof d.stargazers_count === "number") {
@@ -254,7 +254,7 @@
      endpoint and parse the "last" page number from the Link header. */
   var commitEl = document.querySelector("[data-commits]");
   if (commitEl) {
-    fetch("https://api.github.com/repos/rizwan3d/NanoAgent/commits?per_page=1")
+    fetch("https://api.github.com/repos/getnanoai/NanoAgent/commits?per_page=1")
       .then(function (r) {
         if (!r.ok) return null;
         var link = r.headers.get("Link");

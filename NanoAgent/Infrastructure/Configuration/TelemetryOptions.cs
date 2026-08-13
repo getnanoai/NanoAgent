@@ -4,7 +4,7 @@ public sealed class TelemetryOptions
 {
     public const string DefaultHost = "https://us.i.posthog.com";
 
-    public const string DefaultProjectToken = "phc_AKZFSyU239kkQ5GQ2y4idb8MtFX96kVekgezgnsELHRk";
+    public const string DefaultProjectToken = "phc_zon2mAf4WjnqZCgZszhgbPgieXxngH5iixSiapVGcczQ";
 
     public bool Enabled { get; set; } = true;
 

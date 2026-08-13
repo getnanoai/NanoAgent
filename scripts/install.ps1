@@ -46,7 +46,7 @@ $InstallActivity = "Installing $AppName"
 # and usage land in the same project. Opt out with NANOAGENT_TELEMETRY_DISABLED=1
 # or the cross-tool DO_NOT_TRACK convention.
 $TelemetryHost = 'https://us.i.posthog.com'
-$TelemetryProjectToken = 'phc_AKZFSyU239kkQ5GQ2y4idb8MtFX96kVekgezgnsELHRk'
+$TelemetryProjectToken = 'phc_zon2mAf4WjnqZCgZszhgbPgieXxngH5iixSiapVGcczQ'
 $TelemetryEvent = 'nanoagent cli installed'
 
 function Write-Status {

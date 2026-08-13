@@ -16,7 +16,7 @@ readonly TOTAL_STEPS=7
 # and usage land in the same project. Opt out with NANOAGENT_TELEMETRY_DISABLED=1
 # or the cross-tool DO_NOT_TRACK convention.
 readonly TELEMETRY_HOST="https://us.i.posthog.com"
-readonly TELEMETRY_PROJECT_TOKEN="phc_AKZFSyU239kkQ5GQ2y4idb8MtFX96kVekgezgnsELHRk"
+readonly TELEMETRY_PROJECT_TOKEN="phc_zon2mAf4WjnqZCgZszhgbPgieXxngH5iixSiapVGcczQ"
 readonly TELEMETRY_EVENT="nanoagent cli installed"
 
 TEMP_ROOT=""

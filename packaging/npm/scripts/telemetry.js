@@ -13,7 +13,7 @@ const platform = require("./platform");
 // Mirrors NanoAgent.Infrastructure.Configuration.TelemetryOptions so install and
 // in-product analytics land in the same PostHog project.
 const TELEMETRY_HOST = "https://us.i.posthog.com";
-const TELEMETRY_PROJECT_TOKEN = "phc_AKZFSyU239kkQ5GQ2y4idb8MtFX96kVekgezgnsELHRk";
+const TELEMETRY_PROJECT_TOKEN = "phc_zon2mAf4WjnqZCgZszhgbPgieXxngH5iixSiapVGcczQ";
 const TELEMETRY_EVENT = "nanoagent cli installed";
 const TIMEOUT_MS = 5000;
 

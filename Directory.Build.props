@@ -5,7 +5,7 @@
     <Authors>NanoAgent Contributors</Authors>
     <Company>NanoAgent</Company>
     <Copyright>Copyright (c) NanoAgent Contributors</Copyright>
-    <RepositoryUrl>https://github.com/rizwan3d/NanoAgent</RepositoryUrl>
+    <RepositoryUrl>https://github.com/getnanoai/NanoAgent</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>

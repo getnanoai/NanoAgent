@@ -36,19 +36,19 @@ Download the latest release for your platform:
 
 | Platform | Download |
 | --- | --- |
-| Windows x64 | [Installer](https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-win-x64-setup.exe) |
-| Linux x64 | [Zip](https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-linux-x64.zip) |
-| Linux arm64 | [Zip](https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-linux-arm64.zip) |
-| macOS x64 | [Zip](https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-osx-x64.zip) |
-| macOS arm64 | [Zip](https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-osx-arm64.zip) |
+| Windows x64 | [Installer](https://github.com/getnanoai/NanoAgent/releases/latest/download/NanoAgent.Desktop-win-x64-setup.exe) |
+| Linux x64 | [Zip](https://github.com/getnanoai/NanoAgent/releases/latest/download/NanoAgent.Desktop-linux-x64.zip) |
+| Linux arm64 | [Zip](https://github.com/getnanoai/NanoAgent/releases/latest/download/NanoAgent.Desktop-linux-arm64.zip) |
+| macOS x64 | [Zip](https://github.com/getnanoai/NanoAgent/releases/latest/download/NanoAgent.Desktop-osx-x64.zip) |
+| macOS arm64 | [Zip](https://github.com/getnanoai/NanoAgent/releases/latest/download/NanoAgent.Desktop-osx-arm64.zip) |
 
 Release downloads are published at:
 
 ```text
-https://github.com/rizwan3d/NanoAgent/releases/latest
+https://github.com/getnanoai/NanoAgent/releases/latest
 ```
 
-New release assets include `SHA256SUMS` beside the downloads. The release pipeline verifies every checksum matches its asset before publishing, and GitHub release workflows also generate artifact attestations that establish SLSA build provenance for the checksummed assets. For manual downloads, compare the published SHA256 hash with your downloaded file before running it. To verify provenance with GitHub CLI, run `gh attestation verify path/to/asset -R rizwan3d/NanoAgent`.
+New release assets include `SHA256SUMS` beside the downloads. The release pipeline verifies every checksum matches its asset before publishing, and GitHub release workflows also generate artifact attestations that establish SLSA build provenance for the checksummed assets. For manual downloads, compare the published SHA256 hash with your downloaded file before running it. To verify provenance with GitHub CLI, run `gh attestation verify path/to/asset -R getnanoai/NanoAgent`.
 
 ### CLI
 
@@ -61,13 +61,13 @@ same binary from the same release assets.
 Curl:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/getnanoai/NanoAgent/master/scripts/install.sh | bash
 ```
 
 Windows PowerShell:
 
 ```powershell
-irm https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.ps1 | iex
+irm https://raw.githubusercontent.com/getnanoai/NanoAgent/master/scripts/install.ps1 | iex
 ```
 
 The installers show step status and download progress when run in an interactive terminal. Set `NANOAGENT_NO_PROGRESS=1` to keep output compact in CI logs. Restart your terminal if `nanoai` is not found immediately after installation.
@@ -512,13 +512,13 @@ Run `nanoai` once before using the extension so provider onboarding, credentials
 Install from the Visual Studio Marketplace:
 
 ```text
-ext install rizwan3d.nanoagent
+ext install getnanoai.nanoagent
 ```
 
 The Marketplace item is:
 
 ```text
-https://marketplace.visualstudio.com/items?itemName=rizwan3d.nanoagent
+https://marketplace.visualstudio.com/items?itemName=getnanoai.nanoagent
 ```
 
 GitHub releases also publish an installable VSIX asset:
@@ -587,7 +587,7 @@ NUGET_API_KEY
 VSCE_PAT
 ```
 
-Create `NUGET_API_KEY` in NuGet.org with push permission for the target packages. Create `VSCE_PAT` in Azure DevOps with Marketplace Manage scope and access to the `rizwan3d` Visual Studio Marketplace publisher. The release workflow publishes NuGet packages with `dotnet nuget push`, and the Marketplace workflow publishes through `@vscode/vsce`, uploads the generated `.vsix` artifact, and uses the `vscode-marketplace` GitHub environment for deployment approval or environment-level protection rules if configured.
+Create `NUGET_API_KEY` in NuGet.org with push permission for the target packages. Create `VSCE_PAT` in Azure DevOps with Marketplace Manage scope and access to the `getnanoai` Visual Studio Marketplace publisher. The release workflow publishes NuGet packages with `dotnet nuget push`, and the Marketplace workflow publishes through `@vscode/vsce`, uploads the generated `.vsix` artifact, and uses the `vscode-marketplace` GitHub environment for deployment approval or environment-level protection rules if configured.
 
 ## Visual Studio Extension
 
@@ -631,7 +631,7 @@ VS_MARKETPLACE_PUBLISHER
 VS_MARKETPLACE_EXTENSION_NAME
 ```
 
-If the optional variables are unset, the workflow defaults to publisher `rizwan3d` and extension internal name `nanoagent-vs`. The publish job uses the `visual-studio-marketplace` GitHub environment so approval or environment protection rules can be applied separately from the VS Code marketplace flow.
+If the optional variables are unset, the workflow defaults to publisher `getnanoai` and extension internal name `nanoagent-vs`. The publish job uses the `visual-studio-marketplace` GitHub environment so approval or environment protection rules can be applied separately from the VS Code marketplace flow.
 
 ## ACP Editor Integration
 

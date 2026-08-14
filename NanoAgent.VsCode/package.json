@@ -5,14 +5,14 @@
   "version": "0.0.1",
   "icon": "resources/logo.png",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/rizwan3d/NanoAgent#readme",
+  "homepage": "https://github.com/getnanoai/NanoAgent#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rizwan3d/NanoAgent.git",
+    "url": "https://github.com/getnanoai/NanoAgent.git",
     "directory": "NanoAgent.VsCode"
   },
   "bugs": {
-    "url": "https://github.com/rizwan3d/NanoAgent/issues"
+    "url": "https://github.com/getnanoai/NanoAgent/issues"
   },
   "keywords": [
     "nanoagent",
@@ -37,7 +37,7 @@
     "Machine Learning",
     "Other"
   ],
-  "publisher": "rizwan3d",
+  "publisher": "getnanoai",
   "galleryBanner": {
     "color": "#101820",
     "theme": "dark"

@@ -27,5 +27,5 @@ NanoAgent for Visual Studio brings the NanoAgent chat experience into Visual Stu
 Project repository:
 
 ```text
-https://github.com/Rizwan3D/NanoAgent
+https://github.com/getnanoai/NanoAgent
 ```

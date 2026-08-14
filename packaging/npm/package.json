@@ -11,13 +11,13 @@
     "acp",
     "coding-agent"
   ],
-  "homepage": "https://github.com/rizwan3d/NanoAgent#readme",
+  "homepage": "https://github.com/getnanoai/NanoAgent#readme",
   "bugs": {
-    "url": "https://github.com/rizwan3d/NanoAgent/issues"
+    "url": "https://github.com/getnanoai/NanoAgent/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rizwan3d/NanoAgent.git",
+    "url": "git+https://github.com/getnanoai/NanoAgent.git",
     "directory": "packaging/npm"
   },
   "license": "Apache-2.0",

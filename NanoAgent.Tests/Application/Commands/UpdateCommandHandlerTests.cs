@@ -15,7 +15,7 @@ public sealed class UpdateCommandHandlerTests
         ApplicationUpdateInfo updateInfo = new(
             "1.2.3",
             "1.2.3",
-            new Uri("https://github.com/rizwan3d/NanoAgent/releases/latest"),
+            new Uri("https://github.com/getnanoai/NanoAgent/releases/latest"),
             IsUpdateAvailable: false);
 
         Mock<IApplicationUpdateService> updateService = new(MockBehavior.Strict);
@@ -43,7 +43,7 @@ public sealed class UpdateCommandHandlerTests
         ApplicationUpdateInfo updateInfo = new(
             "1.2.3",
             "1.2.4",
-            new Uri("https://github.com/rizwan3d/NanoAgent/releases/latest"),
+            new Uri("https://github.com/getnanoai/NanoAgent/releases/latest"),
             IsUpdateAvailable: true);
         ApplicationUpdateInstallResult installResult = new(
             IsSuccess: true,
@@ -77,7 +77,7 @@ public sealed class UpdateCommandHandlerTests
         ApplicationUpdateInfo updateInfo = new(
             "1.2.3",
             "1.2.4",
-            new Uri("https://github.com/rizwan3d/NanoAgent/releases/latest"),
+            new Uri("https://github.com/getnanoai/NanoAgent/releases/latest"),
             IsUpdateAvailable: true);
 
         Mock<IApplicationUpdateService> updateService = new(MockBehavior.Strict);

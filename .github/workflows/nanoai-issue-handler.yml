@@ -61,7 +61,7 @@ jobs:
 
       - name: Install NanoAI
         run: |
-          curl -fsSL https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh | bash
+          curl -fsSL https://raw.githubusercontent.com/getnanoai/NanoAgent/master/scripts/install.sh | bash
 
       - name: Handle issue with NanoAI
         env:

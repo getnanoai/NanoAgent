@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly OWNER="rizwan3d"
+readonly OWNER="getnanoai"
 readonly REPO="NanoAgent"
 readonly APP_NAME="NanoAgent.CLI"
 readonly EXECUTABLE_NAME="NanoAgent.CLI"

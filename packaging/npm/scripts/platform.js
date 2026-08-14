@@ -6,7 +6,7 @@
 const os = require("os");
 const path = require("path");
 
-const OWNER = "rizwan3d";
+const OWNER = "getnanoai";
 const REPO = "NanoAgent";
 const APP_NAME = "NanoAgent.CLI";
 // Executable name inside the release archive (matches the AOT-published output).

@@ -105,10 +105,10 @@ If the package was installed globally, reinstalling the package is usually the s
 
 ## Learn more
 
-- Product overview: [NanoAgent README](https://github.com/rizwan3d/NanoAgent#readme)
-- Full documentation: [docs/documentation.md](https://github.com/rizwan3d/NanoAgent/blob/master/docs/documentation.md)
-- Releases: [GitHub Releases](https://github.com/rizwan3d/NanoAgent/releases)
-- Issues: [GitHub Issues](https://github.com/rizwan3d/NanoAgent/issues)
+- Product overview: [NanoAgent README](https://github.com/getnanoai/NanoAgent#readme)
+- Full documentation: [docs/documentation.md](https://github.com/getnanoai/NanoAgent/blob/master/docs/documentation.md)
+- Releases: [GitHub Releases](https://github.com/getnanoai/NanoAgent/releases)
+- Issues: [GitHub Issues](https://github.com/getnanoai/NanoAgent/issues)
 
 ## License
 

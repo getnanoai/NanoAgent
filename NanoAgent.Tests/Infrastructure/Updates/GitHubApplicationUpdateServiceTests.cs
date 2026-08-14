@@ -18,7 +18,7 @@ public sealed class GitHubApplicationUpdateServiceTests
         ApplicationUpdateInfo updateInfo = new(
             "1.2.3",
             "1.2.4",
-            new Uri("https://github.com/rizwan3d/NanoAgent/releases/latest"),
+            new Uri("https://github.com/getnanoai/NanoAgent/releases/latest"),
             IsUpdateAvailable: true);
 
         ApplicationUpdateInstallResult result = await sut.InstallAsync(
@@ -53,7 +53,7 @@ public sealed class GitHubApplicationUpdateServiceTests
         ApplicationUpdateInfo updateInfo = new(
             "1.2.3",
             "1.2.4",
-            new Uri("https://github.com/rizwan3d/NanoAgent/releases/latest"),
+            new Uri("https://github.com/getnanoai/NanoAgent/releases/latest"),
             IsUpdateAvailable: true);
 
         await sut.InstallAsync(updateInfo, progress: null, CancellationToken.None);
@@ -93,7 +93,7 @@ public sealed class GitHubApplicationUpdateServiceTests
         ApplicationUpdateInfo updateInfo = new(
             "1.2.3",
             "1.2.4",
-            new Uri("https://github.com/rizwan3d/NanoAgent/releases/latest"),
+            new Uri("https://github.com/getnanoai/NanoAgent/releases/latest"),
             IsUpdateAvailable: true);
 
         List<string> reported = [];

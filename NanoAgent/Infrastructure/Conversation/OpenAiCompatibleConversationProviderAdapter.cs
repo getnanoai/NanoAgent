@@ -9,7 +9,7 @@ namespace NanoAgent.Infrastructure.Conversation;
 
 internal sealed class OpenAiCompatibleConversationProviderAdapter : IConversationProviderAdapter
 {
-    private const string OpenRouterApplicationUrl = "https://github.com/rizwan3d/NanoAgent";
+    private const string OpenRouterApplicationUrl = "https://github.com/getnanoai/NanoAgent";
     private const string KiloCodeEditorName = "NanoAgent";
     private const string KiloCodeUserAgent = "nanoagent-kilo-provider";
 

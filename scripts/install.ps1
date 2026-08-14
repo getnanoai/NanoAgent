@@ -32,7 +32,7 @@ if ([string]::IsNullOrWhiteSpace($CommandName)) {
     }
 }
 
-$Owner = 'rizwan3d'
+$Owner = 'getnanoai'
 $Repo = 'NanoAgent'
 $AppName = 'NanoAgent.CLI'
 $ExecutableName = 'NanoAgent.CLI'

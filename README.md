@@ -13,19 +13,19 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/rizwan3d/NanoAgent/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/rizwan3d/NanoAgent/ci.yml?branch=master&amp;label=build" alt="Build"></a>
-  <a href="https://github.com/rizwan3d/NanoAgent/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/rizwan3d/NanoAgent/ci.yml?branch=master&amp;label=tests" alt="Tests"></a>
-  <a href="https://github.com/rizwan3d/NanoAgent/actions/workflows/release.yml"><img src="https://img.shields.io/github/actions/workflow/status/rizwan3d/NanoAgent/release.yml?label=release" alt="Release"></a>
-  <a href="https://github.com/rizwan3d/NanoAgent/blob/master/LICENSE.txt"><img src="https://img.shields.io/github/license/rizwan3d/NanoAgent" alt="License"></a>
-  <a href="https://github.com/rizwan3d/NanoAgent"><img src="https://img.shields.io/github/v/release/rizwan3d/NanoAgent" alt="Version"></a>
-  <a href="https://github.com/rizwan3d/NanoAgent/stargazers"><img src="https://img.shields.io/github/stars/rizwan3d/NanoAgent" alt="Stars"></a>
-  <a href="https://github.com/rizwan3d/NanoAgent/issues"><img src="https://img.shields.io/github/issues/rizwan3d/NanoAgent" alt="Issues"></a>
-  <a href="https://github.com/rizwan3d/NanoAgent/releases"><img src="https://img.shields.io/github/downloads/rizwan3d/NanoAgent/total?label=downloads" alt="Downloads"></a>
-  <a href="https://github.com/rizwan3d/NanoAgent/forks"><img src="https://img.shields.io/github/forks/rizwan3d/NanoAgent" alt="Forks"></a>
+  <a href="https://github.com/getnanoai/NanoAgent/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/getnanoai/NanoAgent/ci.yml?branch=master&amp;label=build" alt="Build"></a>
+  <a href="https://github.com/getnanoai/NanoAgent/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/getnanoai/NanoAgent/ci.yml?branch=master&amp;label=tests" alt="Tests"></a>
+  <a href="https://github.com/getnanoai/NanoAgent/actions/workflows/release.yml"><img src="https://img.shields.io/github/actions/workflow/status/getnanoai/NanoAgent/release.yml?label=release" alt="Release"></a>
+  <a href="https://github.com/getnanoai/NanoAgent/blob/master/LICENSE.txt"><img src="https://img.shields.io/github/license/getnanoai/NanoAgent" alt="License"></a>
+  <a href="https://github.com/getnanoai/NanoAgent"><img src="https://img.shields.io/github/v/release/getnanoai/NanoAgent" alt="Version"></a>
+  <a href="https://github.com/getnanoai/NanoAgent/stargazers"><img src="https://img.shields.io/github/stars/getnanoai/NanoAgent" alt="Stars"></a>
+  <a href="https://github.com/getnanoai/NanoAgent/issues"><img src="https://img.shields.io/github/issues/getnanoai/NanoAgent" alt="Issues"></a>
+  <a href="https://github.com/getnanoai/NanoAgent/releases"><img src="https://img.shields.io/github/downloads/getnanoai/NanoAgent/total?label=downloads" alt="Downloads"></a>
+  <a href="https://github.com/getnanoai/NanoAgent/forks"><img src="https://img.shields.io/github/forks/getnanoai/NanoAgent" alt="Forks"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/rizwan3d/NanoAgent/releases/latest">
+  <a href="https://github.com/getnanoai/NanoAgent/releases/latest">
     <img src="https://img.shields.io/badge/Get-Releases-0969da?style=for-the-badge" alt="Get NanoAgent releases">
   </a>
   <a href="#cli-install">
@@ -34,10 +34,10 @@
    <a href="#desktop-app">
     <img src="https://img.shields.io/badge/Install-Desktop-0969da?style=for-the-badge" alt="Install NanoAgent Desktop">
   </a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=rizwan3d.nanoagent">
+  <a href="https://marketplace.visualstudio.com/items?itemName=getnanoai.nanoagent">
     <img src="https://img.shields.io/badge/Install-VS_Code-0969da?style=for-the-badge" alt="Install NanoAgent VS Code extension">
   </a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=rizwan3d.nanoagent-vs">
+  <a href="https://marketplace.visualstudio.com/items?itemName=getnanoai.nanoagent-vs">
     <img src="https://img.shields.io/badge/Install-Visual_Studio-0969da?style=for-the-badge" alt="Install NanoAgent Visual Studio extension">
   </a>
   <a href="https://www.npmjs.com/package/nanoai-cli">
@@ -110,7 +110,7 @@ Use it when you want one agent experience across:
 
 ## Get Started
 
-Download the latest desktop build from [GitHub Releases](https://github.com/rizwan3d/NanoAgent/releases/latest), or install the CLI with the method that fits your environment.
+Download the latest desktop build from [GitHub Releases](https://github.com/getnanoai/NanoAgent/releases/latest), or install the CLI with the method that fits your environment.
 
 Release assets publish `SHA256SUMS` and GitHub artifact attestations so you can verify both checksums and build provenance.
 
@@ -118,12 +118,12 @@ Release assets publish `SHA256SUMS` and GitHub artifact attestations so you can 
 
 | Platform | Architecture | Download |
 | --- | --- | --- |
-| Windows | x64 | [Setup `.exe`](https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-win-x64-setup.exe) |
-| Windows | x64 | [Portable `.zip`](https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-win-x64.zip) |
-| macOS | arm64 | [Download `.zip`](https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-osx-arm64.zip) |
-| macOS | x64 | [Download `.zip`](https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-osx-x64.zip) |
-| Linux | x64 | [Download `.zip`](https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-linux-x64.zip) |
-| Linux | arm64 | [Download `.zip`](https://github.com/rizwan3d/NanoAgent/releases/latest/download/NanoAgent.Desktop-linux-arm64.zip) |
+| Windows | x64 | [Setup `.exe`](https://github.com/getnanoai/NanoAgent/releases/latest/download/NanoAgent.Desktop-win-x64-setup.exe) |
+| Windows | x64 | [Portable `.zip`](https://github.com/getnanoai/NanoAgent/releases/latest/download/NanoAgent.Desktop-win-x64.zip) |
+| macOS | arm64 | [Download `.zip`](https://github.com/getnanoai/NanoAgent/releases/latest/download/NanoAgent.Desktop-osx-arm64.zip) |
+| macOS | x64 | [Download `.zip`](https://github.com/getnanoai/NanoAgent/releases/latest/download/NanoAgent.Desktop-osx-x64.zip) |
+| Linux | x64 | [Download `.zip`](https://github.com/getnanoai/NanoAgent/releases/latest/download/NanoAgent.Desktop-linux-x64.zip) |
+| Linux | arm64 | [Download `.zip`](https://github.com/getnanoai/NanoAgent/releases/latest/download/NanoAgent.Desktop-linux-arm64.zip) |
 
 ### CLI Install
 
@@ -133,13 +133,13 @@ Every installer exposes the same `nanoai` command and downloads the same self-co
 Curl:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/getnanoai/NanoAgent/master/scripts/install.sh | bash
 ```
 
 Windows PowerShell:
 
 ```powershell
-irm https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.ps1 | iex
+irm https://raw.githubusercontent.com/getnanoai/NanoAgent/master/scripts/install.ps1 | iex
 ```
 
 On Windows, both scripts install the same `nanoai` CLI. The Bash installer downloads the `win-x64` release, installs `nanoai.exe` into `%LOCALAPPDATA%\Programs\NanoAgent\bin` by default, and adds that directory to your user `PATH`.
@@ -331,13 +331,13 @@ Contributions are welcome. To work on NanoAgent from source:
    dotnet test NanoAgent.Tests/NanoAgent.Tests.csproj
    ```
 
-Open an [issue](https://github.com/rizwan3d/NanoAgent/issues) to report bugs or propose features, and keep pull requests focused with a clear description of the change. See [docs/documentation.md](docs/documentation.md#build-from-source) for full source-build details.
+Open an [issue](https://github.com/getnanoai/NanoAgent/issues) to report bugs or propose features, and keep pull requests focused with a clear description of the change. See [docs/documentation.md](docs/documentation.md#build-from-source) for full source-build details.
 
 ## Support
 
 - Browse the [documentation](docs/documentation.md) for setup, workflows, and troubleshooting.
-- Report bugs or request features via [GitHub Issues](https://github.com/rizwan3d/NanoAgent/issues).
-- Find the latest builds on the [Releases](https://github.com/rizwan3d/NanoAgent/releases/latest) page.
+- Report bugs or request features via [GitHub Issues](https://github.com/getnanoai/NanoAgent/issues).
+- Find the latest builds on the [Releases](https://github.com/getnanoai/NanoAgent/releases/latest) page.
 
 ## License
 

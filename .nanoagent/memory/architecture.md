@@ -4,7 +4,7 @@
 
 NanoAgent is an autonomous AI coding agent that runs on the user's machine. It provides AI-powered code assistance through multiple surfaces: CLI terminal UI, desktop GUI (Avalonia), IDE plugins (JetBrains, VS Code), and an ACP (Agent Client Protocol) JSON-RPC server.
 
-- **Repository**: github.com/rizwan3d/NanoAgent
+- **Repository**: github.com/getnanoai/NanoAgent
 - **Sponsor**: ALFAIN Technologies (PVT) Limited
 - **Core Language**: C# (.NET 10, net10.0)
 - **Solution File**: `NanoAgent.slnx`

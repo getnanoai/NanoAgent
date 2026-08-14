@@ -426,7 +426,7 @@ public sealed class OpenAiCompatibleConversationProviderClientTests
 
         handler.RequestUri.Should().Be(new Uri("https://openrouter.ai/api/v1/chat/completions"));
         handler.AuthorizationHeader.Should().Be("Bearer test-key");
-        handler.OpenRouterRefererHeader.Should().Be("https://github.com/rizwan3d/NanoAgent");
+        handler.OpenRouterRefererHeader.Should().Be("https://github.com/getnanoai/NanoAgent");
         handler.OpenRouterTitleHeader.Should().Be("NanoAgent");
         handler.RequestBody.Should().Contain("\"model\":\"openai/gpt-4o\"");
         payload.ProviderKind.Should().Be(ProviderKind.OpenRouter);

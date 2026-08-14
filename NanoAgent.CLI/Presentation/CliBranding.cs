@@ -5,7 +5,7 @@ namespace NanoAgent.CLI;
 internal static class CliBranding
 {
     private const string ApplicationName = "NanoAgent";
-    private const string RepositoryUrl = "github.com/rizwan3d/NanoAgent";
+    private const string RepositoryUrl = "github.com/getnanoai/NanoAgent";
     private const string SponsorName = "ALFAIN Technologies (PVT) Limited";
     private const string SponsorUrl = "https://alfain.co/";
 

@@ -44,7 +44,7 @@ intellijPlatform {
 
         vendor {
             name = "ALFAIN Technologies (PVT) Limited"
-            url = "https://github.com/rizwan3d/NanoAgent"
+            url = "https://github.com/getnanoai/NanoAgent"
         }
 
         ideaVersion {

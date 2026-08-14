@@ -10,10 +10,10 @@ namespace NanoAgent.Infrastructure.Updates;
 
 internal sealed class GitHubApplicationUpdateService : IApplicationUpdateService
 {
-    private const string LatestReleaseApiUrl = "https://api.github.com/repos/rizwan3d/NanoAgent/releases/latest";
-    private const string ReleasePageUrl = "https://github.com/rizwan3d/NanoAgent/releases/latest";
-    private const string InstallScriptUrl = "https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh";
-    private const string InstallPowerShellScriptUrl = "https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.ps1";
+    private const string LatestReleaseApiUrl = "https://api.github.com/repos/getnanoai/NanoAgent/releases/latest";
+    private const string ReleasePageUrl = "https://github.com/getnanoai/NanoAgent/releases/latest";
+    private const string InstallScriptUrl = "https://raw.githubusercontent.com/getnanoai/NanoAgent/master/scripts/install.sh";
+    private const string InstallPowerShellScriptUrl = "https://raw.githubusercontent.com/getnanoai/NanoAgent/master/scripts/install.ps1";
 
     private readonly HttpClient _httpClient;
     private readonly IProcessRunner _processRunner;

@@ -371,7 +371,7 @@ public sealed class OpenAiCompatibleModelProviderClientTests
 
         handler.RequestUri.Should().Be(new Uri("https://openrouter.ai/api/v1/models"));
         handler.AuthorizationHeader.Should().Be("Bearer test-key");
-        handler.OpenRouterRefererHeader.Should().Be("https://github.com/rizwan3d/NanoAgent");
+        handler.OpenRouterRefererHeader.Should().Be("https://github.com/getnanoai/NanoAgent");
         handler.OpenRouterTitleHeader.Should().Be("NanoAgent");
         models.Select(model => model.Id).Should().Equal("openai/gpt-4o");
     }

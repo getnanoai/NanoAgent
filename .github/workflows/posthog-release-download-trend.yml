@@ -31,7 +31,7 @@ jobs:
       REPOSITORY: ${{ github.repository }}
       NPM_PACKAGE_IDS: ${{ github.event.inputs.npm_package_ids || vars.NPM_PACKAGE_IDS || 'nanoai-cli' }}
       NUGET_PACKAGE_IDS: ${{ github.event.inputs.nuget_package_ids || vars.NUGET_PACKAGE_IDS || '' }}
-      VSCODE_EXTENSION_IDS: ${{ github.event.inputs.vscode_extension_ids || vars.VSCODE_EXTENSION_IDS || 'rizwan3d.nanoagent,rizwan3d.nanoagent-vs' }}
+      VSCODE_EXTENSION_IDS: ${{ github.event.inputs.vscode_extension_ids || vars.VSCODE_EXTENSION_IDS || 'getnanoai.nanoagent,getnanoai.nanoagent-vs' }}
     steps:
       - name: Send GitHub release download snapshots to PostHog
         shell: bash

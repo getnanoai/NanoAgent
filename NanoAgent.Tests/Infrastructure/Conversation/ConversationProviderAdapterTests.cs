@@ -28,7 +28,7 @@ public sealed class ConversationProviderAdapterTests
             CancellationToken.None);
 
         handler.RequestUri.Should().Be(new Uri("https://openrouter.ai/api/v1/chat/completions"));
-        handler.RefererHeader.Should().Be("https://github.com/rizwan3d/NanoAgent");
+        handler.RefererHeader.Should().Be("https://github.com/getnanoai/NanoAgent");
         handler.TitleHeader.Should().Be("NanoAgent");
     }
 

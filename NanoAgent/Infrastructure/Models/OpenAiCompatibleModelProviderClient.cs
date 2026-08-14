@@ -19,7 +19,7 @@ internal sealed class OpenAiCompatibleModelProviderClient : IModelProviderClient
     private const string AnthropicClaudeAccountUserAgent = "claude-cli/2.1.75";
     private const string AccountHeaderName = "Chat" + "G" + "P" + "T-Account-Id";
     private const string Originator = "nanoagent";
-    private const string OpenRouterApplicationUrl = "https://github.com/rizwan3d/NanoAgent";
+    private const string OpenRouterApplicationUrl = "https://github.com/getnanoai/NanoAgent";
     private const string KiloCodeEditorName = "NanoAgent";
     private const string KiloCodeUserAgent = "nanoagent-kilo-provider";
     private static readonly IReadOnlyDictionary<string, int> ContextWindowFallbacks =

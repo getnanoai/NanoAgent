@@ -15,13 +15,13 @@ The extension does not bundle the NanoAgent engine. It starts the local terminal
 macOS / Linux:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/getnanoai/NanoAgent/master/scripts/install.sh | bash
 ```
 
 Windows PowerShell:
 
 ```powershell
-irm https://raw.githubusercontent.com/rizwan3d/NanoAgent/master/scripts/install.ps1 | iex
+irm https://raw.githubusercontent.com/getnanoai/NanoAgent/master/scripts/install.ps1 | iex
 ```
 
 After installation, restart your terminal if `nanoai` is not found, then run:
@@ -37,7 +37,7 @@ Finish provider setup in the terminal before using the VS Code extension.
 Install from the Visual Studio Marketplace:
 
 ```text
-ext install rizwan3d.nanoagent
+ext install getnanoai.nanoagent
 ```
 
 Then open the NanoAgent view in VS Code or run `NanoAgent: Open Chat` from the Command Palette.

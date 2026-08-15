@@ -5,6 +5,7 @@ const { spawnSync } = require("child_process");
 
 const platform = require("./platform");
 const { ensureBinary } = require("./download");
+const { terminateOtherInstances } = require("./instances");
 
 const LatestReleaseApiUrl = `https://api.github.com/repos/${platform.OWNER}/${platform.REPO}/releases/latest`;
 const VersionPattern = /\b(?:NanoAgent\s+CLI\s+)?v?(\d+(?:\.\d+){1,3}(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?)\b/i;
@@ -217,6 +218,10 @@ async function maybeUpdateBinary(binaryPath, options = {}) {
   }
 
   log(`Updating NanoAgent CLI to ${latestRelease.tag}...`);
+
+  // Before replacing the vendored binary, terminate any other running NanoAgent
+  // sessions so the file is not held by another process during the update.
+  await terminateOtherInstances({ log });
 
   try {
     return await ensureBinary({

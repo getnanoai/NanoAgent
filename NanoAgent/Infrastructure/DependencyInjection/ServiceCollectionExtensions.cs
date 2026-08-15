@@ -219,6 +219,8 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IWindowsSandboxStartupService, WindowsSandboxStartupService>();
         services.AddSingleton<IWindowsSandboxProcessRunner, WindowsSandboxProcessRunnerAdapter>();
 
+        services.AddSingleton<INanoAgentInstanceService, NanoAgentInstanceService>();
+
         services
             .AddOptions<ApplicationOptions>()
             .BindConfiguration(ApplicationOptions.SectionName, binderOptions =>

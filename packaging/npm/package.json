@@ -27,7 +27,8 @@
     "nanoai": "bin/nanoai.js"
   },
   "scripts": {
-    "postinstall": "node scripts/postinstall.js"
+    "postinstall": "node scripts/postinstall.js",
+    "test": "node --test"
   },
   "files": [
     "bin/",

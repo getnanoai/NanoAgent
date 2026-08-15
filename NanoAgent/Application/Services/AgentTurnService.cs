@@ -593,5 +593,24 @@ internal sealed class AgentTurnService
             Exception? exception = null)
         {
         }
+
+        public void TrackToolInvoked(
+            string toolName,
+            ToolResultStatus status,
+            bool success,
+            TimeSpan latency,
+            string? errorMessage = null)
+        {
+        }
+
+        public void TrackProviderRequest(
+            string? providerKind,
+            bool success,
+            TimeSpan latency,
+            bool streamed,
+            int retryCount,
+            string? errorMessage = null)
+        {
+        }
     }
 }

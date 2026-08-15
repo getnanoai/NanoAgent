@@ -151,6 +151,60 @@ public sealed class PostHogTelemetryServiceTests
         appStartedProperties.GetProperty("ci_provider").GetString().Should().Be(expectedProvider);
     }
 
+    [Fact]
+    public async Task TrackToolInvoked_ShouldNormalizeToolNameAndEmitExecutionError()
+    {
+        RecordingHandler handler = new(_ => new HttpResponseMessage(HttpStatusCode.OK));
+        PostHogTelemetryService sut = CreateSut(handler, BackendRuntimeOptions.DesktopSurface);
+
+        sut.TrackToolInvoked(
+            "shell_command",
+            ToolResultStatus.ExecutionError,
+            success: false,
+            TimeSpan.FromMilliseconds(1500),
+            errorMessage: "command failed");
+        await sut.DisposeAsync();
+
+        handler.Requests.Should().HaveCount(2);
+
+        using JsonDocument toolRequest = ParseBody(handler.Requests[1]);
+
+        JsonElement toolProperties = toolRequest.RootElement.GetProperty("properties");
+        toolProperties.GetProperty("tool_name").GetString().Should().Be("shell_command");
+        toolProperties.GetProperty("tool_status").GetString().Should().Be("execution_error");
+        toolProperties.GetProperty("success").GetBoolean().Should().BeFalse();
+        toolProperties.GetProperty("error_message").GetString().Should().Be("command failed");
+    }
+
+    [Fact]
+    public async Task TrackProviderRequest_ShouldNormalizeBucketsAndEmitFailure()
+    {
+        RecordingHandler handler = new(_ => new HttpResponseMessage(HttpStatusCode.OK));
+        PostHogTelemetryService sut = CreateSut(handler, BackendRuntimeOptions.DesktopSurface);
+
+        sut.TrackProviderRequest(
+            "OpenRouter",
+            success: false,
+            TimeSpan.FromMilliseconds(30000),
+            streamed: false,
+            retryCount: 3,
+            errorMessage: "Provider returned HTTP 429: rate limited");
+        await sut.DisposeAsync();
+
+        handler.Requests.Should().HaveCount(2);
+
+        using JsonDocument providerRequest = ParseBody(handler.Requests[1]);
+
+        JsonElement props = providerRequest.RootElement.GetProperty("properties");
+        props.GetProperty("success").GetBoolean().Should().BeFalse();
+        props.GetProperty("streamed").GetBoolean().Should().BeFalse();
+        props.GetProperty("latency_ms").GetInt64().Should().Be(30000);
+        props.GetProperty("latency_bucket").GetString().Should().Be("15s_to_60s");
+        props.GetProperty("retry_count_bucket").GetString().Should().Be("2_to_5");
+        props.GetProperty("error_message").GetString().Should()
+            .Be("Provider returned HTTP 429: rate limited");
+    }
+
     private static PostHogTelemetryService CreateSut(
         HttpMessageHandler handler,
         string appSurface,

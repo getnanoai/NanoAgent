@@ -15,4 +15,19 @@ public interface IProductTelemetry
         ConversationTurnMetrics? metrics = null,
         int attachmentCount = 0,
         Exception? exception = null);
+
+    void TrackToolInvoked(
+        string toolName,
+        ToolResultStatus status,
+        bool success,
+        TimeSpan latency,
+        string? errorMessage = null);
+
+    void TrackProviderRequest(
+        string? providerKind,
+        bool success,
+        TimeSpan latency,
+        bool streamed,
+        int retryCount,
+        string? errorMessage = null);
 }

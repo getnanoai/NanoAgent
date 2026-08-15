@@ -66,5 +66,24 @@ public static class ServiceCollectionExtensions
             Exception? exception = null)
         {
         }
+
+        public void TrackToolInvoked(
+            string toolName,
+            Models.ToolResultStatus status,
+            bool success,
+            TimeSpan latency,
+            string? errorMessage = null)
+        {
+        }
+
+        public void TrackProviderRequest(
+            string? providerKind,
+            bool success,
+            TimeSpan latency,
+            bool streamed,
+            int retryCount,
+            string? errorMessage = null)
+        {
+        }
     }
 }

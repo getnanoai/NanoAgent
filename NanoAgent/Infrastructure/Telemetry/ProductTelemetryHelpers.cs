@@ -105,6 +105,70 @@ internal static class ProductTelemetryHelpers
         return properties;
     }
 
+    public static IReadOnlyDictionary<string, object> CreateToolInvokedProperties(
+        string version,
+        string osFamily,
+        string appSurface,
+        string executionEnvironment,
+        string? ciProvider,
+        string toolName,
+        ToolResultStatus status,
+        bool success,
+        TimeSpan latency,
+        string? errorMessage)
+    {
+        Dictionary<string, object> properties = CreateCommonProperties(
+            version, osFamily, appSurface, executionEnvironment, ciProvider);
+        properties["tool_name"] = NormalizeToolName(toolName);
+        properties["tool_status"] = NormalizeToolStatus(status);
+        properties["success"] = success;
+        properties["latency_ms"] = (long)latency.TotalMilliseconds;
+        properties["latency_bucket"] = ToLatencyBucket(latency);
+
+        if (!string.IsNullOrWhiteSpace(errorMessage))
+        {
+            properties["error_message"] = errorMessage;
+        }
+
+        return properties;
+    }
+
+    public static IReadOnlyDictionary<string, object> CreateProviderRequestProperties(
+        string version,
+        string osFamily,
+        string appSurface,
+        string executionEnvironment,
+        string? ciProvider,
+        string? providerKind,
+        bool success,
+        TimeSpan latency,
+        bool streamed,
+        int retryCount,
+        string? errorMessage)
+    {
+        Dictionary<string, object> properties = CreateCommonProperties(
+            version, osFamily, appSurface, executionEnvironment, ciProvider);
+
+        if (!string.IsNullOrWhiteSpace(providerKind))
+        {
+            properties["provider_kind"] = providerKind;
+        }
+
+        properties["success"] = success;
+        properties["latency_ms"] = (long)latency.TotalMilliseconds;
+        properties["latency_bucket"] = ToLatencyBucket(latency);
+        properties["streamed"] = streamed;
+        properties["retry_count"] = retryCount;
+        properties["retry_count_bucket"] = ToCountBucket(retryCount);
+
+        if (!string.IsNullOrWhiteSpace(errorMessage))
+        {
+            properties["error_message"] = errorMessage;
+        }
+
+        return properties;
+    }
+
     public static string GetNanoAgentVersion()
     {
         Type type = typeof(ProductTelemetryHelpers);
@@ -291,7 +355,64 @@ internal static class ProductTelemetryHelpers
             : modelId.Trim();
     }
 
+    private static string NormalizeToolName(string? toolName)
+    {
+        string normalized = toolName.Trim();
+
+        if (normalized.StartsWith("mcp__", StringComparison.Ordinal))
+        {
+            return "mcp";
+        }
+
+        return normalized.ToLowerInvariant();
+    }
+
+    internal static string? NormalizeProviderKind(string? providerKind)
+    {
+        return string.IsNullOrWhiteSpace(providerKind)
+            ? null
+            : providerKind.Trim().ToLowerInvariant();
+    }
+
+    private static string NormalizeToolStatus(ToolResultStatus status)
+    {
+        return status switch
+        {
+            ToolResultStatus.Success => "success",
+            ToolResultStatus.InvalidArguments => "invalid_arguments",
+            ToolResultStatus.NotFound => "not_found",
+            ToolResultStatus.ExecutionError => "execution_error",
+            ToolResultStatus.PermissionDenied => "permission_denied",
+            _ => "unknown"
+        };
+    }
+
     private static string ToDurationBucket(TimeSpan elapsed)
+    {
+        if (elapsed <= TimeSpan.Zero)
+        {
+            return "none";
+        }
+
+        if (elapsed < TimeSpan.FromSeconds(5))
+        {
+            return "lt_5s";
+        }
+
+        if (elapsed < TimeSpan.FromSeconds(15))
+        {
+            return "5s_to_15s";
+        }
+
+        if (elapsed < TimeSpan.FromMinutes(1))
+        {
+            return "15s_to_60s";
+        }
+
+        return "ge_60s";
+    }
+
+    private static string ToLatencyBucket(TimeSpan elapsed)
     {
         if (elapsed <= TimeSpan.Zero)
         {

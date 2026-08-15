@@ -5,6 +5,9 @@ using NanoAgent.Domain.Models;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Sockets;
+using System.Diagnostics;
+using NanoAgent.Application.Abstractions;
+using NanoAgent.Infrastructure.Telemetry;
 
 namespace NanoAgent.Infrastructure.Conversation;
 
@@ -18,17 +21,20 @@ internal sealed class ConversationProviderHttpExecutor : IConversationProviderHt
     private readonly HttpClient _httpClient;
     private readonly ILogger _logger;
     private readonly Func<double> _nextJitter;
+    private readonly IProductTelemetry? _telemetry;
 
     public ConversationProviderHttpExecutor(
         HttpClient httpClient,
         ILogger logger,
         Func<TimeSpan, CancellationToken, Task>? delayAsync = null,
-        Func<double>? nextJitter = null)
+        Func<double>? nextJitter = null,
+        IProductTelemetry? telemetry = null)
     {
         _httpClient = httpClient;
         _logger = logger;
         _delayAsync = delayAsync ?? ((delay, token) => Task.Delay(delay, token));
         _nextJitter = nextJitter ?? Random.Shared.NextDouble;
+        _telemetry = telemetry;
     }
 
     public async Task<ConversationProviderPayload> ExecuteAsync(
@@ -43,6 +49,7 @@ internal sealed class ConversationProviderHttpExecutor : IConversationProviderHt
     {
         int retryCount = 0;
         bool forcedRefreshAfterAuthFailure = false;
+        Stopwatch stopwatch = Stopwatch.StartNew();
 
         for (int attempt = 0; attempt <= MaxRetryAttempts; attempt++)
         {
@@ -98,6 +105,10 @@ internal sealed class ConversationProviderHttpExecutor : IConversationProviderHt
 
             LogDebugApiResponse(response.StatusCode, TryGetResponseId(response));
 
+            string normalizedProviderKind =
+                ProductTelemetryHelpers.NormalizeProviderKind(providerKind.ToString())
+                ?? providerKind.ToString();
+
             if (response.IsSuccessStatusCode)
             {
                 string normalizedResponseBody = normalizeResponseBody is null
@@ -108,6 +119,14 @@ internal sealed class ConversationProviderHttpExecutor : IConversationProviderHt
                     throw new ConversationProviderException(
                         "The provider returned an empty response body for the conversation request.");
                 }
+
+                _telemetry?.TrackProviderRequest(
+                    normalizedProviderKind,
+                    success: true,
+                    stopwatch.Elapsed,
+                    assistantMessageWasStreamed,
+                    retryCount,
+                    errorMessage: null);
 
                 return new ConversationProviderPayload(
                     providerKind,
@@ -145,7 +164,19 @@ internal sealed class ConversationProviderHttpExecutor : IConversationProviderHt
                 continue;
             }
 
-            ThrowConversationRequestFailed(response.StatusCode, responseBody);
+            string providerRequestFailure = BuildProviderRequestFailureDetail(
+                response.StatusCode,
+                responseBody);
+            _telemetry?.TrackProviderRequest(
+                normalizedProviderKind,
+                success: false,
+                stopwatch.Elapsed,
+                streamed: false,
+                retryCount,
+                errorMessage: providerRequestFailure);
+
+            throw new ConversationProviderException(
+                $"Unable to complete the conversation request. {providerRequestFailure}");
             } // using (response)
         }
 
@@ -282,7 +313,7 @@ internal sealed class ConversationProviderHttpExecutor : IConversationProviderHt
         return null;
     }
 
-    private static void ThrowConversationRequestFailed(
+    private static string BuildProviderRequestFailureDetail(
         HttpStatusCode statusCode,
         string responseBody)
     {
@@ -290,8 +321,7 @@ internal sealed class ConversationProviderHttpExecutor : IConversationProviderHt
             ? $"Provider returned HTTP {(int)statusCode}."
             : $"Provider returned HTTP {(int)statusCode}: {Truncate(responseBody.Trim(), 200)}";
 
-        throw new ConversationProviderException(
-            $"Unable to complete the conversation request. {detail}");
+        return detail;
     }
 
     private static string Truncate(string value, int maxLength)

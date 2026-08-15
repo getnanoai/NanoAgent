@@ -159,6 +159,64 @@ internal sealed class PostHogTelemetryService : IProductTelemetry, IAsyncDisposa
                 exception));
     }
 
+    public void TrackToolInvoked(
+        string toolName,
+        ToolResultStatus status,
+        bool success,
+        TimeSpan latency,
+        string? errorMessage = null)
+    {
+        if (!_enabled)
+        {
+            return;
+        }
+
+        EnsurePersonIdentified();
+        Enqueue(
+            "nanoagent tool invoked",
+            ProductTelemetryHelpers.CreateToolInvokedProperties(
+                _version,
+                _osFamily,
+                _appSurface,
+                _executionEnvironment,
+                _ciProvider,
+                toolName,
+                status,
+                success,
+                latency,
+                errorMessage));
+    }
+
+    public void TrackProviderRequest(
+        string? providerKind,
+        bool success,
+        TimeSpan latency,
+        bool streamed,
+        int retryCount,
+        string? errorMessage = null)
+    {
+        if (!_enabled)
+        {
+            return;
+        }
+
+        EnsurePersonIdentified();
+        Enqueue(
+            "nanoagent provider request",
+            ProductTelemetryHelpers.CreateProviderRequestProperties(
+                _version,
+                _osFamily,
+                _appSurface,
+                _executionEnvironment,
+                _ciProvider,
+                providerKind,
+                success,
+                latency,
+                streamed,
+                retryCount,
+                errorMessage));
+    }
+
     public async ValueTask DisposeAsync()
     {
         if (_queue is null)

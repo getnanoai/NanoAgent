@@ -55,6 +55,10 @@ export default function Nav() {
     window.open(siteConfig.appUrl, "_blank");
   }, []);
 
+  const openRegister = useCallback(() => {
+    window.open(siteConfig.signupUrl, "_blank");
+  }, []);
+
   return (
     <header
       className={`sticky top-0 z-50 backdrop-blur-[14px] transition-all duration-250 border-b border-transparent ${
@@ -288,7 +292,7 @@ export default function Nav() {
             className="md:hidden inline-flex items-center justify-center font-semibold text-[13.5px] leading-none px-4 py-3 rounded-full border border-transparent text-[#06121a] bg-[var(--color-acc-2)] shadow-[0_4px_15px_-5px_rgba(110,231,255,0.4)] hover:-translate-y-0.5 transition-all duration-200 w-full cursor-pointer"
             onClick={() => {
               closeMenu();
-              openApp();
+              openRegister();
             }}
           >
             Register
@@ -318,7 +322,7 @@ export default function Nav() {
           </button>
           <button
             className="hidden md:inline-flex items-center justify-center font-semibold text-[13.5px] leading-none px-4 py-3 rounded-full border border-transparent text-[#06121a] bg-[var(--color-acc-2)] shadow-[0_4px_15px_-5px_rgba(110,231,255,0.4)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
-            onClick={openApp}
+            onClick={openRegister}
           >
             Register
           </button>

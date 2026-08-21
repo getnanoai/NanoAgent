@@ -215,16 +215,15 @@ export default function HomePage() {
 
         {/* Unified Ecosystem Subtitle */}
         <p className="mt-5 mx-auto max-w-[760px] text-[16px] sm:text-[17.5px] leading-[1.65] text-[var(--color-text-mut)] [text-wrap:balance]">
-          A complete engineering platform for developers and teams. Run <strong className="text-white">NanoAgent</strong> locally for free, build full-stack apps with <strong className="text-white">NanoForge</strong>, and govern AI spend across teams with the <strong className="text-[#f4c489]">Gateway</strong>.
+          Run <strong className="text-white">NanoAgent</strong> locally for free. Build full-stack apps with <strong className="text-white">NanoForge</strong>. Keep AI spend under control with the <strong className="text-[#f4c489]">Gateway</strong>.
         </p>
 
         {/* ── 3-PRODUCT INTERACTIVE SELECTOR CARDS (FIXED DIMENSIONS, ZERO JERK) ── */}
         <div className="mt-10 max-w-[1040px] mx-auto grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-left">
           {/* 1. NanoAgent (Flagship - Free) */}
-          <button
-            type="button"
+          <div
             onClick={() => setSelectedProduct("agent")}
-            className={`p-4 sm:p-5 rounded-2xl border text-left transition-colors duration-200 cursor-pointer relative flex flex-col justify-between min-h-[145px] ${
+            className={`p-4 sm:p-5 rounded-2xl border text-left transition-colors duration-200 cursor-pointer relative flex flex-col justify-between min-h-[175px] ${
               selectedProduct === "agent"
                 ? "bg-[rgba(110,231,255,0.08)] border-[var(--color-acc-1)] shadow-[0_0_30px_-10px_rgba(110,231,255,0.35)]"
                 : "bg-[rgba(255,255,255,0.02)] border-[var(--color-border)] hover:border-[var(--color-border-2)] hover:bg-[rgba(255,255,255,0.04)]"
@@ -242,24 +241,30 @@ export default function HomePage() {
                   Free · Open Source
                 </span>
               </div>
-              <p className="text-[12.5px] sm:text-[13px] leading-relaxed text-[var(--color-text-mut)] m-0 line-clamp-2 sm:line-clamp-none">
-                Local-first AI coding agent for CLI, VS Code, Visual Studio &amp; Desktop. Zero code telemetry.
+              <p className="text-[12.5px] sm:text-[13px] leading-relaxed text-[var(--color-text-mut)] m-0">
+                Local-first AI coding agent for CLI, VS Code, Visual Studio &amp; Desktop. No code telemetry. Ever.
               </p>
             </div>
-            <div className="mt-2.5">
+            <div className="mt-3 flex items-center justify-between gap-2">
+              <a
+                href={siteConfig.signupUrl}
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[var(--color-acc-1)] text-black hover:bg-white transition-colors"
+              >
+                Code for Free →
+              </a>
               <div
-                className={`h-[2.5px] rounded-full transition-all duration-300 ${
-                  selectedProduct === "agent" ? "w-full bg-[var(--color-acc-1)] opacity-100" : "w-0 bg-transparent opacity-0"
+                className={`h-[2.5px] w-12 rounded-full transition-all duration-300 ${
+                  selectedProduct === "agent" ? "bg-[var(--color-acc-1)] opacity-100" : "bg-transparent opacity-0"
                 }`}
               />
             </div>
-          </button>
+          </div>
 
           {/* 2. NanoForge (App Builder - Free) */}
-          <button
-            type="button"
+          <div
             onClick={() => setSelectedProduct("forge")}
-            className={`p-4 sm:p-5 rounded-2xl border text-left transition-colors duration-200 cursor-pointer relative flex flex-col justify-between min-h-[145px] ${
+            className={`p-4 sm:p-5 rounded-2xl border text-left transition-colors duration-200 cursor-pointer relative flex flex-col justify-between min-h-[175px] ${
               selectedProduct === "forge"
                 ? "bg-[rgba(176,124,255,0.08)] border-[#b07cff] shadow-[0_0_30px_-10px_rgba(176,124,255,0.35)]"
                 : "bg-[rgba(255,255,255,0.02)] border-[var(--color-border)] hover:border-[var(--color-border-2)] hover:bg-[rgba(255,255,255,0.04)]"
@@ -277,24 +282,30 @@ export default function HomePage() {
                   Free · Builder
                 </span>
               </div>
-              <p className="text-[12.5px] sm:text-[13px] leading-relaxed text-[var(--color-text-mut)] m-0 line-clamp-2 sm:line-clamp-none">
-                Prompt to full-stack app. Generates React + Express + Postgres inside a live isolated preview.
+              <p className="text-[12.5px] sm:text-[13px] leading-relaxed text-[var(--color-text-mut)] m-0">
+                Describe your app. Get a working full-stack app, live in preview.
               </p>
             </div>
-            <div className="mt-2.5">
+            <div className="mt-3 flex items-center justify-between gap-2">
+              <a
+                href={siteConfig.signupUrl}
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#b07cff] text-black hover:bg-white transition-colors"
+              >
+                Build for Free →
+              </a>
               <div
-                className={`h-[2.5px] rounded-full transition-all duration-300 ${
-                  selectedProduct === "forge" ? "w-full bg-[#b07cff] opacity-100" : "w-0 bg-transparent opacity-0"
+                className={`h-[2.5px] w-12 rounded-full transition-all duration-300 ${
+                  selectedProduct === "forge" ? "bg-[#b07cff] opacity-100" : "bg-transparent opacity-0"
                 }`}
               />
             </div>
-          </button>
+          </div>
 
           {/* 3. Gateway (Paid / Enterprise) */}
-          <button
-            type="button"
+          <div
             onClick={() => setSelectedProduct("gateway")}
-            className={`p-4 sm:p-5 rounded-2xl border text-left transition-colors duration-200 cursor-pointer relative flex flex-col justify-between min-h-[145px] ${
+            className={`p-4 sm:p-5 rounded-2xl border text-left transition-colors duration-200 cursor-pointer relative flex flex-col justify-between min-h-[175px] ${
               selectedProduct === "gateway"
                 ? "bg-[rgba(232,166,87,0.1)] border-[#e8a657] shadow-[0_0_30px_-10px_rgba(232,166,87,0.35)]"
                 : "bg-[rgba(255,255,255,0.02)] border-[var(--color-border)] hover:border-[var(--color-border-2)] hover:bg-[rgba(255,255,255,0.04)]"
@@ -312,18 +323,25 @@ export default function HomePage() {
                   Paid · Teams
                 </span>
               </div>
-              <p className="text-[12.5px] sm:text-[13px] leading-relaxed text-[var(--color-text-mut)] m-0 line-clamp-2 sm:line-clamp-none">
-                Enterprise control plane. Single OpenAI-compatible endpoint with spend attribution, rate limits &amp; audit logs.
+              <p className="text-[12.5px] sm:text-[13px] leading-relaxed text-[var(--color-text-mut)] m-0">
+                One endpoint for every model. Visibility into spend, control over access, and audit-ready logs. Built for teams.
               </p>
             </div>
-            <div className="mt-2.5">
+            <div className="mt-3 flex items-center justify-between gap-2">
+              <a
+                href={siteConfig.signupUrl}
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#e8a657] text-black hover:bg-white transition-colors"
+              >
+                Start for Free →
+              </a>
               <div
-                className={`h-[2.5px] rounded-full transition-all duration-300 ${
-                  selectedProduct === "gateway" ? "w-full bg-[#e8a657] opacity-100" : "w-0 bg-transparent opacity-0"
+                className={`h-[2.5px] w-12 rounded-full transition-all duration-300 ${
+                  selectedProduct === "gateway" ? "bg-[#e8a657] opacity-100" : "bg-transparent opacity-0"
                 }`}
               />
             </div>
-          </button>
+          </div>
         </div>
 
         {/* ── DYNAMIC INTERACTIVE SHOWCASE STAGE (FULLY RESPONSIVE & SPACIOUS) ── */}
@@ -342,24 +360,22 @@ export default function HomePage() {
                     </span>
                   </div>
                   <p className="text-sm text-[var(--color-text-mut)] m-0 leading-relaxed max-w-[620px]">
-                    Runs locally on your machine. Understands repository context, plans edits, runs validation &amp; reviews diffs.
+                    Runs locally on your machine. Understands repository context, plans edits, runs validation and reviews diffs.
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-3 shrink-0">
-                  <Link
-                    href="/agent"
+                  <a
+                    href={siteConfig.signupUrl}
                     className="inline-flex items-center justify-center gap-2 font-semibold text-[13.5px] px-5 py-2.5 rounded-full text-[#06121a] bg-[var(--color-acc-2)] hover:bg-[#93a0ff] transition-all shadow-[0_4px_20px_-5px_rgba(110,231,255,0.5)]"
                   >
-                    Explore NanoAgent Page →
-                  </Link>
-                  <a
-                    href={siteConfig.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    Code for Free →
+                  </a>
+                  <Link
+                    href="/agent"
                     className="inline-flex items-center justify-center gap-2 font-semibold text-[13.5px] px-4 py-2.5 rounded-full border border-[var(--color-border-2)] bg-[rgba(255,255,255,0.03)] text-[var(--color-text)] hover:bg-[rgba(255,255,255,0.08)] transition-all"
                   >
-                    GitHub
-                  </a>
+                    Explore
+                  </Link>
                 </div>
               </div>
 
@@ -469,15 +485,24 @@ export default function HomePage() {
                     </span>
                   </div>
                   <p className="text-sm text-[var(--color-text-mut)] m-0 leading-relaxed max-w-[620px]">
-                    Describe your application idea. NanoForge scaffolds, provisions a real PostgreSQL database, and builds React + Express in an isolated container.
+                    From idea to working app — no code required. Describe what you want, and NanoForge builds it: a working app with a live preview, free to use.
+                  </p>
+                  <p className="text-xs text-[var(--color-text-dim)] m-0 mt-1.5 leading-relaxed max-w-[620px]">
+                    Under the hood: React + Express and a real PostgreSQL database, running in an isolated container with a GitHub repo you can inspect.
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-3 shrink-0">
-                  <Link
-                    href="/nanoforge"
+                  <a
+                    href={siteConfig.signupUrl}
                     className="inline-flex items-center justify-center gap-2 font-semibold text-[13.5px] px-5 py-2.5 rounded-full text-black bg-[#b07cff] hover:bg-[#cbb0ff] transition-all shadow-[0_4px_20px_-5px_rgba(176,124,255,0.5)]"
                   >
-                    Build with NanoForge →
+                    Build for Free →
+                  </a>
+                  <Link
+                    href="/nanoforge"
+                    className="inline-flex items-center justify-center gap-2 font-semibold text-[13.5px] px-4 py-2.5 rounded-full border border-[var(--color-border-2)] bg-[rgba(255,255,255,0.03)] text-[var(--color-text)] hover:bg-[rgba(255,255,255,0.08)] transition-all"
+                  >
+                    Explore
                   </Link>
                 </div>
               </div>
@@ -531,19 +556,25 @@ export default function HomePage() {
                   <div className="flex flex-wrap items-center gap-2 mb-1.5">
                     <h3 className="text-xl font-bold text-white m-0">NanoAgent Gateway</h3>
                     <span className="text-xs font-mono px-2 py-0.5 rounded bg-[rgba(232,166,87,0.2)] text-[#f4c489]">
-                      Paid Enterprise Tier · Free Evaluation
+                      Free Single User · Paid Teams
                     </span>
                   </div>
                   <p className="text-sm text-[var(--color-text-mut)] m-0 leading-relaxed max-w-[620px]">
-                    The control plane for enterprise AI. Put one OpenAI-compatible endpoint in front of your developer tools to govern spend, set policy &amp; audit traffic.
+                    The control plane for AI-powered development, built to scale from your first pilot to your entire engineering org. One endpoint, every model (Anthropic, OpenAI, Google, and more) with the spend visibility, access policy, and audit trail that scale requires.
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-3 shrink-0">
-                  <Link
-                    href="/gateway"
+                  <a
+                    href={siteConfig.signupUrl}
                     className="inline-flex items-center justify-center gap-2 font-semibold text-[13.5px] px-5 py-2.5 rounded-full text-black bg-[#e8a657] hover:bg-[#f4c489] transition-all shadow-[0_4px_20px_-5px_rgba(232,166,87,0.5)]"
                   >
-                    View Gateway &amp; Pricing →
+                    Start for Free →
+                  </a>
+                  <Link
+                    href="/gateway"
+                    className="inline-flex items-center justify-center gap-2 font-semibold text-[13.5px] px-4 py-2.5 rounded-full border border-[var(--color-border-2)] bg-[rgba(255,255,255,0.03)] text-[var(--color-text)] hover:bg-[rgba(255,255,255,0.08)] transition-all"
+                  >
+                    Explore
                   </Link>
                 </div>
               </div>
@@ -551,7 +582,7 @@ export default function HomePage() {
               {/* 3 Value Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                 <div className="p-4 rounded-xl border border-[rgba(232,166,87,0.15)] bg-[rgba(232,166,87,0.03)]">
-                  <strong className="text-sm text-[#f4c489] block mb-1">💰 Spend Attribution</strong>
+                  <strong className="text-sm text-[#f4c489] block mb-1">💰 Spend Tracking</strong>
                   <p className="text-xs text-[var(--color-text-mut)] m-0 leading-relaxed">Track usage by team, project, user &amp; enforce budget caps.</p>
                 </div>
                 <div className="p-4 rounded-xl border border-[rgba(232,166,87,0.15)] bg-[rgba(232,166,87,0.03)]">

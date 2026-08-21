@@ -360,8 +360,8 @@ function CTASection() {
           database, with you reviewing every change.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
-          <Button href={siteConfig.appUrl} size="lg">
-            Start building
+          <Button href={siteConfig.signupUrl} size="lg">
+            Build for Free &rarr;
           </Button>
           <Button
             href="mailto:abdullah@alfain.tech?subject=NanoForge%20%E2%80%94%20Full-Stack%20App%20Builder%20enquiry"
@@ -402,22 +402,23 @@ export default function NanoForgePage() {
           <RevealSection className="max-w-xl">
             <Eyebrow>NanoForge &middot; Full-Stack App Builder</Eyebrow>
             <h1 className="text-[clamp(32px,5vw,58px)] font-extrabold leading-[1.08] tracking-tight mt-4 mb-5">
-              From prompt to
-              <br />
-              <span className="text-gradient-nano">production-grade app</span>.
+              From idea to working app.{" "}
+              <span className="text-gradient-nano">No code required.</span>
             </h1>
-            <p className="text-[var(--color-text-mut)] text-[17px] leading-relaxed mb-8">
-              Describe what you want and NanoForge&#8217;s agent scaffolds,
-              builds, and live-previews a real React&#160;+&#160;Express&#160;+&#160;PostgreSQL
-              app inside an isolated container &#8212; backed by its own GitHub repo
-              and database, with you reviewing every diff.
+            <p className="text-[var(--color-text-mut)] text-[17px] leading-relaxed mb-3">
+              Describe what you want to build, and NanoForge&#8217;s agent scaffolds it, builds it, and shows you a live preview you can click through. Free to use.
+            </p>
+            <p className="text-[var(--color-text-dim)] text-[14px] leading-relaxed mb-8">
+              Under the hood: a real React&#160;+&#160;Express&#160;+&#160;PostgreSQL app, running in its own isolated container, backed by a GitHub repo. With you reviewing every diff.
             </p>
 
             <PromptBox />
 
-            <Button href={siteConfig.appUrl} size="lg" className="mt-4">
-              Start building
-            </Button>
+            <div className="mt-6">
+              <Button href={siteConfig.signupUrl} size="lg">
+                Build for Free &rarr;
+              </Button>
+            </div>
           </RevealSection>
 
           {/* Screenshot */}

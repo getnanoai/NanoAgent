@@ -51,12 +51,6 @@ export default function Footer() {
       </div>
       <div className="w-full max-w-[1160px] mx-auto px-6 flex justify-between flex-wrap gap-[10px] pt-[22px] pb-8 border-t border-[var(--color-border)] text-[13px] text-[var(--color-text-dim)]">
         <span>© {new Date().getFullYear()} NanoAgent · Apache-2.0 · Built with ❤ for the open-source community.</span>
-        <span className="footer__sponsor">
-          Sponsored by{" "}
-          <a href={siteConfig.sponsor} target="_blank" rel="noopener noreferrer" className="text-[var(--color-text-mut)] hover:text-[var(--color-acc-1)]">
-            {siteConfig.sponsorName}
-          </a>
-        </span>
       </div>
     </footer>
   );

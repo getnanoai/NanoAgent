@@ -3,7 +3,6 @@
 import { gatewayPricingPlans } from "@/lib/data";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
-import Link from "next/link";
 
 function PricingCheck({ included }: { included: boolean }) {
   return (
@@ -36,26 +35,6 @@ export default function GatewayPricing() {
           </p>
         </div>
 
-        {/* Free vs Paid Ecosystem Clarity Banner */}
-        <div className="max-w-[920px] mx-auto mb-12 p-4 sm:p-5 rounded-2xl border border-[rgba(110,231,255,0.25)] bg-[rgba(110,231,255,0.04)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-start gap-3">
-            <span className="w-8 h-8 rounded-lg flex items-center justify-center bg-[var(--color-acc-1)] text-black font-bold text-sm shrink-0 mt-0.5 sm:mt-0">
-              ⌘
-            </span>
-            <div className="text-left text-sm leading-relaxed">
-              <strong className="text-white block mb-0.5">Looking for the core AI Coding Agent?</strong>
-              <span className="text-[var(--color-text-mut)]">
-                The <Link href="/agent" className="text-[var(--color-acc-1)] hover:underline font-semibold">NanoAgent CLI &amp; IDE extensions</Link> and <Link href="/nanoforge" className="text-[#b07cff] hover:underline font-semibold">NanoForge App Builder</Link> are <strong>100% Free &amp; Open Source</strong>. Gateway pricing is exclusively for teams governing multi-developer AI proxy traffic.
-              </span>
-            </div>
-          </div>
-          <Link
-            href="/agent"
-            className="shrink-0 text-xs font-mono font-semibold px-3 py-1.5 rounded-lg border border-[var(--color-border)] text-white hover:bg-[rgba(255,255,255,0.08)] transition-colors whitespace-nowrap"
-          >
-            Get Agent Free →
-          </Link>
-        </div>
 
         {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-[20px] max-w-[1060px] mx-auto">
@@ -105,9 +84,15 @@ export default function GatewayPricing() {
                   )}
                 </p>
                 {plan.annualPrice !== plan.monthlyPrice && (
-                  <p className="text-[var(--color-text-dim)] text-[12px] mt-1.5 mb-0 font-mono">
-                    {plan.annualPrice}/mo billed annually
-                  </p>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[rgba(40,200,100,0.15)] border border-[rgba(40,200,100,0.35)] text-[#28c864] text-[12px] font-semibold">
+                      <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      {plan.annualPrice}/mo billed annually
+                    </span>
+                    <span className="text-[11px] text-[#28c864] font-semibold opacity-80">Save 21%</span>
+                  </div>
                 )}
               </div>
 

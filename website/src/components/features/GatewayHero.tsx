@@ -1,153 +1,127 @@
 "use client";
 
-import { useState, useCallback } from "react";
 import Button from "@/components/ui/Button";
-import { gatewayCodeTabs } from "@/lib/data";
+import { siteConfig } from "@/lib/data";
+import { supportedProviders } from "./providerIcons";
 
-function CodeBlock({ code, isActive }: { code: string; isActive: boolean }) {
-  return (
-    <pre
-     className={`relative m-0 p-5 overflow-x-auto font-mono text-[13px] leading-relaxed text-white bg-[#050505] ${
-       isActive ? "block" : "hidden"
-     }`}
-    >
-      <code className="block [counter-reset:ln]">
-        {code.split("\n").map((line, i) => {
-          const lineContent = line || " ";
-          const parts = lineContent.split(/(\bimport\b)/);
-          const hasImport = parts.length > 1;
-          return (
-            <span
-              key={i}
-              className="block relative pl-[3em] min-h-[1.75em] [counter-increment:ln] before:content-[counter(ln)] before:absolute before:left-0 before:w-[1.8em] before:text-right before:text-[#c4a7ff] before:select-none"
-            >
-              {hasImport
-                ? parts.map((part, j) =>
-                    part === "import" ? (
-                      <span key={j} className="text-[#9ece6a]">
-                        import
-                      </span>
-                    ) : (
-                      part
-                    )
-                  )
-                : lineContent}
-            </span>
-          );
-        })}
-      </code>
-    </pre>
-  );
-}
+const tools = [
+  { label: "AI Coding Agents", hint: "NanoAgent · Cursor · Claude Code" },
+  { label: "IDE Extensions", hint: "VS Code · JetBrains · Visual Studio" },
+  { label: "Python / Node Apps", hint: "Any OpenAI-compatible SDK" },
+  { label: "curl / REST", hint: "Direct API calls" },
+  { label: "CI/CD Pipelines", hint: "GitHub Actions · GitLab CI" },
+];
+
+// Use first 4 providers in the hero diagram to keep it compact
+const heroProviders = supportedProviders.slice(0, 4);
 
 export default function GatewayHero() {
-  const [activeTab, setActiveTab] = useState(gatewayCodeTabs[0].id);
-  const [copied, setCopied] = useState<string | null>(null);
-
-  const activeCode =
-    gatewayCodeTabs.find((t) => t.id === activeTab)?.code ?? "";
-
-  const handleCopy = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(activeCode);
-      setCopied(activeTab);
-      setTimeout(() => setCopied(null), 1600);
-    } catch {
-      const ta = document.createElement("textarea");
-      ta.value = activeCode;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-      setCopied(activeTab);
-      setTimeout(() => setCopied(null), 1600);
-    }
-  }, [activeCode, activeTab]);
-
   return (
     <section className="px-[158px] max-lg:px-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pt-14 pb-5 max-lg:gap-8 max-lg:pt-8">
-        {/* Copy side */}
+
+        {/* ── Copy ── */}
         <div className="flex flex-col gap-[18px]">
           <span className="inline-block text-[13px] font-bold tracking-[0.08em] uppercase text-[var(--color-acc-1)]">
             Enterprise Gateway
           </span>
-          <h1 className="text-[clamp(38px,5vw,58px)] leading-[1.1] tracking-[-0.02em] font-extrabold m-0">
-            One AI gateway for security, finance, and platform teams{" "}
+          <h1 className="text-[clamp(36px,4.8vw,54px)] leading-[1.12] tracking-[-0.02em] font-extrabold m-0">
+            One gateway for security, finance, and platform teams{" "}
             <span className="block mt-[0.08em] bg-gradient-to-r from-[#2fd4ff] via-[#5c9cff] to-[#6c54ff] bg-clip-text text-transparent">
-              to control every model call
+              to see and control AI spend.
             </span>
           </h1>
-          <p className="m-0 max-w-[520px] text-[16.5px] text-[var(--color-text-mut)]">
-            NanoAgent Gateway is the control plane for enterprise AI. Put a
-            single OpenAI-compatible endpoint in front of your AI traffic, and
-            give security, finance, and platform teams the visibility and
-            operational control they need.
+          <p className="m-0 max-w-[520px] text-[16.5px] leading-relaxed text-[var(--color-text-mut)]">
+            NanoAgent Gateway is the control plane for AI-powered development. Built to scale from your first pilot to your entire engineering org. One endpoint in front of every model (Claude, OpenAI, Google, and more) gives your teams the visibility and operational control they need.
           </p>
-          <div className="flex gap-[14px] flex-wrap">
-            <Button
-              variant="primary"
-              size="lg"
-              href="mailto:abdullah@alfain.tech?subject=NanoAgent%20Gateway%20-%20Enterprise%20enquiry"
-            >
+          <div className="flex gap-[14px] flex-wrap items-center mt-2">
+            <Button variant="primary" size="lg" href="mailto:abdullah@alfain.tech?subject=NanoAgent%20Gateway%20-%20Enterprise%20enquiry">
               Talk to sales
+            </Button>
+            <Button variant="ghost" size="lg" href={siteConfig.signupUrl}>
+              Start for Free &rarr;
             </Button>
           </div>
         </div>
 
-        {/* Code panel side */}
-        <div className="border border-[var(--color-border)] rounded-none bg-gradient-to-b from-[var(--color-surface)] to-[var(--color-bg-2)] overflow-hidden">
-          <div className="p-[22px_24px] mb-0">
-            <div>
-              <h2 className="text-xl m-0">Drop-in OpenAI-compatible proxy</h2>
-              <p className="mt-1 text-[var(--color-text-mut)] text-sm m-0">
-                Change one base URL. The Gateway speaks the OpenAI API your
-                tools already use.
-              </p>
+        {/* ── Diagram ── */}
+        <div className="relative rounded-2xl border border-[rgba(232,166,87,0.2)] bg-gradient-to-b from-[rgba(15,18,24,0.98)] to-[rgba(10,12,16,0.98)] p-5 sm:p-6 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] overflow-hidden">
+          {/* Ambient glow */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+            <div className="w-40 h-40 rounded-full bg-[rgba(232,166,87,0.07)] blur-3xl" />
+          </div>
+
+          {/* Column labels */}
+          <div className="grid grid-cols-[1fr_80px_1fr] mb-4 text-center">
+            <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-[var(--color-text-dim)]">Any Client</p>
+            <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-[#f4c489]">Gateway</p>
+            <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-[var(--color-text-dim)]">LLM Providers</p>
+          </div>
+
+          {/* Three-column flow */}
+          <div className="grid grid-cols-[1fr_80px_1fr] gap-x-2 items-center">
+
+            {/* Left: clients */}
+            <div className="flex flex-col gap-1.5">
+              {tools.map((t) => (
+                <div key={t.label} className="px-2.5 py-2 rounded-lg border border-[var(--color-border)] bg-[rgba(255,255,255,0.03)]">
+                  <p className="text-[11px] font-semibold text-[var(--color-text)] m-0 leading-tight">{t.label}</p>
+                  <p className="text-[9.5px] text-[var(--color-text-dim)] font-mono m-0 leading-tight mt-0.5 hidden sm:block">{t.hint}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Center: gateway node */}
+            <div className="flex flex-col items-center gap-1 relative">
+              {/* Lines in */}
+              <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-around w-1/2 pointer-events-none">
+                {tools.map((_, i) => (
+                  <div key={i} className="border-t border-dashed border-[rgba(110,231,255,0.15)] w-full" />
+                ))}
+              </div>
+              {/* Lines out */}
+              <div className="absolute right-0 top-0 bottom-0 flex flex-col justify-around w-1/2 pointer-events-none">
+                {heroProviders.map((_, i) => (
+                  <div key={i} className="border-t border-dashed border-[rgba(232,166,87,0.2)] w-full" />
+                ))}
+              </div>
+
+              {/* Node */}
+              <div className="relative z-10 flex flex-col items-center gap-1.5 py-2">
+                <div className="w-12 h-12 rounded-xl bg-[rgba(232,166,87,0.12)] border-2 border-[#e8a657] flex items-center justify-center shadow-[0_0_24px_-4px_rgba(232,166,87,0.5)] text-[#f4c489]">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                    <path d="m7 23-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+                  </svg>
+                </div>
+                <span className="text-[8px] font-mono font-bold text-[#f4c489] uppercase tracking-widest whitespace-nowrap">1 Endpoint</span>
+              </div>
+            </div>
+
+            {/* Right: providers */}
+            <div className="flex flex-col gap-1.5">
+              {heroProviders.map((p) => (
+                <div key={p.name} className="flex items-center gap-2 px-2.5 py-2 rounded-lg border border-[rgba(232,166,87,0.15)] bg-[rgba(232,166,87,0.03)]">
+                  <span className="shrink-0 w-5 flex items-center justify-center">{p.icon}</span>
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-semibold text-white m-0 leading-tight truncate">{p.name}</p>
+                    <p className="text-[9.5px] text-[var(--color-text-dim)] font-mono m-0 leading-tight mt-0.5 truncate hidden sm:block">{p.sub}</p>
+                  </div>
+                </div>
+              ))}
+              <p className="text-[9.5px] text-[var(--color-text-dim)] font-mono text-center mt-0.5">+ Groq · Ollama · more</p>
             </div>
           </div>
 
-          <div className="border-t border-[var(--color-border)]">
-            <div className="p-[6px_8px] bg-[var(--color-bg-2)] border-b border-[var(--color-border)] flex gap-1">
-              {gatewayCodeTabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  className={`border-0 bg-transparent text-[var(--color-text-mut)] font-sans text-[13px] font-semibold p-[6px_14px] rounded-lg cursor-pointer transition-all duration-150 hover:text-[var(--color-text)] hover:bg-white/5 ${
-                    activeTab === tab.id
-                      ? "!text-[var(--color-text)] !bg-[rgba(124,140,255,0.16)]"
-                      : ""
-                  }`}
-                  onClick={() => setActiveTab(tab.id)}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-            <div className="relative">
-              {gatewayCodeTabs.map((tab) => (
-                <CodeBlock
-                  key={tab.id}
-                  code={tab.code}
-                  isActive={activeTab === tab.id}
-                />
-              ))}
-              <button
-                className="absolute top-3 right-3 border border-[var(--color-border)] bg-white/5 text-[var(--color-text-mut)] font-semibold text-xs px-3 py-[6px] rounded-md cursor-pointer transition-all duration-150 z-10 hover:bg-white/10 hover:text-[var(--color-text)]"
-                onClick={handleCopy}
-              >
-                {copied === activeTab ? "Copied!" : "Copy"}
-              </button>
-            </div>
+          {/* Footer */}
+          <div className="mt-5 pt-3.5 border-t border-[rgba(255,255,255,0.05)] flex items-center justify-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#28c864] animate-pulse shrink-0" />
+            <span className="text-[10px] font-mono text-[var(--color-text-dim)] text-center">
+              OpenAI-compatible · Zero client rewrites · Switch providers instantly
+            </span>
           </div>
-
-          <p className="mx-4 mb-4 mt-3 text-left text-[13px] text-[var(--color-text-dim)]">
-            Standard routes: <code className="font-mono text-[var(--color-text-mut)] text-[12.5px] bg-white/5 px-[6px] py-[1px] rounded">POST /v1/chat/completions</code> and{" "}
-            <code className="font-mono text-[var(--color-text-mut)] text-[12.5px] bg-white/5 px-[6px] py-[1px] rounded">GET /v1/models</code>. Streaming responses, headers, and
-            finish reasons pass through transparently.
-          </p>
         </div>
+
       </div>
     </section>
   );

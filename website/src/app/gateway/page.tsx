@@ -4,6 +4,7 @@ import GatewayHero from "@/components/features/GatewayHero";
 import GatewayAudienceCards from "@/components/features/GatewayAudienceCards";
 import GatewayStats from "@/components/features/GatewayStats";
 import GatewayFeatureCards from "@/components/features/GatewayFeatureCards";
+import GatewayConnectivity from "@/components/features/GatewayConnectivity";
 import GatewayPricing from "@/components/features/GatewayPricing";
 import Container from "@/components/ui/Container";
 
@@ -17,6 +18,8 @@ export default function GatewayPage() {
       <GatewayStats />
 
       <GatewayFeatureCards />
+
+      <GatewayConnectivity />
 
       <GatewayPricing />
 

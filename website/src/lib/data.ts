@@ -9,8 +9,6 @@ export const siteConfig = {
   github: "https://github.com/getnanoai/NanoAgent",
   nuget: "https://www.nuget.org/packages/NanoAgent/",
   creator: "https://github.com/getnanoai",
-  sponsor: "https://alfain.co/",
-  sponsorName: "ALFAIN Technologies",
   security: "https://github.com/getnanoai/NanoAgent/blob/master/SECURITY.md",
   latestRelease: "https://github.com/getnanoai/NanoAgent/releases/latest",
   changelog: "https://github.com/getnanoai/NanoAgent/releases",
@@ -19,6 +17,7 @@ export const siteConfig = {
   readme: "https://github.com/getnanoai/NanoAgent#readme",
   commits: "https://github.com/getnanoai/NanoAgent/commits/master",
   appUrl: "https://app.getnanoai.com",
+  signupUrl: "https://app.getnanoai.com/register",
 };
 
 export interface NavLink {
@@ -621,198 +620,198 @@ export const docSections = [
   { id: "forge-overview", heading: "NanoForge App Builder" },
   { id: "forge-containers", heading: "Extending NanoForge Apps Locally" },
 ] as const;
- 
- // ── Gateway page data ──
- 
- export interface GatewayAudience {
-   label: string;
-   title: string;
-   description: string;
- }
- 
- export const gatewayAudiences: GatewayAudience[] = [
-   {
-     label: "Security",
-     title: "See AI traffic clearly across your organization",
-     description: "Track how teams use models, watch for anomalies, and keep operations visible as adoption grows.",
-   },
-   {
-     label: "Finance",
-     title: "Turn AI spend into something you can actually measure",
-     description: "Attribute usage by team, app, project, and user so budgets, quotas, and cost reviews stop being guesswork.",
-   },
-   {
-     label: "Platform",
-     title: "Give developers one stable interface as your stack evolves",
-     description: "Keep clients pointed at one endpoint while your team manages changes behind the scenes.",
-   },
- ];
- 
- export interface GatewayStat {
-   eyebrow: string;
-   value: string;
-   description: string;
- }
- 
- export const gatewayStats: GatewayStat[] = [
-   {
-     eyebrow: "01 · ACCESS",
-     value: "1 endpoint",
-     description: "for teams that need one consistent AI entry point",
-   },
-   {
-     eyebrow: "02 · MIGRATE",
-     value: "0 client rewrites",
-     description: "for tools already built on the OpenAI API shape",
-   },
-   {
-     eyebrow: "03 · OBSERVE",
-     value: "Full visibility",
-     description: "across spend, access patterns, and usage",
-   },
- ];
- 
- export interface GatewayFeature {
-   icon: string;
-   title: string;
-   description: string;
- }
- 
- export const gatewayFeatures: GatewayFeature[] = [
-   {
-     icon: "🔌",
-     title: "Zero migration",
-     description: "Keep your existing OpenAI-compatible SDKs and prompts. Swap one base URL and you're routed through the Gateway.",
-   },
-   {
-     icon: "🛡️",
-     title: "Operations built in",
-     description: "Visibility features wrap every call without forcing teams to rebuild their tooling.",
-   },
-   {
-     icon: "💰",
-     title: "Cost in your control",
-     description: "Attribute spend per team and monitor usage trends so AI costs stay understandable as demand grows.",
-   },
- ];
- 
- export const gatewayCodeTabs = [
-   {
-     id: "aisdk",
-     label: "AI SDK",
-     code: `import { streamText } from 'ai'
- import { createOpenAI } from '@ai-sdk/openai'
- 
- const nano = createOpenAI({
-   baseURL: 'https://app.getnanoai.com/v1',
-   apiKey: process.env.NANOAGENT_API_KEY,
- })
- 
- const result = streamText({
-   model: nano.chat('anthropic/claude-opus-4-8'),
-   prompt: 'Why is the sky blue?',
- })`,
-   },
-   {
-     id: "python",
-     label: "Python",
-     code: `import os
- from openai import OpenAI
- 
- client = OpenAI(
-     base_url="https://app.getnanoai.com/v1",
-     api_key=os.environ["NANOAGENT_API_KEY"],
- )
- 
- stream = client.chat.completions.create(
-     model="anthropic/claude-opus-4-8",
-     messages=[{"role": "user", "content": "Why is the sky blue?"}],
-     stream=True,
- )`,
-   },
-   {
-     id: "curl",
-     label: "curl",
-     code: `# point any OpenAI-compatible client at the Gateway
- curl https://app.getnanoai.com/v1/chat/completions \\
-   -H "Authorization: Bearer $NANOAGENT_API_KEY" \\
-   -H "Content-Type: application/json" \\
-   -d '{
-     "model": "anthropic/claude-opus-4-8",
-     "messages": [{"role": "user", "content": "Why is the sky blue?"}],
-     "stream": true
-   }'`,
-   },
- ];
- 
- export interface GatewayPricingPlan {
-   name: string;
-   monthlyPrice: string;
-   annualPrice: string;
-   description: string;
-   features: { name: string; included: boolean }[];
-   ctaLabel: string;
-   ctaHref: string;
-   featured?: boolean;
- }
- 
- export const gatewayPricingPlans: GatewayPricingPlan[] = [
-   {
-     name: "Free",
-     monthlyPrice: "$0",
-     annualPrice: "$0",
-     description: "Start evaluating the Gateway with basic visibility.",
-     features: [
-       { name: "Single workspace", included: true },
-       { name: "Up to 10,000 requests/mo", included: true },
-       { name: "Basic request logs", included: true },
-       { name: "Community support", included: true },
-       { name: "Team management", included: false },
-       { name: "Usage analytics", included: false },
-       { name: "Role-based access", included: false },
-       { name: "Priority support", included: false },
-     ],
-     ctaLabel: "Get Started",
-     ctaHref: "https://app.getnanoai.com",
-   },
-   {
-     name: "Pro",
-     monthlyPrice: "$49",
-     annualPrice: "$39",
-     description: "For teams that need operational visibility.",
-     featured: true,
-     features: [
-       { name: "Multiple workspaces", included: true },
-       { name: "Up to 100,000 requests/mo", included: true },
-       { name: "Detailed request logs", included: true },
-       { name: "Usage analytics", included: true },
-       { name: "Team management", included: true },
-       { name: "Role-based access", included: false },
-       { name: "Priority support", included: false },
-       { name: "Custom rate limits", included: false },
-     ],
-     ctaLabel: "Start Free Trial",
-     ctaHref: "https://app.getnanoai.com",
-   },
-   {
-     name: "Enterprise",
-     monthlyPrice: "Custom",
-     annualPrice: "Custom",
-     description: "For organizations with compliance and control requirements.",
-     features: [
-       { name: "Unlimited workspaces", included: true },
-       { name: "Custom request limits", included: true },
-       { name: "Audit-grade logging", included: true },
-       { name: "Advanced usage analytics", included: true },
-       { name: "Team management", included: true },
-       { name: "Role-based access (RBAC)", included: true },
-       { name: "Priority support & SLAs", included: true },
-       { name: "Custom rate limits", included: true },
-     ],
-     ctaLabel: "Talk to Sales",
-     ctaHref: "mailto:abdullah@alfain.tech?subject=NanoAgent%20Gateway%20-%20Enterprise%20enquiry",
-   },
- ];
+
+// ── Gateway page data ──
+
+export interface GatewayAudience {
+  label: string;
+  title: string;
+  description: string;
+}
+
+export const gatewayAudiences: GatewayAudience[] = [
+  {
+    label: "Security",
+    title: "See AI traffic clearly across your organization",
+    description: "Track how teams use models, watch for anomalies, and keep operations visible as adoption grows.",
+  },
+  {
+    label: "Finance",
+    title: "Turn AI spend into something you can actually measure",
+    description: "Attribute usage by team, app, project, and user so budgets, quotas, and cost reviews stop being guesswork.",
+  },
+  {
+    label: "Platform",
+    title: "Give developers one stable interface as your stack evolves",
+    description: "Keep clients pointed at one endpoint while your team manages changes behind the scenes.",
+  },
+];
+
+export interface GatewayStat {
+  eyebrow: string;
+  value: string;
+  description: string;
+}
+
+export const gatewayStats: GatewayStat[] = [
+  {
+    eyebrow: "01 · ACCESS",
+    value: "1 endpoint",
+    description: "for teams that need one consistent AI entry point",
+  },
+  {
+    eyebrow: "02 · MIGRATE",
+    value: "0 client rewrites",
+    description: "for tools already built on the OpenAI API shape",
+  },
+  {
+    eyebrow: "03 · OBSERVE",
+    value: "Full visibility",
+    description: "across spend, access patterns, and usage",
+  },
+];
+
+export interface GatewayFeature {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export const gatewayFeatures: GatewayFeature[] = [
+  {
+    icon: "🔌",
+    title: "Zero migration",
+    description: "Keep your existing OpenAI-compatible SDKs and prompts. Swap one base URL and you're routed through the Gateway.",
+  },
+  {
+    icon: "🛡️",
+    title: "Operations built in",
+    description: "Visibility features wrap every call without forcing teams to rebuild their tooling.",
+  },
+  {
+    icon: "💰",
+    title: "Cost in your control",
+    description: "Attribute spend per team and monitor usage trends so AI costs stay understandable as demand grows.",
+  },
+];
+
+export const gatewayCodeTabs = [
+  {
+    id: "aisdk",
+    label: "AI SDK",
+    code: `import { streamText } from 'ai'
+import { createOpenAI } from '@ai-sdk/openai'
+
+const nano = createOpenAI({
+  baseURL: 'https://app.getnanoai.com/v1',
+  apiKey: process.env.NANOAGENT_API_KEY,
+})
+
+const result = streamText({
+  model: nano.chat('anthropic/claude-opus-4-8'),
+  prompt: 'Why is the sky blue?',
+})`,
+  },
+  {
+    id: "python",
+    label: "Python",
+    code: `import os
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://app.getnanoai.com/v1",
+    api_key=os.environ["NANOAGENT_API_KEY"],
+)
+
+stream = client.chat.completions.create(
+    model="anthropic/claude-opus-4-8",
+    messages=[{"role": "user", "content": "Why is the sky blue?"}],
+    stream=True,
+)`,
+  },
+  {
+    id: "curl",
+    label: "curl",
+    code: `# point any OpenAI-compatible client at the Gateway
+curl https://app.getnanoai.com/v1/chat/completions \\
+  -H "Authorization: Bearer $NANOAGENT_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "model": "anthropic/claude-opus-4-8",
+    "messages": [{"role": "user", "content": "Why is the sky blue?"}],
+    "stream": true
+  }'`,
+  },
+];
+
+export interface GatewayPricingPlan {
+  name: string;
+  monthlyPrice: string;
+  annualPrice: string;
+  description: string;
+  features: { name: string; included: boolean }[];
+  ctaLabel: string;
+  ctaHref: string;
+  featured?: boolean;
+}
+
+export const gatewayPricingPlans: GatewayPricingPlan[] = [
+  {
+    name: "Free",
+    monthlyPrice: "$0",
+    annualPrice: "$0",
+    description: "Start evaluating the Gateway with basic visibility.",
+    features: [
+      { name: "Single workspace", included: true },
+      { name: "Up to 10,000 requests/mo", included: true },
+      { name: "Basic request logs", included: true },
+      { name: "Community support", included: true },
+      { name: "Team management", included: false },
+      { name: "Usage analytics", included: false },
+      { name: "Role-based access", included: false },
+      { name: "Priority support", included: false },
+    ],
+    ctaLabel: "Get Started",
+    ctaHref: "https://app.getnanoai.com/register",
+  },
+  {
+    name: "Pro",
+    monthlyPrice: "$19",
+    annualPrice: "$15",
+    description: "For teams that need operational visibility.",
+    featured: true,
+    features: [
+      { name: "Multiple workspaces", included: true },
+      { name: "Up to 100,000 requests/mo", included: true },
+      { name: "Detailed request logs", included: true },
+      { name: "Usage analytics", included: true },
+      { name: "Team management", included: true },
+      { name: "Role-based access", included: false },
+      { name: "Priority support", included: false },
+      { name: "Custom rate limits", included: false },
+    ],
+    ctaLabel: "Start Free Trial",
+    ctaHref: "https://app.getnanoai.com/register",
+  },
+  {
+    name: "Enterprise",
+    monthlyPrice: "Custom",
+    annualPrice: "Custom",
+    description: "For organizations with compliance and control requirements.",
+    features: [
+      { name: "Unlimited workspaces", included: true },
+      { name: "Custom request limits", included: true },
+      { name: "Audit-grade logging", included: true },
+      { name: "Advanced usage analytics", included: true },
+      { name: "Team management", included: true },
+      { name: "Role-based access (RBAC)", included: true },
+      { name: "Priority support & SLAs", included: true },
+      { name: "Custom rate limits", included: true },
+    ],
+    ctaLabel: "Talk to Sales",
+    ctaHref: "mailto:abdullah@alfain.tech?subject=NanoAgent%20Gateway%20-%20Enterprise%20enquiry",
+  },
+];
 
 export interface DocSectionContent {
   id: string;

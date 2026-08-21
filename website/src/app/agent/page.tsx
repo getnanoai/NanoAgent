@@ -13,8 +13,6 @@ import Quickstart from "@/components/features/Quickstart";
 import CodeBlock from "@/components/ui/CodeBlock";
 import PrecisionGrid from "@/components/features/PrecisionGrid";
 import PrivacyShowcase from "@/components/features/PrivacyShowcase";
-import GatewayHighlight from "@/components/features/GatewayHighlight";
-import NanoForgeHighlight from "@/components/features/NanoForgeHighlight";
 import NuGetCard from "@/components/features/NuGetCard";
 import { siteConfig, whyFeatures } from "@/lib/data";
 
@@ -75,6 +73,23 @@ export default function AgentPage() {
         <p className="mt-[22px] mx-auto max-w-[640px] text-[17px] text-[var(--color-text-mut)]">
           NanoAgent runs on your machine. It understands your repository, plans changes, edits files, runs validation, and reviews diffs. Quietly capable, incredibly precise.
         </p>
+
+        <div className="flex flex-wrap items-center justify-center gap-3 mt-7 mb-8">
+          <a
+            href={siteConfig.signupUrl}
+            className="inline-flex items-center justify-center gap-2 font-semibold text-[14.5px] px-6 py-3 rounded-full text-[#06121a] bg-[var(--color-acc-2)] hover:bg-[#93a0ff] hover:-translate-y-0.5 transition-all duration-200 shadow-[0_6px_25px_-8px_rgba(110,231,255,0.6)]"
+          >
+            Code for Free →
+          </a>
+          <a
+            href={siteConfig.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 font-semibold text-[14.5px] px-5 py-3 rounded-full border border-[var(--color-border-2)] bg-[rgba(255,255,255,0.04)] text-[var(--color-text)] hover:bg-[rgba(255,255,255,0.08)] transition-all duration-200"
+          >
+            View on GitHub
+          </a>
+        </div>
 
         <Installer />
 
@@ -231,12 +246,6 @@ export default function AgentPage() {
 
       {/* ---- PRIVACY SHOWCASE ---- */}
       <PrivacyShowcase />
-
-      {/* ---- GATEWAY HIGHLIGHT ---- */}
-      <GatewayHighlight />
-
-      {/* ---- NANOFORGE HIGHLIGHT ---- */}
-      <NanoForgeHighlight />
 
       {/* ---- NUGET CARD ---- */}
       <NuGetCard />

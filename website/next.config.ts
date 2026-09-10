@@ -5,7 +5,6 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  outputFileTracingRoot: __dirname,
   async redirects() {
     return [
       {

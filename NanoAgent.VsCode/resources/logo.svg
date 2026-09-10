@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <!-- Hexagon outline -->
+  <path d="M12 2L21 7V17L12 22L3 17V7L12 2Z"
+        stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+  <!-- N letter mark -->
+  <path d="M8.5 16V8L15.5 16V8"
+        stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

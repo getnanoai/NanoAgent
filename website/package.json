@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node copy-assets.mjs",
     "start": "next start",
     "lint": "next lint"
   },
@@ -19,6 +19,7 @@
     "@types/node": "^22.15.3",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "copyfiles": "^2.4.1",
     "tailwindcss": "^4.1.5",
     "typescript": "^5.8.3"
   }

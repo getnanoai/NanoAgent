@@ -32,10 +32,31 @@ export function activate(context: vscode.ExtensionContext) {
     registerCommands(context, processManager, logService);
     registerChatCommands(context, sessionManager, chatViewProvider);
 
+    // Status bar item for instant visibility & 1-click access
+    const statusBarItem = vscode.window.createStatusBarItem(
+        vscode.StatusBarAlignment.Right,
+        100
+    );
+    statusBarItem.command = 'nanoagent.openChat';
+    statusBarItem.text = 'N NanoAgent';
+    statusBarItem.tooltip = 'Open NanoAgent Chat (Ctrl+Alt+A)';
+    statusBarItem.show();
+    context.subscriptions.push(statusBarItem);
+
     // Check autoStart config
     const config = vscode.workspace.getConfiguration('nanoagent');
     if (config.get<boolean>('autoStart', false)) {
         processManager.start();
+    }
+
+    // Auto-open chat on first launch if enabled
+    const autoOpen = config.get<boolean>('autoOpenChat', true);
+    const HAS_AUTO_OPENED_KEY = 'nanoagent.hasAutoOpenedChat';
+    if (autoOpen && !context.globalState.get<boolean>(HAS_AUTO_OPENED_KEY, false)) {
+        void context.globalState.update(HAS_AUTO_OPENED_KEY, true);
+        setTimeout(() => {
+            void vscode.commands.executeCommand('nanoagent.openChat');
+        }, 300);
     }
 
     context.subscriptions.push({

@@ -51,11 +51,11 @@
   "main": "./dist/extension.js",
   "contributes": {
     "viewsContainers": {
-      "secondarySidebar": [
+      "activitybar": [
         {
           "id": "nanoagent",
           "title": "NanoAgent",
-          "icon": "resources/logo.png"
+          "icon": "resources/logo.svg"
         }
       ]
     },
@@ -84,7 +84,10 @@
       {
         "command": "nanoagent.openChat",
         "title": "NanoAgent: Open Chat",
-        "icon": "$(comment-discussion)"
+        "icon": {
+          "light": "resources/logo.svg",
+          "dark": "resources/logo.svg"
+        }
       },
       {
         "command": "nanoagent.newChat",
@@ -133,11 +136,18 @@
         "title": "NanoAgent: Open Settings"
       }
     ],
+    "keybindings": [
+      {
+        "command": "nanoagent.openChat",
+        "key": "ctrl+alt+a",
+        "mac": "cmd+alt+a"
+      }
+    ],
     "menus": {
       "editor/title": [
         {
           "command": "nanoagent.openChat",
-          "group": "navigation@90"
+          "group": "navigation"
         }
       ],
       "view/title": [
@@ -189,6 +199,11 @@
           "type": "boolean",
           "default": false,
           "description": "Whether to start NanoAgent automatically when VS Code starts."
+        },
+        "nanoagent.autoOpenChat": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically open the NanoAgent chat panel on first install or launch."
         },
         "nanoagent.logLevel": {
           "type": "string",

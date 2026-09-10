@@ -46,15 +46,16 @@ const commandSuggestions = CHAT_COMMANDS;
         const modelButtonLabel = document.getElementById('model-button-label');
         const agentMenu = document.getElementById('agent-menu');
         const REASONING_LEVELS = [
-            { label: 'None', value: 'none' },
-            { label: 'Minimal', value: 'minimal' },
-            { label: 'Low', value: 'low' },
-            { label: 'Medium', value: 'medium' },
-            { label: 'High', value: 'high' },
-            { label: 'Extra High', value: 'xhigh' },
-            { label: 'Max', value: 'max' }
+            { label: 'None', short: 'None', value: 'none' },
+            { label: 'Low', short: 'Low', value: 'low' },
+            { label: 'Medium', short: 'Med', value: 'medium' },
+            { label: 'High', short: 'High', value: 'high' },
+            { label: 'Max', short: 'Max', value: 'max' }
         ];
-        const profileSelect = document.getElementById('profile-select');
+        const profileSelect = document.getElementById('profile-select'); // now a <button>
+        const profileDropdown = document.getElementById('profile-dropdown');
+        const profilePillLabel = document.getElementById('profile-pill-label');
+
         const sectionTitle = document.getElementById('section-title');
         const statusText = document.getElementById('status-text');
         const statusPill = statusText ? statusText.closest('.status-pill') : null;
@@ -70,6 +71,7 @@ const commandSuggestions = CHAT_COMMANDS;
         const agentThreadList = document.getElementById('agent-thread-list');
         const agentCount = document.getElementById('agent-count');
         const modalBackdrop = document.getElementById('modal-backdrop');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
         const modalTitle = document.getElementById('modal-title');
         const modalDescription = document.getElementById('modal-description');
         const modalBody = document.getElementById('modal-body');
@@ -569,8 +571,21 @@ const commandSuggestions = CHAT_COMMANDS;
             }
 
             inputField.value = '';
+            resizeInputField();
             hideSuggestions();
             updateComposerState();
+        }
+
+        function resizeInputField() {
+            inputField.style.height = 'auto';
+            const maxHeight = 120;
+            if (inputField.scrollHeight > maxHeight) {
+                inputField.style.height = maxHeight + 'px';
+                inputField.style.overflowY = 'auto';
+            } else {
+                inputField.style.height = Math.max(24, inputField.scrollHeight) + 'px';
+                inputField.style.overflowY = 'hidden';
+            }
         }
 
         function renderPromptQueue() {
@@ -637,10 +652,54 @@ const commandSuggestions = CHAT_COMMANDS;
             button.addEventListener('click', () => runSettingsAction(button));
         });
         modelButton.addEventListener('click', toggleAgentMenu);
-        profileSelect.addEventListener('change', () => {
-            post({ command: 'changeProfile', profileName: profileSelect.value || '' });
+        profileSelect.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = !profileDropdown.classList.contains('hidden');
+            closeAllDropdowns();
+            if (!isOpen) {
+                renderProfileSelect();
+                profileDropdown.classList.remove('hidden');
+                profileSelect.setAttribute('aria-expanded', 'true');
+                const rect = profileSelect.getBoundingClientRect();
+                const menuW = 110; // compact width
+                const left = Math.min(Math.max(8, rect.left), window.innerWidth - menuW - 8);
+                profileDropdown.style.left = left + 'px';
+                profileDropdown.style.bottom = (window.innerHeight - rect.top + 6) + 'px';
+                setTimeout(() => document.addEventListener('mousedown', handleProfileDropdownOutside), 0);
+            }
         });
         stopButton.addEventListener('click', () => post({ command: 'cancelPrompt' }));
+
+        function dismissModal() {
+            if (activeModalRequest) {
+                if (activeModalRequest.allowCancellation) {
+                    cancelActiveRequest();
+                }
+            } else {
+                closeModal();
+            }
+        }
+
+        if (modalBackdrop) {
+            modalBackdrop.addEventListener('click', (event) => {
+                if (event.target === modalBackdrop) {
+                    dismissModal();
+                }
+            });
+        }
+
+        if (modalCloseBtn) {
+            modalCloseBtn.addEventListener('click', () => {
+                dismissModal();
+            });
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modalBackdrop && !modalBackdrop.classList.contains('hidden')) {
+                event.preventDefault();
+                dismissModal();
+            }
+        });
 
         inputField.addEventListener('keydown', (event) => {
             if (visibleSuggestions.length > 0) {
@@ -685,9 +744,11 @@ const commandSuggestions = CHAT_COMMANDS;
         });
 
         inputField.addEventListener('input', () => {
+            resizeInputField();
             updateSuggestions();
             updateComposerState();
         });
+        resizeInputField();
         inputField.addEventListener('blur', () => setTimeout(hideSuggestions, 150));
 
         window.addEventListener('message', event => {
@@ -904,6 +965,7 @@ const commandSuggestions = CHAT_COMMANDS;
             indicator.setAttribute('aria-live', 'polite');
 
             const label = document.createElement('span');
+            label.className = 'progress-label';
             label.textContent = 'Thinking';
             indicator.appendChild(label);
 
@@ -911,7 +973,7 @@ const commandSuggestions = CHAT_COMMANDS;
             dots.className = 'progress-dots';
             for (let index = 0; index < 3; index += 1) {
                 const dot = document.createElement('span');
-                dot.textContent = '.';
+                dot.textContent = '•';
                 dots.appendChild(dot);
             }
 
@@ -994,6 +1056,12 @@ const commandSuggestions = CHAT_COMMANDS;
             return String(value);
         }
 
+        function capitalize(value) {
+            if (!value) return '';
+            const str = String(value);
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
         function renderSettingsSummary() {
             const provider = sessionInfo && sessionInfo.providerName ? sessionInfo.providerName : 'No provider';
             const model = sessionInfo && sessionInfo.modelId ? sessionInfo.modelId : 'No model';
@@ -1022,32 +1090,46 @@ const commandSuggestions = CHAT_COMMANDS;
             const profileName = sessionInfo && sessionInfo.agentProfileName
                 ? sessionInfo.agentProfileName
                 : getDefaultProfileName(renderedProfiles);
-            profileSelect.textContent = '';
-            renderedProfiles.forEach(profile => {
-                const option = document.createElement('option');
-                option.value = profile.name;
-                option.textContent = profile.name;
-                if (profile.description) {
-                    option.title = profile.description;
-                }
-                option.selected = profile.name.toLowerCase() === profileName.toLowerCase();
-                profileSelect.appendChild(option);
-            });
 
-            if (!renderedProfiles.some(profile => profile.name.toLowerCase() === profileName.toLowerCase())) {
-                const option = document.createElement('option');
-                option.value = profileName;
-                option.textContent = profileName;
-                option.selected = true;
-                profileSelect.insertBefore(option, profileSelect.firstChild);
-            }
-
-            profileSelect.value = profileName;
-            const activeProfile = renderedProfiles.find(profile =>
-                profile.name.toLowerCase() === profileName.toLowerCase());
+            // Update the pill label (capitalized)
+            if (profilePillLabel) profilePillLabel.textContent = capitalize(profileName);
+            const activeProfile = renderedProfiles.find(p => p.name.toLowerCase() === profileName.toLowerCase());
             profileSelect.title = activeProfile && activeProfile.description
-                ? profileName + ' - ' + activeProfile.description
-                : 'Profile: ' + profileName;
+                ? capitalize(profileName) + ' — ' + activeProfile.description
+                : 'Profile: ' + capitalize(profileName);
+
+            // Rebuild the dropdown items (name only, capitalized)
+            profileDropdown.textContent = '';
+            const allProfiles = renderedProfiles.slice();
+            if (!allProfiles.some(p => p.name.toLowerCase() === profileName.toLowerCase())) {
+                allProfiles.unshift({ name: profileName, description: '' });
+            }
+            allProfiles.forEach(p => {
+                const item = document.createElement('div');
+                const isActive = p.name.toLowerCase() === profileName.toLowerCase();
+                item.className = 'profile-dropdown-item' + (isActive ? ' active' : '');
+                item.setAttribute('role', 'option');
+                item.setAttribute('aria-selected', String(isActive));
+                item.title = p.description || p.name;
+
+                const checkEl = document.createElement('span');
+                checkEl.className = 'profile-dropdown-check';
+                checkEl.textContent = isActive ? '✓' : '';
+
+                const nameEl = document.createElement('span');
+                nameEl.className = 'profile-dropdown-name';
+                nameEl.textContent = capitalize(p.name);
+
+                item.appendChild(checkEl);
+                item.appendChild(nameEl);
+
+                item.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    closeProfileDropdown();
+                    post({ command: 'changeProfile', profileName: p.name });
+                });
+                profileDropdown.appendChild(item);
+            });
         }
 
         function renderModelSelect(models) {
@@ -1066,11 +1148,31 @@ const commandSuggestions = CHAT_COMMANDS;
             const effort = sessionInfo && sessionInfo.reasoningEffort
                 ? String(sessionInfo.reasoningEffort).toLowerCase()
                 : '';
+            if (effort === 'minimal') return REASONING_LEVELS.find(l => l.value === 'low') || null;
+            if (effort === 'xhigh') return REASONING_LEVELS.find(l => l.value === 'high') || null;
             return REASONING_LEVELS.find(level => level.value === effort) || null;
         }
 
         function thinkingOn() {
             return String(sessionInfo && sessionInfo.thinkingMode || '').toLowerCase() === 'on';
+        }
+
+        function closeAllDropdowns() {
+            closeAgentMenu();
+            closeProfileDropdown();
+        }
+
+        function closeProfileDropdown() {
+            profileDropdown.classList.add('hidden');
+            profileSelect.removeAttribute('aria-expanded');
+            document.removeEventListener('mousedown', handleProfileDropdownOutside);
+        }
+
+        function handleProfileDropdownOutside(event) {
+            const wrapper = profileSelect.closest('.profile-select-wrapper');
+            if (wrapper && !wrapper.contains(event.target)) {
+                closeProfileDropdown();
+            }
         }
 
         function toggleAgentMenu() {
@@ -1082,6 +1184,7 @@ const commandSuggestions = CHAT_COMMANDS;
         }
 
         function openAgentMenu() {
+            closeProfileDropdown();
             if (!sessionInfo) {
                 post({ command: 'selectModel' });
                 return;
@@ -1089,9 +1192,16 @@ const commandSuggestions = CHAT_COMMANDS;
             renderAgentMenu();
             agentMenu.classList.remove('hidden');
             const rect = modelButton.getBoundingClientRect();
-            agentMenu.style.left = Math.max(8, rect.left) + 'px';
+            // Open from left margin (14px) so it has full width room in the sidebar
+            agentMenu.style.left = '14px';
             agentMenu.style.bottom = (window.innerHeight - rect.top + 6) + 'px';
-            setTimeout(() => document.addEventListener('mousedown', handleAgentMenuOutside), 0);
+            setTimeout(() => {
+                document.addEventListener('mousedown', handleAgentMenuOutside);
+                const searchInput = agentMenu.querySelector('.agent-menu-search');
+                if (searchInput) {
+                    searchInput.focus();
+                }
+            }, 0);
         }
 
         function closeAgentMenu() {
@@ -1114,14 +1224,33 @@ const commandSuggestions = CHAT_COMMANDS;
 
         function addMenuItem(label, checked, onClick) {
             const item = document.createElement('button');
-            item.className = 'agent-menu-item';
+            item.className = 'agent-menu-item' + (checked ? ' active' : '');
             item.setAttribute('role', 'menuitemradio');
+            item.title = label;
+
             const check = document.createElement('span');
             check.className = 'agent-menu-check';
             check.textContent = checked ? '✓' : '';
+
             const text = document.createElement('span');
             text.className = 'agent-menu-label';
-            text.textContent = label;
+
+            const slashIdx = label.indexOf('/');
+            if (slashIdx !== -1) {
+                const provider = document.createElement('span');
+                provider.className = 'agent-menu-provider';
+                provider.textContent = label.slice(0, slashIdx + 1);
+
+                const modelName = document.createElement('span');
+                modelName.className = 'agent-menu-model-name';
+                modelName.textContent = label.slice(slashIdx + 1);
+
+                text.appendChild(provider);
+                text.appendChild(modelName);
+            } else {
+                text.textContent = label;
+            }
+
             item.appendChild(check);
             item.appendChild(text);
             item.addEventListener('click', () => {
@@ -1137,40 +1266,168 @@ const commandSuggestions = CHAT_COMMANDS;
             agentMenu.appendChild(sep);
         }
 
+        function renderThinkingToggle(isOn) {
+            const row = document.createElement('div');
+            row.className = 'agent-menu-toggle-row';
+
+            const label = document.createElement('span');
+            label.className = 'agent-menu-toggle-title';
+            label.textContent = 'Thinking';
+            row.appendChild(label);
+
+            const toggle = document.createElement('button');
+            toggle.type = 'button';
+            toggle.className = 'agent-toggle-switch' + (isOn ? ' active' : '');
+            toggle.setAttribute('role', 'switch');
+            toggle.setAttribute('aria-checked', String(isOn));
+            toggle.title = 'Toggle thinking ' + (isOn ? 'off' : 'on');
+
+            const track = document.createElement('span');
+            track.className = 'agent-toggle-track';
+            const thumb = document.createElement('span');
+            thumb.className = 'agent-toggle-thumb';
+            track.appendChild(thumb);
+
+            const stateText = document.createElement('span');
+            stateText.className = 'agent-toggle-state-text';
+            stateText.textContent = isOn ? 'On' : 'Off';
+
+            toggle.appendChild(track);
+            toggle.appendChild(stateText);
+
+            toggle.addEventListener('click', () => {
+                closeAgentMenu();
+                post({ command: 'runSessionCommand', text: '/thinking ' + (isOn ? 'off' : 'on') });
+            });
+
+            row.appendChild(toggle);
+            return row;
+        }
+
+        function renderReasoningSection(activeEffort) {
+            const section = document.createElement('div');
+            section.className = 'agent-menu-reasoning-section';
+
+            const header = document.createElement('div');
+            header.className = 'agent-menu-reasoning-header';
+            header.textContent = 'Reasoning';
+            section.appendChild(header);
+
+            // Row 1: None, Low, Med (3 buttons)
+            const row1 = document.createElement('div');
+            row1.className = 'agent-menu-reasoning-row';
+            const firstRowLevels = REASONING_LEVELS.slice(0, 3);
+            firstRowLevels.forEach(level => {
+                row1.appendChild(createReasoningBtn(level, activeEffort));
+            });
+            section.appendChild(row1);
+
+            // Row 2: High, Max (2 buttons)
+            const row2 = document.createElement('div');
+            row2.className = 'agent-menu-reasoning-row';
+            const secondRowLevels = REASONING_LEVELS.slice(3);
+            secondRowLevels.forEach(level => {
+                row2.appendChild(createReasoningBtn(level, activeEffort));
+            });
+            section.appendChild(row2);
+
+            return section;
+        }
+
+        function createReasoningBtn(level, activeEffort) {
+            const btn = document.createElement('button');
+            const isActive = !!(activeEffort && activeEffort.value === level.value);
+            btn.className = 'reasoning-btn' + (isActive ? ' active' : '');
+            btn.textContent = level.short || level.label;
+            btn.title = level.label;
+            btn.type = 'button';
+            btn.addEventListener('click', () => {
+                closeAgentMenu();
+                post({ command: 'runSessionCommand', text: '/reasoning ' + level.value });
+            });
+            return btn;
+        }
+
         function renderAgentMenu() {
             agentMenu.textContent = '';
 
-            addMenuHeader('Reasoning');
-            const activeEffort = activeReasoningLevel();
-            REASONING_LEVELS.forEach(level => {
-                agentMenu.appendChild(addMenuItem(
-                    level.label,
-                    activeEffort && activeEffort.value === level.value,
-                    () => post({ command: 'runSessionCommand', text: '/reasoning ' + level.value })
-                ));
-            });
-
-            addMenuSeparator();
-            addMenuHeader('Thinking');
-            const isOn = thinkingOn();
-            agentMenu.appendChild(addMenuItem('Thinking on', isOn,
-                () => post({ command: 'runSessionCommand', text: '/thinking on' })));
-            agentMenu.appendChild(addMenuItem('Thinking off', !isOn,
-                () => post({ command: 'runSessionCommand', text: '/thinking off' })));
-
             const models = getAvailableModelIds();
-            if (models.length > 0) {
-                addMenuSeparator();
-                addMenuHeader('Model');
-                const activeModelId = sessionInfo && sessionInfo.modelId ? sessionInfo.modelId : '';
-                const modelGroup = document.createElement('div');
-                modelGroup.className = 'agent-menu-models';
-                models.forEach(modelId => {
+
+            // 1. Search Bar at the top
+            const searchContainer = document.createElement('div');
+            searchContainer.className = 'agent-menu-search-container';
+
+            const searchIcon = document.createElement('span');
+            searchIcon.className = 'agent-menu-search-icon';
+            searchIcon.textContent = '🔍';
+            searchContainer.appendChild(searchIcon);
+
+            const searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.className = 'agent-menu-search';
+            searchInput.placeholder = models.length > 0
+                ? 'Search ' + models.length + ' models...'
+                : 'Search models...';
+            searchInput.autocomplete = 'off';
+            searchInput.spellcheck = false;
+            searchContainer.appendChild(searchInput);
+            agentMenu.appendChild(searchContainer);
+
+            // 2. Models List in the middle
+            const activeModelId = sessionInfo && sessionInfo.modelId ? sessionInfo.modelId : '';
+            const modelGroup = document.createElement('div');
+            modelGroup.className = 'agent-menu-models';
+
+            function renderModelList(filterQuery = '') {
+                modelGroup.textContent = '';
+                const q = filterQuery.toLowerCase().trim();
+                const filtered = models.filter(id => !q || id.toLowerCase().includes(q));
+
+                if (filtered.length === 0) {
+                    const empty = document.createElement('div');
+                    empty.className = 'agent-menu-empty';
+                    empty.textContent = 'No matching models';
+                    modelGroup.appendChild(empty);
+                    return;
+                }
+
+                filtered.forEach(modelId => {
                     modelGroup.appendChild(addMenuItem(modelId, modelId === activeModelId,
                         () => post({ command: 'changeModel', modelId })));
                 });
-                agentMenu.appendChild(modelGroup);
             }
+
+            searchInput.addEventListener('input', () => {
+                renderModelList(searchInput.value);
+            });
+
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeAgentMenu();
+                } else if (e.key === 'Enter') {
+                    const firstItem = modelGroup.querySelector('.agent-menu-item');
+                    if (firstItem) {
+                        firstItem.click();
+                    }
+                }
+            });
+
+            renderModelList();
+            agentMenu.appendChild(modelGroup);
+
+            // 3. Quick Controls at the bottom
+            addMenuSeparator();
+
+            const settingsGroup = document.createElement('div');
+            settingsGroup.className = 'agent-menu-settings';
+
+            const isOn = thinkingOn();
+            settingsGroup.appendChild(renderThinkingToggle(isOn));
+
+            const activeEffort = activeReasoningLevel();
+            settingsGroup.appendChild(renderReasoningSection(activeEffort));
+
+            agentMenu.appendChild(settingsGroup);
         }
 
         function getDefaultProfileName(profiles) {
@@ -2879,55 +3136,110 @@ const commandSuggestions = CHAT_COMMANDS;
             modalBody.textContent = '';
             modalActions.textContent = '';
 
+            let filterQuery = '';
+
+            if (sessions.length > 3) {
+                const searchBox = document.createElement('div');
+                searchBox.className = 'modal-search-box';
+
+                const searchIcon = document.createElement('span');
+                searchIcon.className = 'modal-search-icon';
+                searchIcon.textContent = '🔍';
+                searchBox.appendChild(searchIcon);
+
+                const searchInput = document.createElement('input');
+                searchInput.type = 'text';
+                searchInput.className = 'modal-search-input';
+                searchInput.placeholder = 'Search ' + sessions.length + ' sessions...';
+                searchInput.autocomplete = 'off';
+                searchInput.spellcheck = false;
+                searchBox.appendChild(searchInput);
+                modalBody.appendChild(searchBox);
+
+                searchInput.addEventListener('input', () => {
+                    filterQuery = searchInput.value;
+                    renderSessionList(filterQuery);
+                });
+
+                setTimeout(() => searchInput.focus(), 60);
+            }
+
             const options = document.createElement('div');
             options.className = 'modal-options';
             modalBody.appendChild(options);
 
-            if (sessions.length === 0) {
-                const empty = document.createElement('div');
-                empty.className = 'empty-panel';
-                empty.textContent = 'No saved sessions yet.';
-                options.appendChild(empty);
-            }
-
-            sessions.forEach(session => {
-                const button = document.createElement('button');
-                button.className = 'modal-option' + (session.sessionId === currentSessionId ? ' active' : '');
-                button.addEventListener('click', () => {
-                    if (session.sessionId !== currentSessionId) {
-                        post({ command: 'resumeSession', sessionId: session.sessionId });
-                    }
-                    closeModal();
+            function renderSessionList(query = '') {
+                options.textContent = '';
+                const q = query.toLowerCase().trim();
+                const filtered = sessions.filter(session => {
+                    if (!q) return true;
+                    const title = (session.title || '').toLowerCase();
+                    const model = (session.modelId || '').toLowerCase();
+                    return title.includes(q) || model.includes(q);
                 });
 
-                const name = document.createElement('strong');
-                name.textContent = session.title || 'Untitled session';
-                button.appendChild(name);
-
-                const metaParts = [];
-                if (session.modelId) {
-                    metaParts.push(session.modelId);
-                }
-                if (typeof session.turnCount === 'number') {
-                    metaParts.push(session.turnCount + (session.turnCount === 1 ? ' turn' : ' turns'));
-                }
-                if (session.parentSessionId) {
-                    metaParts.push('fork');
-                }
-                const when = formatRelativeTime(session.updatedAtUtc);
-                if (when) {
-                    metaParts.push(when);
-                }
-                if (session.sessionId === currentSessionId) {
-                    metaParts.push('current');
+                if (filtered.length === 0) {
+                    const empty = document.createElement('div');
+                    empty.className = 'modal-empty-notice';
+                    empty.textContent = query ? 'No sessions matching "' + query + '"' : 'No saved sessions yet.';
+                    options.appendChild(empty);
+                    return;
                 }
 
-                const meta = document.createElement('span');
-                meta.textContent = metaParts.join(' · ');
-                button.appendChild(meta);
+                filtered.forEach(session => {
+                    const isCurrent = session.sessionId === currentSessionId;
+                    const button = document.createElement('button');
+                    button.className = 'modal-option' + (isCurrent ? ' active' : '');
+                    button.title = session.title || 'Untitled session';
+                    button.addEventListener('click', () => {
+                        if (!isCurrent) {
+                            post({ command: 'resumeSession', sessionId: session.sessionId });
+                        }
+                        closeModal();
+                    });
 
-                options.appendChild(button);
-            });
+                    const name = document.createElement('strong');
+                    name.textContent = session.title || 'Untitled session';
+                    button.appendChild(name);
+
+                    const metaRow = document.createElement('div');
+                    metaRow.className = 'session-item-meta';
+
+                    if (isCurrent) {
+                        const currentBadge = document.createElement('span');
+                        currentBadge.className = 'session-badge-current';
+                        currentBadge.textContent = 'Current';
+                        metaRow.appendChild(currentBadge);
+                    }
+
+                    const metaParts = [];
+                    if (session.modelId) {
+                        metaParts.push(session.modelId);
+                    }
+                    if (typeof session.turnCount === 'number') {
+                        metaParts.push(session.turnCount + (session.turnCount === 1 ? ' turn' : ' turns'));
+                    }
+                    if (session.parentSessionId) {
+                        metaParts.push('fork');
+                    }
+                    const when = formatRelativeTime(session.updatedAtUtc);
+                    if (when) {
+                        metaParts.push(when);
+                    }
+
+                    if (metaParts.length > 0) {
+                        const details = document.createElement('span');
+                        details.className = 'session-item-details';
+                        details.textContent = metaParts.join(' · ');
+                        metaRow.appendChild(details);
+                    }
+
+                    button.appendChild(metaRow);
+                    options.appendChild(button);
+                });
+            }
+
+            renderSessionList();
 
             const fork = document.createElement('button');
             fork.className = 'ghost-button';

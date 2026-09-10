@@ -227,11 +227,16 @@ export function getChatWebviewContent(webview: vscode.Webview, extensionUri: vsc
                     <div id="prompt-queue" class="prompt-queue hidden"></div>
                     <div id="suggestions" class="suggestions hidden"></div>
                     <div class="composer-row">
-                        <textarea id="chat-input" class="chat-input" rows="1" placeholder="Message NanoAgent, type / for commands, or @ for files"></textarea>
+                        <textarea id="chat-input" class="chat-input" rows="1" placeholder="Ask NanoAgent... (/ commands, @ files)"></textarea>
                         <div class="composer-toolbar">
                             <div class="toolbar-left">
                                 <button id="add-context-button" class="icon-button" title="Read workspace file" aria-label="Read workspace file">+</button>
-                                <select id="profile-select" class="profile-select" title="Profile" aria-label="Profile"></select>
+                                <div class="profile-select-wrapper">
+                                    <button id="profile-select" class="profile-pill" title="Profile" aria-label="Profile" aria-haspopup="listbox">
+                                        <span id="profile-pill-label">Build</span>
+                                        <span class="profile-pill-chevron">▾</span>
+                                    </button>
+                                </div>
                                 <button id="model-button" class="model-pill" title="Choose model" aria-label="Choose model"><span id="model-button-label">Model</span></button>
                                 <div class="status-pill" title="Process status">
                                     <span id="status-text">Stopped</span>
@@ -250,11 +255,17 @@ export function getChatWebviewContent(webview: vscode.Webview, extensionUri: vsc
     </div>
 
     <div id="agent-menu" class="agent-menu hidden" role="menu"></div>
+    <div id="profile-dropdown" class="profile-dropdown hidden" role="listbox"></div>
 
     <div id="modal-backdrop" class="modal-backdrop hidden">
-        <div class="modal">
-            <h2 id="modal-title"></h2>
-            <p id="modal-description" class="modal-description"></p>
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="modal-header">
+                <div class="modal-header-text">
+                    <h2 id="modal-title"></h2>
+                    <p id="modal-description" class="modal-description"></p>
+                </div>
+                <button id="modal-close-btn" class="modal-close-btn" title="Close (Esc)" aria-label="Close">&#10005;</button>
+            </div>
             <div id="modal-body"></div>
             <div id="modal-actions" class="modal-actions"></div>
         </div>
